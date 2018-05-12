@@ -2,23 +2,31 @@
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QLoggingCategory>
+#include "GUIQML/GUIQMLThread.hpp"
 #include "thread1.hpp"
 #include "thread2.hpp"
 
 int main(int argc, char *argv[])
 {
     QLoggingCategory categrory("main");
-    qCDebug(categrory) << "Start TID " << QThread::currentThreadId();
+    qCDebug(categrory) << "Start TID " << QThread::currentThreadId();   
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
-    qCDebug(categrory) << "Load engine";
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-    int size =  engine.rootObjects().size();
-    qCDebug(categrory) << "size " << size;
-    QObject * item = engine.rootObjects().value(0);
+   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+   QGuiApplication app(argc, argv);
+
+   GUIQMLThread GUIThread;
+   GUIThread.init();
+   GUIThread.start(QThread::HighestPriority);
+
+   QQmlApplicationEngine engine;
+   qCDebug(categrory) << "Load engine";
+   engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+   int size =  engine.rootObjects().size();
+   qCDebug(categrory) << "size " << size;
+   QObject * item = engine.rootObjects().value(0);
+
+    //QObject * item = NULL;
     if(item == NULL)
     {
          qCDebug(categrory) << "item == NULL ";
@@ -59,8 +67,10 @@ int main(int argc, char *argv[])
     thread1.wait(10);
     thread2.quit();
     thread2.wait(10);
-    qCDebug(categrory) << "thread exit";
 
+    qCDebug(categrory) << "thread exit";
+    GUIThread.quit();
+    GUIThread.wait(100);
 
     return 1;
 }
