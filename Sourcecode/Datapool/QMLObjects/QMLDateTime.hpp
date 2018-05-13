@@ -11,9 +11,9 @@ public:
     QMLDateTime();
     ~QMLDateTime();
 
-    void conncet();
+    void init();
+
     void triggertimer(void);
-    void setClockObject(QObject *ClockObject);
 
 signals:   
     void setClock(QString time);

@@ -3,6 +3,8 @@
 #include <QMetaObject>
 #include <QVariant>
 #include <QTime>
+#include "GUIQML/GetQMLObject.hpp"
+
 
 QMLDateTime::QMLDateTime() : m_categrory("QMLDateTime")
 {
@@ -14,16 +16,21 @@ QMLDateTime::~QMLDateTime()
 
 }
 
-void QMLDateTime::conncet()
+void QMLDateTime::init()
 {
-
-}
-
-void QMLDateTime::setClockObject(QObject *ClockObject)
-{
-    if(mClockObject == NULL)
+    GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
+    if(NULL != pGetQMLObject)
     {
-        mClockObject = ClockObject;
+        QObject::connect(pGetQMLObject->GetSpcificQMLObject("sidebaralarm"), SIGNAL(sidbarsignal(int)), this, SLOT(receiveSwitch(int)), Qt::QueuedConnection);
+        mClockObject = pGetQMLObject->GetSpcificQMLObject("sidebar");
+        if(NULL != mClockObject)
+        {
+
+        }
+        else
+        {
+            qCDebug(m_categrory) << "init: NULL == mClockObject ";
+        }
     }
 }
 
@@ -41,3 +48,9 @@ void QMLDateTime::setClockTime(QString time)
     QMetaObject::invokeMethod(mClockObject, "setclock", Qt::QueuedConnection,
             Q_ARG(QVariant, cpptime));
 }
+
+void QMLDateTime::receiveSwitch(int count)
+{
+
+}
+

@@ -14,12 +14,16 @@ DatapoolThread::~DatapoolThread()
 
 void DatapoolThread::init(void)
 {
-
+    mQMLDateTime.moveToThread(this);
+    mQMLDateTime.init();
 }
 
 void DatapoolThread::run()
 {
     qCDebug(m_categrory) << "Hello DatapoolThread TID: " << this->currentThreadId();
+    init();
+
+    //Timer
     QTimer timer;
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
     timer.setInterval(1000);
@@ -31,4 +35,5 @@ void DatapoolThread::run()
 void DatapoolThread::timerHit()
 {
     qCDebug(m_categrory) << QTime::currentTime() << " timerHit TID: " << this->currentThreadId();
+    mQMLDateTime.triggertimer();
 }
