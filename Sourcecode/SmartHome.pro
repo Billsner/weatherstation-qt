@@ -7,7 +7,6 @@ SOURCES += main.cpp \
     thread2.cpp \
     objectthread1.cpp \
     Datapool/DatapoolThread.cpp \
-    GUIQML/GUIQMLThread.cpp \
     Datapool/QMLObjects/QMLDateTime.cpp \
     GUIQML/GetQMLObject.cpp
 
@@ -24,6 +23,5 @@ HEADERS += \
     thread2.hpp \
     objectthread1.hpp \
     Datapool/DatapoolThread.hpp \
-    GUIQML/GUIQMLThread.hpp \
     Datapool/QMLObjects/QMLDateTime.hpp \
     GUIQML/GetQMLObject.hpp

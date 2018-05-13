@@ -14,6 +14,11 @@ QMLDateTime::~QMLDateTime()
 
 }
 
+void QMLDateTime::conncet()
+{
+
+}
+
 void QMLDateTime::setClockObject(QObject *ClockObject)
 {
     if(mClockObject == NULL)

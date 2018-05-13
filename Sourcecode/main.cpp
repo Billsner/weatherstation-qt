@@ -2,7 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QLoggingCategory>
-#include "GUIQML/GUIQMLThread.hpp"
+#include "Datapool/DatapoolThread.hpp"
+#include "GUIQML/GetQMLObject.hpp"
 #include "thread1.hpp"
 #include "thread2.hpp"
 
@@ -12,44 +13,38 @@ int main(int argc, char *argv[])
     qCDebug(categrory) << "Start TID " << QThread::currentThreadId();   
 
 
-   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-   QGuiApplication app(argc, argv);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication app(argc, argv);
 
-   GUIQMLThread GUIThread;
-   GUIThread.init();
-   GUIThread.start(QThread::HighestPriority);
+    QQmlApplicationEngine engine;
+    qCDebug(categrory) << "Load engine";
+    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    int size =  engine.rootObjects().size();
+    qCDebug(categrory) << "size " << size;
 
-   QQmlApplicationEngine engine;
-   qCDebug(categrory) << "Load engine";
-   engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-   int size =  engine.rootObjects().size();
-   qCDebug(categrory) << "size " << size;
-   QObject * item = engine.rootObjects().value(0);
-
-    //QObject * item = NULL;
-    if(item == NULL)
-    {
-         qCDebug(categrory) << "item == NULL ";
-    }
-    QObject * myObject= item->findChild<QObject*>("sidebaralarm");
-    if(myObject == NULL)
-    {
-        qCDebug(categrory) << "myObject == NULL ";
-    }
-
-    QObject * myclock= item->findChild<QObject*>("sidebar");
-    if(myclock == NULL)
-    {
-        qCDebug(categrory) << "myclock == NULL ";
-    }
+    DatapoolThread mDatapoolThread;
+    mDatapoolThread.start(QThread::HighPriority);
 
     Thread1 thread1;
     Thread2 thread2;
 
     thread1.init();
-    thread1.setClockObject(myclock);
 
-    QObject::connect(myObject, SIGNAL(sidbarsignal(int)), thread1.getObject(), SLOT(receiveSwitch(int)), Qt::QueuedConnection);  
+    GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
+
+
+    if(NULL != pGetQMLObject)
+    {
+        pGetQMLObject->SetQMLEngineRootObject(engine.rootObjects().value(0));
+        thread1.setClockObject(pGetQMLObject->GetSpcificQMLObject("sidebar"));
+        QObject::connect(pGetQMLObject->GetSpcificQMLObject("sidebaralarm"), SIGNAL(sidbarsignal(int)), thread1.getObject(), SLOT(receiveSwitch(int)), Qt::QueuedConnection);
+    }
+    else
+    {
+        qCDebug(categrory) << "No Object";
+    }
+
+
     QObject::connect(thread1.getObject(), SIGNAL(sendtoThread2(int)), &thread2, SLOT(receiveThread1Count(int)), Qt::QueuedConnection);
     QObject::connect(&thread2, SIGNAL(sendtoThread1(int)), thread1.getObject(), SLOT(receiveThread2Count(int)), Qt::QueuedConnection);
 
@@ -69,8 +64,9 @@ int main(int argc, char *argv[])
     thread2.wait(10);
 
     qCDebug(categrory) << "thread exit";
-    GUIThread.quit();
-    GUIThread.wait(100);
+    mDatapoolThread.quit();
+    mDatapoolThread.wait(100);
+    GetQMLObject::DestroyGetQMLObject();
 
     return 1;
 }
