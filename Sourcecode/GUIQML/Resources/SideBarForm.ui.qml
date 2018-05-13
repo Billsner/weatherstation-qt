@@ -7,6 +7,7 @@ PageBackground {
     property alias button1: button1
     property alias comboBox: comboBox
     property alias customLabel1: customLabel1
+    property alias customLabel2: customLabel2
     title: "Smart Home"
 
     CustomLabel {

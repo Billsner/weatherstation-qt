@@ -20,9 +20,6 @@ int main(int argc, char *argv[])
     int size =  engine.rootObjects().size();
     qCDebug(categrory) << "size " << size;
 
-    DatapoolThread mDatapoolThread;
-    mDatapoolThread.start(QThread::HighPriority);
-
     GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
 
     if(NULL != pGetQMLObject)
@@ -33,6 +30,10 @@ int main(int argc, char *argv[])
     {
         qCDebug(categrory) << "No Object";
     }
+
+    DatapoolThread mDatapoolThread;
+    mDatapoolThread.initthread();
+    mDatapoolThread.start(QThread::HighPriority);
 
     app.exec();
     qCDebug(categrory) << "app.exec";

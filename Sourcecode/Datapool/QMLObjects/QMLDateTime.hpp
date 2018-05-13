@@ -27,6 +27,7 @@ private:
     QObject *mClockObject;
 
     void setClockTime(QString time);
+    void setClockDate(QString date);
 
 };
 

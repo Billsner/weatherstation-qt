@@ -12,16 +12,21 @@ DatapoolThread::~DatapoolThread()
     qCDebug(m_categrory) << "Destructer";
 }
 
-void DatapoolThread::init(void)
+void DatapoolThread::initthread()
 {
     mQMLDateTime.moveToThread(this);
+}
+
+void DatapoolThread::initobjects(void)
+{
+    qCDebug(m_categrory) << "initobjects TID: " << this->currentThreadId();
     mQMLDateTime.init();
 }
 
 void DatapoolThread::run()
 {
     qCDebug(m_categrory) << "Hello DatapoolThread TID: " << this->currentThreadId();
-    init();
+    initobjects();
 
     //Timer
     QTimer timer;

@@ -40,6 +40,17 @@ void QMLDateTime::triggertimer(void)
     qCDebug(m_categrory) << "triggertimer TID: " << QThread::currentThreadId();
     QTime time = QTime::currentTime();
     setClockTime(time.toString());
+    static int count = 0;
+    if(0 == count)
+    {
+        QDate date = QDate::currentDate();
+        setClockDate(date.toString("dd.MM.yyyy"));
+        count = 300;
+    }
+    else
+    {
+        count--;
+    }
 }
 
 void QMLDateTime::setClockTime(QString time)
@@ -49,8 +60,16 @@ void QMLDateTime::setClockTime(QString time)
             Q_ARG(QVariant, cpptime));
 }
 
+void QMLDateTime::setClockDate(QString date)
+{
+    QVariant cppdate(date);
+    QMetaObject::invokeMethod(mClockObject, "setdate", Qt::QueuedConnection,
+            Q_ARG(QVariant, cppdate));
+}
+
 void QMLDateTime::receiveSwitch(int count)
 {
-
+    qCDebug(m_categrory) << "receiveSwitch: " << count << " TID: " << QThread::currentThreadId();
 }
+
 

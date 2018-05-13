@@ -20,15 +20,16 @@ SideBarForm {
         }
     }
 
-    customLabel1{
-        //objectName: "clock"
-
-    }
-
     function setclock(cpptime) {
         customLabel1.text = cpptime;        
         print("setclock")
 
     }
 
+
+    function setdate(cppdate) {
+        customLabel2.text = cppdate;
+        print("setdate")
+
+    }
 }

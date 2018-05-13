@@ -13,7 +13,9 @@ class DatapoolThread : public QThread
     Q_OBJECT
 public:
     DatapoolThread(QObject *parent = NULL);
-    ~DatapoolThread();    
+    ~DatapoolThread();
+
+    void initthread();
 
 signals:
 
@@ -23,7 +25,7 @@ public slots:
 
 private:
     void run();
-    void init(void);
+    void initobjects(void);
     QLoggingCategory m_categrory;
     QMLDateTime mQMLDateTime;
 
