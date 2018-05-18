@@ -4,11 +4,12 @@ import QtQuick.Layouts 1.0
 
 PageBackground {
     id: pageBackground1
-    title: "Lights"
+    property alias groupBox1: groupBox1
 
     GridLayout {
         x: 148
-        y: 158
+        y: 159
+        anchors.horizontalCenterOffset: 94
         anchors.horizontalCenter: parent.horizontalCenter
         columnSpacing: 20
         rowSpacing: 20
@@ -17,6 +18,9 @@ PageBackground {
 
         GroupBox {
             id: groupBox1
+            Layout.fillHeight: false
+            Layout.fillWidth: false
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             title: qsTr("Living Room")
 
             GridLayout {
@@ -59,138 +63,6 @@ PageBackground {
                     value: 0.5
                 }
             }
-        }
-
-        GroupBox {
-            id: groupBox2
-            GridLayout {
-                Switch {
-                    id: switch4
-                    text: qsTr("All")
-                }
-
-                Slider {
-                    id: slider4
-                    Layout.preferredWidth: 180
-                    Layout.preferredHeight: 25
-                    value: 0.5
-                }
-
-                Switch {
-                    id: switch5
-                    text: qsTr("Central")
-                }
-
-                Slider {
-                    id: slider5
-                    Layout.preferredWidth: 180
-                    Layout.preferredHeight: 25
-                    value: 0.5
-                }
-
-                Switch {
-                    id: switch6
-                    text: qsTr("Shower")
-                }
-
-                Slider {
-                    id: slider6
-                    Layout.preferredWidth: 180
-                    Layout.preferredHeight: 25
-                    value: 0.5
-                }
-                columns: 2
-                rows: 3
-            }
-            title: qsTr("Bathroom")
-        }
-
-        GroupBox {
-            id: groupBox3
-            GridLayout {
-                Switch {
-                    id: switch7
-                    text: qsTr("All")
-                }
-
-                Slider {
-                    id: slider7
-                    Layout.preferredWidth: 180
-                    Layout.preferredHeight: 25
-                    value: 0.5
-                }
-
-                Switch {
-                    id: switch8
-                    text: qsTr("Central")
-                }
-
-                Slider {
-                    id: slider8
-                    Layout.preferredWidth: 180
-                    Layout.preferredHeight: 25
-                    value: 0.5
-                }
-
-                Switch {
-                    id: switch9
-                    text: qsTr("Bed")
-                }
-
-                Slider {
-                    id: slider9
-                    Layout.preferredWidth: 180
-                    Layout.preferredHeight: 25
-                    value: 0.5
-                }
-                columns: 2
-                rows: 3
-            }
-            title: qsTr("Bedroom 01")
-        }
-
-        GroupBox {
-            id: groupBox4
-            GridLayout {
-                Switch {
-                    id: switch10
-                    text: qsTr("All")
-                }
-
-                Slider {
-                    id: slider10
-                    Layout.preferredHeight: 25
-                    Layout.preferredWidth: 180
-                    value: 0.5
-                }
-
-                Switch {
-                    id: switch11
-                    text: qsTr("Central")
-                }
-
-                Slider {
-                    id: slider11
-                    Layout.preferredHeight: 25
-                    Layout.preferredWidth: 180
-                    value: 0.5
-                }
-
-                Switch {
-                    id: switch12
-                    text: qsTr("Bed")
-                }
-
-                Slider {
-                    id: slider12
-                    Layout.preferredHeight: 25
-                    Layout.preferredWidth: 180
-                    value: 0.5
-                }
-                columns: 2
-                rows: 3
-            }
-            title: qsTr("Bedroom 02")
         }
     }
 

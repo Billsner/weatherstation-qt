@@ -6,20 +6,19 @@ import QtQuick.Controls.Material 2.0
 ApplicationWindow {
     id: applicationWindow1
     visible: true
-    width: 1280
-    height: 800
+    width: 800
+    height: 480
     title: qsTr("Smart Home")
     Material.theme: Material.Dark
     Material.accent: Material.DeepOrange
 
-    signal testsignal(int count)
-
     StackLayout {
         id: swipeView
-        anchors.left: sideBar.right
-        anchors.right: parent.right
+        width: 800
+        height: 430
+        anchors.bottomMargin: -10
         anchors.bottom: parent.bottom
-        anchors.top: parent.top
+        anchors.top: SideBar.top
         currentIndex: tabBar.currentIndex
 
         Light {
@@ -33,27 +32,52 @@ ApplicationWindow {
         Security {
 
         }
-    }
 
-    TabBar {
-        id: tabBar
-        height: 42
-        anchors.bottom: parent.bottom
-        anchors.left: sideBar.right
-        anchors.right: parent.right
-        currentIndex: swipeView.currentIndex
-        TabButton {
-            text: qsTr("Lights")
-        }
-        TabButton {
-            text: qsTr("Heating")
-        }
-        TabButton {
-            text: qsTr("Security")
-        }
+
     }
 
     SideBar {
         id: sideBar
+    }
+
+    TabBar {
+        id: tabBar
+        x: 252
+        y: -420
+        width: 300
+        height: 30
+        position: TabBar.Header
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: true
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        z: 2
+        contentHeight: 30
+        currentIndex: swipeView.currentIndex
+        TabButton {
+            width: 100
+            height: 25
+            text: qsTr("Lights")
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+        }
+        TabButton {
+            x: 350
+            width: 100
+            height: 25
+            text: qsTr("Heating")
+            anchors.top: parent.top
+            anchors.topMargin: 0
+        }
+        TabButton {
+            x: 700
+            width: 100
+            height: 25
+            text: qsTr("Security")
+            anchors.top: parent.top
+            anchors.topMargin: 0
+        }
     }
 }
