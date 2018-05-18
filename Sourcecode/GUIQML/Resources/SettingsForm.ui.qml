@@ -7,7 +7,8 @@ PageBackground {
 
     GridLayout {
         x: 124
-        y: 151
+        y: 82
+        anchors.horizontalCenterOffset: 1
         anchors.horizontalCenter: parent.horizontalCenter
         rows: 2
         columns: 2
@@ -18,6 +19,8 @@ PageBackground {
         GroupBox {
             id: groupBox2
             GridLayout {
+                x: -5
+                y: 0
                 RadioButton {
                     id: radioButton3
                     text: qsTr("Smoke Detector")

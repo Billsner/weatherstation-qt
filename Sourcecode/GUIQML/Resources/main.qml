@@ -21,15 +21,15 @@ ApplicationWindow {
         anchors.top: SideBar.top
         currentIndex: tabBar.currentIndex
 
-        Light {
+        Wetter {
 
         }
 
-        Heating {
+        Smarthome {
 
         }
 
-        Security {
+        Settings {
 
         }
 
@@ -57,7 +57,7 @@ ApplicationWindow {
         TabButton {
             width: 100
             height: 25
-            text: qsTr("Lights")
+            text: qsTr("Wetter")
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.left: parent.left
@@ -67,7 +67,7 @@ ApplicationWindow {
             x: 350
             width: 100
             height: 25
-            text: qsTr("Heating")
+            text: qsTr("Smarthome")
             anchors.top: parent.top
             anchors.topMargin: 0
         }
@@ -75,7 +75,7 @@ ApplicationWindow {
             x: 700
             width: 100
             height: 25
-            text: qsTr("Security")
+            text: qsTr("Einstellung")
             anchors.top: parent.top
             anchors.topMargin: 0
         }
