@@ -4,72 +4,51 @@ import QtQuick.Layouts 1.0
 
 PageBackground {
     id: pageBackground1
+    objectName: "Settings"
+
+
+    signal signaldateformat(string format)
+    property alias dateformat: dateformat
+
 
     GridLayout {
         x: 124
-        y: 82
-        anchors.horizontalCenterOffset: 1
+        y: 93
+        width: 210
+        height: 106
+        anchors.horizontalCenterOffset: -233
         anchors.horizontalCenter: parent.horizontalCenter
         rows: 2
         columns: 2
 
-        signal signalswitch3(int count)
-
-
         GroupBox {
             id: groupBox2
+            width: 210
             GridLayout {
                 x: -5
                 y: 0
-                RadioButton {
-                    id: radioButton3
-                    text: qsTr("Smoke Detector")
-                }
+                width: 181
+                height: 48
 
-                Button {
-                    id: button3
-                    text: qsTr("Test")
-                }
 
-                RadioButton {
-                    id: radioButton4
-                    text: qsTr("Movement Detector")
-                }
-
-                Button {
-                    id: button4
-                    text: qsTr("Test")
-                }
-
-                Switch {
-                    id: switch3
-                    text: qsTr("Window 01")
-
-                }
-
-                Label {
-                    id: label3
-                    text: switch3.checked ? "Open" : "Closed"
-                }
-
-                Switch {
-                    id: switch4
-                    text: qsTr("Window 02")
-                }
-
-                Label {
-                    id: label4
-                    text: switch4.checked ? "Open" : "Closed"
+                ComboBox {
+                    id: dateformat
+                    x: 294
+                    y: 9
+                    width: 180
+                    height: 43
+                    Layout.minimumHeight: 50
+                    Layout.minimumWidth: 180
                 }
                 columns: 2
                 rows: 4
             }
-            title: qsTr("Bathroom")
+            title: qsTr("Dateformat")
         }
     }
 
     Connections {
-        target: switch3
-        onClicked: pageBackground1.signalswitch3(switch3.checked)
+        target: dateformat
+        onAccepted: signaldateformat(dateformat.currentText)
     }
 }

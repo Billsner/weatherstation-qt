@@ -20,7 +20,7 @@ signals:
 
 
 public slots:
-    void receiveSwitch(int count);
+    void receiveDateformate(QString format);
 
 private:
     QLoggingCategory m_categrory;
@@ -28,6 +28,10 @@ private:
 
     void setClockTime(QString time);
     void setClockDate(QString date);
+    void setClockDay(QString day);
+    void setClockDateDay(QString date,QString day);
+
+    void connect();
 
 };
 

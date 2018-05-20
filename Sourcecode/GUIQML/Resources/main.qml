@@ -18,7 +18,7 @@ ApplicationWindow {
         height: 430
         anchors.bottomMargin: -10
         anchors.bottom: parent.bottom
-        anchors.top: SideBar.top
+        anchors.top: StatusLine.top
         currentIndex: tabBar.currentIndex
 
         Wetter {
@@ -36,7 +36,7 @@ ApplicationWindow {
 
     }
 
-    SideBar {
+    StatusLine {
         id: sideBar
     }
 

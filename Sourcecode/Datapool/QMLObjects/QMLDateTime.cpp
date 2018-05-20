@@ -21,8 +21,7 @@ void QMLDateTime::init()
     GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
     if(NULL != pGetQMLObject)
     {
-        QObject::connect(pGetQMLObject->GetSpcificQMLObject("sidebaralarm"), SIGNAL(sidbarsignal(int)), this, SLOT(receiveSwitch(int)), Qt::QueuedConnection);
-        mClockObject = pGetQMLObject->GetSpcificQMLObject("sidebar");
+        mClockObject = pGetQMLObject->GetSpcificQMLObject("statusbar");
         if(NULL != mClockObject)
         {
 
@@ -30,6 +29,25 @@ void QMLDateTime::init()
         else
         {
             qCDebug(m_categrory) << "init: NULL == mClockObject ";
+        }
+    }
+    connect();
+}
+
+void QMLDateTime::connect()
+{
+    GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
+    if(NULL != pGetQMLObject)
+    {
+        QObject *pConnectObject = pGetQMLObject->GetSpcificQMLObject("Settings");
+        if(NULL != pConnectObject)
+        {
+            QObject::connect(pConnectObject, SIGNAL(signaldateformat(string)), this, SLOT(receiveDateformate(QString)), Qt::QueuedConnection);
+
+        }
+        else
+        {
+            qCDebug(m_categrory) << "connect: NULL == pConnectObject ";
         }
     }
 }
@@ -43,8 +61,8 @@ void QMLDateTime::triggertimer(void)
     static int count = 0;
     if(0 == count)
     {
-        QDate date = QDate::currentDate();
-        setClockDate(date.toString("dd.MM.yyyy"));
+        QDate date = QDate::currentDate();        
+        setClockDateDay(date.toString("dd.MM.yyyy"),date.toString("dddd"));
         count = 300;
     }
     else
@@ -67,9 +85,25 @@ void QMLDateTime::setClockDate(QString date)
             Q_ARG(QVariant, cppdate));
 }
 
-void QMLDateTime::receiveSwitch(int count)
+void QMLDateTime::setClockDay(QString day)
 {
-    qCDebug(m_categrory) << "receiveSwitch: " << count << " TID: " << QThread::currentThreadId();
+    QVariant cppday(day);
+    QMetaObject::invokeMethod(mClockObject, "setday", Qt::QueuedConnection,
+            Q_ARG(QVariant, cppday));
+}
+
+void QMLDateTime::setClockDateDay(QString date, QString day)
+{
+    QVariant cppdate(date);
+    QVariant cppday(day);
+    QMetaObject::invokeMethod(mClockObject, "setdateday", Qt::QueuedConnection,
+            Q_ARG(QVariant, cppdate),Q_ARG(QVariant, cppday));
+}
+
+
+void QMLDateTime::receiveDateformate(QString format)
+{
+    qCDebug(m_categrory) << "receiveDateformate: " << format << " TID: " << QThread::currentThreadId();
 }
 
 

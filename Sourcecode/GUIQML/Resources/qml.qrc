@@ -3,8 +3,8 @@
         <file>main.qml</file>
         <file>CustomLabel.qml</file>
         <file>PageBackground.qml</file>
-        <file>SideBar.qml</file>
-        <file>SideBarForm.ui.qml</file>
+        <file>StatusLine.qml</file>
+        <file>StatusLineForm.ui.qml</file>
         <file>Wetter.qml</file>
         <file>WetterForm.ui.qml</file>
         <file>Smarthome.qml</file>

@@ -28,6 +28,8 @@ void DatapoolThread::run()
     qCDebug(m_categrory) << "Hello DatapoolThread TID: " << this->currentThreadId();
     initobjects();
 
+    mQMLDateTime.triggertimer();
+
     //Timer
     QTimer timer;
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
