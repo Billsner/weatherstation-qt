@@ -6,7 +6,7 @@
 #include "GUIQML/GetQMLObject.hpp"
 
 
-QMLDateTime::QMLDateTime() : m_categrory("QMLDateTime")
+QMLDateTime::QMLDateTime() : m_categrory("QMLDateTime"),mdateformate("dd.MM.yyyy")
 {
     mClockObject = NULL;
 }
@@ -42,7 +42,9 @@ void QMLDateTime::connect()
         QObject *pConnectObject = pGetQMLObject->GetSpcificQMLObject("Settings");
         if(NULL != pConnectObject)
         {
-            QObject::connect(pConnectObject, SIGNAL(signaldateformat(string)), this, SLOT(receiveDateformate(QString)), Qt::QueuedConnection);
+            QObject::connect(pConnectObject, SIGNAL(signaldateformat(QString)), this, SLOT(receiveDateformate(QString)), Qt::QueuedConnection);
+            QObject::connect(pConnectObject, SIGNAL(signaldateformatid(int)), this, SLOT(receiveDateformateIndex(int)), Qt::QueuedConnection);
+
 
         }
         else
@@ -62,7 +64,7 @@ void QMLDateTime::triggertimer(void)
     if(0 == count)
     {
         QDate date = QDate::currentDate();        
-        setClockDateDay(date.toString("dd.MM.yyyy"),date.toString("dddd"));
+        setClockDateDay(date.toString(mdateformate),date.toString("dddd"));
         count = 300;
     }
     else
@@ -104,6 +106,15 @@ void QMLDateTime::setClockDateDay(QString date, QString day)
 void QMLDateTime::receiveDateformate(QString format)
 {
     qCDebug(m_categrory) << "receiveDateformate: " << format << " TID: " << QThread::currentThreadId();
+    mdateformate = format;
+    QDate date = QDate::currentDate();
+    setClockDateDay(date.toString(mdateformate),date.toString("dddd"));
 }
+
+void QMLDateTime::receiveDateformateIndex(int formatid)
+{
+    qCDebug(m_categrory) << "receiveDateformateIndex: " << formatid << " TID: " << QThread::currentThreadId();
+}
+
 
 

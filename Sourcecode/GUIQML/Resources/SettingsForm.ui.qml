@@ -8,6 +8,7 @@ PageBackground {
 
 
     signal signaldateformat(string format)
+    signal signaldateformatid(int formatid)
     property alias dateformat: dateformat
 
 
@@ -49,6 +50,6 @@ PageBackground {
 
     Connections {
         target: dateformat
-        onAccepted: signaldateformat(dateformat.currentText)
+        onActivated: {signaldateformat(dateformat.currentText); signaldateformatid(dateformat.currentIndex);print("Settings: dateformat");}
     }
 }

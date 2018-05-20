@@ -21,10 +21,12 @@ signals:
 
 public slots:
     void receiveDateformate(QString format);
+    void receiveDateformateIndex(int formatid);
 
 private:
     QLoggingCategory m_categrory;
     QObject *mClockObject;
+    QString mdateformate;
 
     void setClockTime(QString time);
     void setClockDate(QString date);
