@@ -10,6 +10,7 @@ PageBackground {
     signal signaldateformat(string format)
     signal signaldateformatid(int formatid)
     property alias dateformat: dateformat
+    property alias buttonExit: buttonExit
 
 
     GridLayout {
@@ -51,5 +52,14 @@ PageBackground {
     Connections {
         target: dateformat
         onActivated: {signaldateformat(dateformat.currentText); signaldateformatid(dateformat.currentIndex);print("Settings: dateformat");}
+    }
+
+    Button {
+        id: buttonExit
+        x: 669
+        y: 43
+        width: 116
+        height: 46
+        text: qsTr("Exit APP")
     }
 }

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QMLDateTime_t {
-    QByteArrayData data[6];
-    char stringdata0[47];
+    QByteArrayData data[8];
+    char stringdata0[86];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,12 +35,15 @@ QT_MOC_LITERAL(0, 0, 11), // "QMLDateTime"
 QT_MOC_LITERAL(1, 12, 8), // "setClock"
 QT_MOC_LITERAL(2, 21, 0), // ""
 QT_MOC_LITERAL(3, 22, 4), // "time"
-QT_MOC_LITERAL(4, 27, 13), // "receiveSwitch"
-QT_MOC_LITERAL(5, 41, 5) // "count"
+QT_MOC_LITERAL(4, 27, 18), // "receiveDateformate"
+QT_MOC_LITERAL(5, 46, 6), // "format"
+QT_MOC_LITERAL(6, 53, 23), // "receiveDateformateIndex"
+QT_MOC_LITERAL(7, 77, 8) // "formatid"
 
     },
-    "QMLDateTime\0setClock\0\0time\0receiveSwitch\0"
-    "count"
+    "QMLDateTime\0setClock\0\0time\0"
+    "receiveDateformate\0format\0"
+    "receiveDateformateIndex\0formatid"
 };
 #undef QT_MOC_LITERAL
 
@@ -50,7 +53,7 @@ static const uint qt_meta_data_QMLDateTime[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -58,16 +61,18 @@ static const uint qt_meta_data_QMLDateTime[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
+       1,    1,   29,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   27,    2, 0x0a /* Public */,
+       4,    1,   32,    2, 0x0a /* Public */,
+       6,    1,   35,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::QString,    5,
+    QMetaType::Void, QMetaType::Int,    7,
 
        0        // eod
 };
@@ -79,7 +84,8 @@ void QMLDateTime::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->setClock((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->receiveSwitch((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->receiveDateformate((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->receiveDateformateIndex((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -119,13 +125,13 @@ int QMLDateTime::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

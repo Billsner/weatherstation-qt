@@ -1,0 +1,11 @@
+#export QT_QPA_EGLFS_HIDECURSOR=1
+export QT_QPA_GENERIC_PLUGINS=Tslib
+#export QT_QPA_EGLFS_DISABLE_INPUT=1
+#export QT_QPA_PLATFROM=eglfs
+#export QT_QPA_FB_TSLIB=1
+#export QT_QPA_EGLFS_TSLIB=1
+#export TSLIB_EBDEVICE=/dev/fb0
+#export TSLIB_TSDEVICE=/dev/input/event0
+export QT_QPA_EGLFS_PHYSICAL_WIDTH=154
+export QT_QPA_EGLFS_PHYSICAL_HEIGHT=86
+./SmartHome 2>TraceSmarthome.txt

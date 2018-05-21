@@ -138,6 +138,7 @@ DIST          = ../../../raspi/qt5/mkspecs/features/spec_pre.prf \
 		../../../raspi/qt5/mkspecs/features/qt_config.prf \
 		../../../raspi/qt5/mkspecs/devices/linux-rasp-pi3-g++/qmake.conf \
 		../../../raspi/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../raspi/qt5/mkspecs/features/exclusive_builds.prf \
 		../../../raspi/qt5/mkspecs/features/toolchain.prf \
 		../../../raspi/qt5/mkspecs/features/default_pre.prf \
@@ -248,6 +249,7 @@ Makefile: SmartHome.pro ../../../raspi/qt5/mkspecs/devices/linux-rasp-pi3-g++/qm
 		../../../raspi/qt5/mkspecs/features/qt_config.prf \
 		../../../raspi/qt5/mkspecs/devices/linux-rasp-pi3-g++/qmake.conf \
 		../../../raspi/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../raspi/qt5/mkspecs/features/exclusive_builds.prf \
 		../../../raspi/qt5/mkspecs/features/toolchain.prf \
 		../../../raspi/qt5/mkspecs/features/default_pre.prf \
@@ -267,7 +269,7 @@ Makefile: SmartHome.pro ../../../raspi/qt5/mkspecs/devices/linux-rasp-pi3-g++/qm
 		../../../raspi/qt5/mkspecs/features/yacc.prf \
 		../../../raspi/qt5/mkspecs/features/lex.prf \
 		SmartHome.pro \
-		qml.qrc \
+		GUIQML/Resources/qml.qrc \
 		../../../raspi/qt5pi/lib/libQt5Quick.prl \
 		../../../raspi/qt5pi/lib/libQt5Gui.prl \
 		../../../raspi/qt5pi/lib/libQt5Qml.prl \
@@ -349,6 +351,7 @@ Makefile: SmartHome.pro ../../../raspi/qt5/mkspecs/devices/linux-rasp-pi3-g++/qm
 ../../../raspi/qt5/mkspecs/features/qt_config.prf:
 ../../../raspi/qt5/mkspecs/devices/linux-rasp-pi3-g++/qmake.conf:
 ../../../raspi/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../raspi/qt5/mkspecs/features/exclusive_builds.prf:
 ../../../raspi/qt5/mkspecs/features/toolchain.prf:
 ../../../raspi/qt5/mkspecs/features/default_pre.prf:
@@ -368,7 +371,7 @@ deployment.pri:
 ../../../raspi/qt5/mkspecs/features/yacc.prf:
 ../../../raspi/qt5/mkspecs/features/lex.prf:
 SmartHome.pro:
-qml.qrc:
+GUIQML/Resources/qml.qrc:
 ../../../raspi/qt5pi/lib/libQt5Quick.prl:
 ../../../raspi/qt5pi/lib/libQt5Gui.prl:
 ../../../raspi/qt5pi/lib/libQt5Qml.prl:
@@ -388,7 +391,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents GUIQML/Resources/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../raspi/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents Datapool/DatapoolThread.hpp Datapool/QMLObjects/QMLDateTime.hpp GUIQML/GetQMLObject.hpp $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp Datapool/DatapoolThread.cpp Datapool/QMLObjects/QMLDateTime.cpp GUIQML/GetQMLObject.cpp $(DISTDIR)/
@@ -418,21 +421,21 @@ benchmark: first
 compiler_rcc_make_all: qrc_qml.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
-qrc_qml.cpp: qml.qrc \
+qrc_qml.cpp: GUIQML/Resources/qml.qrc \
 		../../../raspi/qt5/bin/rcc \
-		PageBackground.qml \
-		SideBar.qml \
-		HeatingForm.ui.qml \
-		SecurityForm.ui.qml \
-		SideBarForm.ui.qml \
-		Heating.qml \
-		Security.qml \
-		LightForm.ui.qml \
-		qtquickcontrols2.conf \
-		Light.qml \
-		main.qml \
-		CustomLabel.qml
-	/home/anraanma/raspi/qt5/bin/rcc -name qml qml.qrc -o qrc_qml.cpp
+		GUIQML/Resources/PageBackground.qml \
+		GUIQML/Resources/StatusLineForm.ui.qml \
+		GUIQML/Resources/Wetter.qml \
+		GUIQML/Resources/Smarthome.qml \
+		GUIQML/Resources/Settings.qml \
+		GUIQML/Resources/StatusLine.qml \
+		GUIQML/Resources/SettingsForm.ui.qml \
+		GUIQML/Resources/SmarthomeForm.ui.qml \
+		GUIQML/Resources/WetterForm.ui.qml \
+		GUIQML/Resources/qtquickcontrols2.conf \
+		GUIQML/Resources/main.qml \
+		GUIQML/Resources/CustomLabel.qml
+	/home/anraanma/raspi/qt5/bin/rcc -name qml GUIQML/Resources/qml.qrc -o qrc_qml.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
