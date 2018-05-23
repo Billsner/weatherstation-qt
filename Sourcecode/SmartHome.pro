@@ -5,7 +5,9 @@ CONFIG += c++11
 SOURCES += main.cpp \
     Datapool/DatapoolThread.cpp \
     Datapool/QMLObjects/QMLDateTime.cpp \
-    GUIQML/GetQMLObject.cpp
+    GUIQML/GetQMLObject.cpp \
+    Datapool/DatapoolControll.cpp \
+    Datapool/DatapoolElement.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -18,4 +20,7 @@ include(deployment.pri)
 HEADERS += \
     Datapool/DatapoolThread.hpp \
     Datapool/QMLObjects/QMLDateTime.hpp \
-    GUIQML/GetQMLObject.hpp
+    GUIQML/GetQMLObject.hpp \
+    Datapool/DatapoolControll.hpp \
+    Datapool/DatapoolElement.hpp \
+    Datapool/DatapoolDefinition.hpp
