@@ -35,6 +35,7 @@ void DatapoolThread::run()
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
     timer.setInterval(1000);
     timer.start();
+    mDatapoolControll.loadDatapool();
     int code = exec();
     qCDebug(m_categrory) << "EXEC.Code " << code;
 }
@@ -43,4 +44,16 @@ void DatapoolThread::timerHit()
 {
     qCDebug(m_categrory) << QTime::currentTime() << " timerHit TID: " << this->currentThreadId();
     mQMLDateTime.triggertimer();
+
+    static int count = 10;
+    if(0 == count)
+    {
+        count = 10;
+        mDatapoolControll.saveDatapool();
+    }
+    else
+    {
+        count--;
+    }
+
 }

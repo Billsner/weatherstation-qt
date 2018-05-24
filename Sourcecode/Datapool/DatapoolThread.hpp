@@ -6,6 +6,7 @@
 
 #include "DatapoolThread.hpp"
 #include "Datapool/QMLObjects/QMLDateTime.hpp"
+#include "DatapoolControll.hpp"
 
 
 class DatapoolThread : public QThread
@@ -28,6 +29,7 @@ private:
     void initobjects(void);
     QLoggingCategory m_categrory;
     QMLDateTime mQMLDateTime;
+    DatapoolControll mDatapoolControll;
 
 };
 
