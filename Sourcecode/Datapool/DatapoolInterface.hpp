@@ -19,11 +19,13 @@ public:
     bool setDatapoolInt(unsigned int id, int value);
     bool getDatapoolInt(unsigned int id, int &value);
 
-    bool setDatapoolString(unsigned int id, QString value);
-    bool getDatapoolString(unsigned int id, QString &value);
+    bool setDatapoolQString(unsigned int id, QString &value);
+    bool getDatapoolQString(unsigned int id, QString &value);
 
 private:
     void createDataArray(int size);
+    bool serializeInt(int value, char *data, int datasize);
+    bool deserializeInt(int &value, char *data, int datasize);
 
     DatapoolControll *mpDatapoolControll;
     sElementDatapool msElementDatapool;

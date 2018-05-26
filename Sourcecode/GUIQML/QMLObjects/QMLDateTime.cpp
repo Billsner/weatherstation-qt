@@ -4,9 +4,12 @@
 #include <QVariant>
 #include <QTime>
 #include "GUIQML/GetQMLObject.hpp"
+#include "Datapool/DatapoolInterface.hpp"
 
 
-QMLDateTime::QMLDateTime() : m_categrory("QMLDateTime"),mdateformate("dd.MM.yyyy")
+QMLDateTime::QMLDateTime() :
+    m_categrory("GUIQML.QMLObjects.QMLDateTime"),
+    mdateformate("dd.MM.yyyy")
 {
     mClockObject = NULL;
 }
@@ -114,6 +117,19 @@ void QMLDateTime::receiveDateformate(QString format)
 void QMLDateTime::receiveDateformateIndex(int formatid)
 {
     qCDebug(m_categrory) << "receiveDateformateIndex: " << formatid << " TID: " << QThread::currentThreadId();
+    DatapoolInterface cDatapoolInterface;
+    cDatapoolInterface.setDatapoolInt(DIdataformatId,formatid);
+    cDatapoolInterface.setDatapoolInt(DIdataformatId,formatid);
+    int datapoolret = 0;
+    if(cDatapoolInterface.getDatapoolInt(DIdataformatId, datapoolret) == true)
+    {
+        qCDebug(m_categrory) << "receiveDateformateIndex: datapoolret " << datapoolret;
+    }
+    else
+    {
+        qCDebug(m_categrory) << "receiveDateformateIndex: datapoolret getError";
+    }
+
 }
 
 

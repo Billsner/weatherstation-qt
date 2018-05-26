@@ -23,9 +23,7 @@ public:
 
 private:
     DatapoolElement mDatapoolElement[DIcount];
-    QLoggingCategory m_categrory;
-    QMutex m_mutex; //ToDo: Check if its better to have a Mutex in each element
-
+    QLoggingCategory m_categrory;    
 };
 
 #endif // DATAPOOLCONTROLL_HPP

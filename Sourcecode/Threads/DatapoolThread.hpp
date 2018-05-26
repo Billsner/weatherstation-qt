@@ -5,8 +5,8 @@
 #include <QLoggingCategory>
 
 #include "DatapoolThread.hpp"
-#include "Datapool/QMLObjects/QMLDateTime.hpp"
-#include "DatapoolControll.hpp"
+#include "GUIQML/QMLObjects/QMLDateTime.hpp"
+#include "Datapool/DatapoolControll.hpp"
 
 
 class DatapoolThread : public QThread

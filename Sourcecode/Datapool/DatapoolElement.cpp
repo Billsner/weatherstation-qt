@@ -1,5 +1,6 @@
 #include "DatapoolElement.hpp"
 #include <cstring>
+#include <QMutexLocker>
 
 static int MAXDATAPOOLDATASIZE = 100;
 
@@ -17,6 +18,7 @@ DatapoolElement::DatapoolElement() :
 
 DatapoolElement::~DatapoolElement()
 {
+    QMutexLocker Locker(&m_mutex);
     if(NULL != mpdata)
     {
         delete mpdata;
@@ -25,15 +27,16 @@ DatapoolElement::~DatapoolElement()
     }
 }
 
-eElementState DatapoolElement::setElement(unsigned int id, sElementDatapool &data)
+void DatapoolElement::setElement(unsigned int id, sElementDatapool &data)
 {
-    eElementState ret = data.DataState = ESError;
+    QMutexLocker Locker(&m_mutex);
+    data.DataState = ESError;
     if((NULL != data.data)
             &&(0 != data.datasize)
             &&((id == mElementID)||(0xffffffff == mElementID)))
     {
         mElementID = id;
-        if((mDatasize != data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize))
+        if((mDatasize != data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(NULL != data.data))
         {
             qCDebug(m_categrory) << "Create-Resize Element: " << mElementID;
             if(NULL != mpdata)
@@ -45,56 +48,57 @@ eElementState DatapoolElement::setElement(unsigned int id, sElementDatapool &dat
             if(NULL != mpdata)
             {
                 memcpy(mpdata,data.data,data.datasize);
-                ret = data.DataState = meElementState = ESValidChanged;
+                mDatasize = data.datasize;
+                data.DataState = meElementState = ESValidChanged;
                 mReceiverChange = 0xffffffff;
             }
             else
             {
-                 ret = data.DataState = ESError;
+                 data.DataState = ESError;
             }
 
         }
-        else if((mDatasize == data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(NULL != mpdata))
+        else if((mDatasize == data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(NULL != mpdata)&&(NULL != data.data))
         {
             if(0 != memcmp(mpdata,data.data,mDatasize))
             {
                 memcpy(mpdata,data.data,data.datasize);
-                ret = data.DataState = meElementState = ESValidChanged;
+                data.DataState = meElementState = ESValidChanged;
                 mReceiverChange = 0xffffffff;
             }
             else
             {
-                ret = data.DataState = ESNothing;
+                data.DataState = ESNothing;
             }
         }
         else
         {
-            ret = data.DataState = ESError;
+            data.DataState = ESError;
         }
 
     }
-    return ret;
 }
 
-bool DatapoolElement::setElementAction(unsigned int id, eElementAction elementaction)
+void DatapoolElement::setElementAction(unsigned int id, eElementAction elementaction, bool &ret)
 {
-    bool ret = false;
+    QMutexLocker Locker(&m_mutex);
+    ret = false;
     if((id == mElementID)||(0xffffffff == mElementID))
     {
         mElementID = id;
         meElementAction = elementaction;
     }
-    return ret;
 }
 
-eElementState DatapoolElement::getElement(unsigned int id, sElementDatapool &element)
+void DatapoolElement::getElement(unsigned int id, sElementDatapool &element)
 {
-    eElementState ret = element.DataState = ESError;
+    QMutexLocker Locker(&m_mutex);
+    element.DataState = ESError;
     element.id = mElementID;
     if(id == mElementID)
     {
         element.DateAction = meElementAction;
-        ret = element.DataState = meElementState;
+        element.DataState = meElementState;
         if((0 != mDatasize) && (NULL != mpdata) && (MAXDATAPOOLDATASIZE > mDatasize))
         {
             element.datasize = mDatasize;
@@ -106,12 +110,11 @@ eElementState DatapoolElement::getElement(unsigned int id, sElementDatapool &ele
             element.data = new char[element.datasize];
             if(NULL != element.data)
             {
-                memcpy(element.data,mpdata,element.datasize);
-                ret = element.DataState = meElementState = ESValidChanged;
+                memcpy(element.data,mpdata,element.datasize);                
             }
             else
             {
-                ret = element.DataState = ESError;
+                element.DataState = ESError;
             }
         }
         else
@@ -119,60 +122,57 @@ eElementState DatapoolElement::getElement(unsigned int id, sElementDatapool &ele
             element.datasize = 0;
             if(ESInt != element.DataState)
             {
-                ret = element.DataState = ESError;
+                element.DataState = ESError;
             }
         }
     }
-    return ret;
 }
 
-eElementState DatapoolElement::getElementState(unsigned int id)
+void DatapoolElement::getElementState(unsigned int id, eElementState &ret)
 {
-    eElementState ret = ESError;
+    QMutexLocker Locker(&m_mutex);
+    ret = ESError;
     if(id == mElementID)
     {
         ret = meElementState;
     }
-    return ret;
 }
 
-eElementAction DatapoolElement::getElementAction(unsigned int id)
+void DatapoolElement::getElementAction(unsigned int id, eElementAction &ret)
 {
-    eElementAction ret = EANothing;
+    QMutexLocker Locker(&m_mutex);
+    ret = EANothing;
     if(id == mElementID)
     {
         ret = meElementAction;
     }
-    return ret;
 }
 
-bool DatapoolElement::isElementReceiverChangeValid(unsigned int id, unsigned int receiver)
+void DatapoolElement::isElementReceiverChangeValid(unsigned int id, unsigned int receiver, bool &ret)
 {
-    bool ret = false;
+    QMutexLocker Locker(&m_mutex);
+    ret = false;
     if(((mReceiverChange & receiver) == receiver)&&(id == mElementID))
     {
         ret = true;
         mReceiverChange = (mReceiverChange & !receiver);
     }
-    return ret;
 }
 
-bool DatapoolElement::loadElement(unsigned int id)
+void DatapoolElement::loadElement(unsigned int id)
 {
-    bool ret = false;
+    QMutexLocker Locker(&m_mutex);
     if(id == mElementID)
     {
-        qCDebug(m_categrory) << "loadElement Element: " << mElementID << " Status: " << ret;
-    }
-    return ret;
+        qCDebug(m_categrory) << "loadElement Element: " << mElementID;
+    }    
 }
 
-bool DatapoolElement::saveElement(unsigned int id)
-{
-    bool ret = false;
+void DatapoolElement::saveElement(unsigned int id)
+{    
+    QMutexLocker Locker(&m_mutex);
     if(id == mElementID)
     {
-        qCDebug(m_categrory) << "saveElement Element: " << mElementID << " Status: " << ret;
+        qCDebug(m_categrory) << "saveElement Element: " << mElementID;
     }
-    return ret;
 }

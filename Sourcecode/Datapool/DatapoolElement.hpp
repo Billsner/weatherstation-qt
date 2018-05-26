@@ -3,6 +3,7 @@
 
 #include "DatapoolDefinition.hpp"
 #include <QLoggingCategory>
+#include <QMutex>
 
 
 class DatapoolElement
@@ -11,17 +12,17 @@ public:
     DatapoolElement();
     ~DatapoolElement();
 
-    eElementState setElement(unsigned int id, sElementDatapool &data);
-    bool setElementAction(unsigned int id, eElementAction elementaction);
+    void setElement(unsigned int id, sElementDatapool &data);
+    void setElementAction(unsigned int id, eElementAction elementaction, bool &ret);
 
-    eElementState getElement(unsigned int id, sElementDatapool &element);
-    eElementState getElementState(unsigned int id);
-    eElementAction getElementAction(unsigned int id);
+    void getElement(unsigned int id, sElementDatapool &element);
+    void getElementState(unsigned int id, eElementState &ret);
+    void getElementAction(unsigned int id, eElementAction &ret);
 
-    bool isElementReceiverChangeValid(unsigned int id, unsigned int receiver);
+    void isElementReceiverChangeValid(unsigned int id, unsigned int receiver, bool &ret);
 
-    bool loadElement(unsigned int id);
-    bool saveElement(unsigned int id);
+    void loadElement(unsigned int id);
+    void saveElement(unsigned int id);
 
 private:
     unsigned int mElementID;
@@ -31,6 +32,7 @@ private:
     eElementState    meElementState;
     eElementAction   meElementAction;
     QLoggingCategory m_categrory;
+    QMutex           m_mutex;
 };
 
 #endif // DATAPOOLELEMENT_H

@@ -19,8 +19,7 @@ DatapoolControll *DatapoolControll::getInstance()
 }
 
 void DatapoolControll::setElement(unsigned int id, sElementDatapool &data)
-{
-    QMutexLocker Locker(&m_mutex);
+{    
     if(id < DIcount)
     {
         mDatapoolElement[id].setElement(id,data);
@@ -29,7 +28,6 @@ void DatapoolControll::setElement(unsigned int id, sElementDatapool &data)
 
 void DatapoolControll::getElement(unsigned int id, sElementDatapool &element)
 {
-    QMutexLocker Locker(&m_mutex);
     if(id < DIcount)
     {
         mDatapoolElement[id].getElement(id,element);
@@ -38,7 +36,6 @@ void DatapoolControll::getElement(unsigned int id, sElementDatapool &element)
 
 void DatapoolControll::loadDatapool()
 {
-    QMutexLocker Locker(&m_mutex);
     for(int count = 0; count < DIcount; count++)
     {
         mDatapoolElement[count].loadElement(count);
@@ -47,7 +44,6 @@ void DatapoolControll::loadDatapool()
 
 void DatapoolControll::saveDatapool()
 {
-    QMutexLocker Locker(&m_mutex);
     for(int count = 0; count < DIcount; count++)
     {
         mDatapoolElement[count].saveElement(count);
