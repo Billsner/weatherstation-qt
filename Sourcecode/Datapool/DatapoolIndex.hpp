@@ -3,9 +3,11 @@
 
 enum eDatapoolIndex
 {
+    DIDatapoolVersionString,
     DItime,
     DIdate,
-    DIdataformat,
+    DIdataformatId,
+    DIDataformatString,
 
     DIcount
 };

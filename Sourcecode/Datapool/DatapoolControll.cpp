@@ -3,7 +3,7 @@
 
 static DatapoolControll *mpDatapoolControll = NULL;
 
-DatapoolControll::DatapoolControll() : m_categrory("DatapoolControll")
+DatapoolControll::DatapoolControll() : m_categrory("Datapool.DatapoolControll")
 {
     mpDatapoolControll = this;
 }

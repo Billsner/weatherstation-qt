@@ -2,7 +2,9 @@
 
 static GetQMLObject *mpGetQMLObject = NULL;
 
-GetQMLObject::GetQMLObject() : m_categrory("GetQMLObject"), mQMLEngineRootObject(NULL)
+GetQMLObject::GetQMLObject() :
+    m_categrory("GUIQML.GetQMLObject"),
+    mQMLEngineRootObject(NULL)
 {
     qCDebug(m_categrory) << "Constructer";
 }

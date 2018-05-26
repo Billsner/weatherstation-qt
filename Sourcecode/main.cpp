@@ -2,12 +2,13 @@
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QLoggingCategory>
-#include "Datapool/DatapoolThread.hpp"
+#include "Threads/DatapoolThread.hpp"
 #include "GUIQML/GetQMLObject.hpp"
 
 int main(int argc, char *argv[])
 {
-    QLoggingCategory categrory("main");
+    QLoggingCategory categrory("main");    
+    QLoggingCategory::setFilterRules(QStringLiteral("thread.DatapoolThread=false"));
     qCDebug(categrory) << "Start TID " << QThread::currentThreadId();   
 
 

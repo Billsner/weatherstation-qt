@@ -6,6 +6,7 @@
 #include "DatapoolControll.hpp"
 
 #include <QString>
+#include <QLoggingCategory>
 
 class DatapoolInterface
 {
@@ -22,8 +23,11 @@ public:
     bool getDatapoolString(unsigned int id, QString &value);
 
 private:
+    void createDataArray(int size);
+
     DatapoolControll *mpDatapoolControll;
     sElementDatapool msElementDatapool;
+    QLoggingCategory m_categrory;
 };
 
 #endif // DATAPOOLINTERFACE_HPP

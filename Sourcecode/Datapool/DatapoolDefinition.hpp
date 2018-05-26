@@ -36,6 +36,4 @@ struct sElementDatapool
     eElementAction DateAction;
 };
 
-static int MAXDATAPOOLDATASIZE = 100;
-
 #endif // DATAPOOLDEFINITION_HPP

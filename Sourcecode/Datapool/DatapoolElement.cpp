@@ -1,6 +1,8 @@
 #include "DatapoolElement.hpp"
 #include <cstring>
 
+static int MAXDATAPOOLDATASIZE = 100;
+
 DatapoolElement::DatapoolElement() :
     mElementID(0xffffffff),
     mDatasize(0),
@@ -8,7 +10,7 @@ DatapoolElement::DatapoolElement() :
     mReceiverChange(0x00000000),
     meElementState(ESInt),
     meElementAction(EANothing),
-    m_categrory("DatapoolElement")
+    m_categrory("Datapool.DatapoolElement")
 {
 
 }
