@@ -162,9 +162,14 @@ void DatapoolElement::isElementReceiverChangeValid(unsigned int id, unsigned int
 void DatapoolElement::loadElement(unsigned int id)
 {
     QMutexLocker Locker(&m_mutex);
-    if(id == mElementID)
+    if((id == mElementID)||(0xffffffff == mElementID))
     {
-        qCDebug(m_categrory) << "loadElement Element: " << mElementID;
+        mElementID = id;
+        if(ESInt == meElementState)
+        {
+            meElementState = ESValidLoad;
+            qCDebug(m_categrory) << "loadElement Element: " << mElementID;
+        }
     }    
 }
 
@@ -173,6 +178,10 @@ void DatapoolElement::saveElement(unsigned int id)
     QMutexLocker Locker(&m_mutex);
     if(id == mElementID)
     {
-        qCDebug(m_categrory) << "saveElement Element: " << mElementID;
+        if(ESValidChanged == meElementState)
+        {
+            meElementState = ESValidSaved;
+            qCDebug(m_categrory) << "saveElement Element: " << mElementID;
+        }
     }
 }

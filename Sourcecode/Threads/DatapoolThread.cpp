@@ -22,6 +22,7 @@ void DatapoolThread::initobjects(void)
 {
     qCDebug(m_categrory) << "initobjects TID: " << this->currentThreadId();
     mQMLDateTime.init();
+    mDatapoolControll.loadDatapool();
 }
 
 void DatapoolThread::run()
@@ -35,8 +36,7 @@ void DatapoolThread::run()
     QTimer timer;
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
     timer.setInterval(1000);
-    timer.start();
-    mDatapoolControll.loadDatapool();
+    timer.start();    
     int code = exec();
     qCDebug(m_categrory) << "EXEC.Code " << code;
 }

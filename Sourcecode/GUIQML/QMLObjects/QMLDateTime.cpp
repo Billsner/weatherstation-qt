@@ -85,9 +85,9 @@ void QMLDateTime::setClockTime(QString time)
 
 void QMLDateTime::setClockDate(QString date)
 {
-    QVariant cppdate(date);
+    QVariant cppdate(date);    
     QMetaObject::invokeMethod(mClockObject, "setdate", Qt::QueuedConnection,
-            Q_ARG(QVariant, cppdate));
+            Q_ARG(QVariant, cppdate));    
 }
 
 void QMLDateTime::setClockDay(QString day)
@@ -95,14 +95,28 @@ void QMLDateTime::setClockDay(QString day)
     QVariant cppday(day);
     QMetaObject::invokeMethod(mClockObject, "setday", Qt::QueuedConnection,
             Q_ARG(QVariant, cppday));
+
 }
 
 void QMLDateTime::setClockDateDay(QString date, QString day)
 {
     QVariant cppdate(date);
     QVariant cppday(day);
+    QString retstring;
+    DatapoolInterface cDatapoolInterface;
     QMetaObject::invokeMethod(mClockObject, "setdateday", Qt::QueuedConnection,
             Q_ARG(QVariant, cppdate),Q_ARG(QVariant, cppday));
+    cDatapoolInterface.setDatapoolQString(DIdate,date);
+    cDatapoolInterface.getDatapoolQString(DIdate,retstring);
+    //if(retstring == date)
+    if(strcmp(date.toStdString().c_str(),retstring.toStdString().c_str()) == 0)
+    {
+        qCDebug(m_categrory) << "setClockDateDay: datapool correct";
+    }
+    else
+    {
+        qCDebug(m_categrory) << "setClockDateDay: datapool error " << date.toStdString().c_str() << " retdate " << retstring.toStdString().c_str();
+    }
 }
 
 

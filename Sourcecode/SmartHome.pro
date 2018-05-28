@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     GUIQML/GetQMLObject.cpp \
     Datapool/DatapoolControll.cpp \
     Datapool/DatapoolElement.cpp \
-    Datapool/DatapoolInterface.cpp
+    Datapool/DatapoolInterface.cpp \
+    FileAccess/SaveDatapool.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -26,4 +27,5 @@ HEADERS += \
     Datapool/DatapoolElement.hpp \
     Datapool/DatapoolDefinition.hpp \
     Datapool/DatapoolIndex.hpp \
-    Datapool/DatapoolInterface.hpp
+    Datapool/DatapoolInterface.hpp \
+    FileAccess/SaveDatapool.hpp
