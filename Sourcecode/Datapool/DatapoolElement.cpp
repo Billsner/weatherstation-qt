@@ -1,6 +1,7 @@
 #include "DatapoolElement.hpp"
 #include <cstring>
 #include <QMutexLocker>
+#include "FileAccess/SaveDatapool.hpp"
 
 static int MAXDATAPOOLDATASIZE = 100;
 
@@ -178,10 +179,15 @@ void DatapoolElement::saveElement(unsigned int id)
     QMutexLocker Locker(&m_mutex);
     if(id == mElementID)
     {
-        if(ESValidChanged == meElementState)
+        SaveDatapool *pSaveDatapool = SaveDatapool::getInstance();
+        if(NULL != pSaveDatapool)
         {
-            meElementState = ESValidSaved;
-            qCDebug(m_categrory) << "saveElement Element: " << mElementID;
+            if((ESValidChanged == meElementState)||(pSaveDatapool->needSaveAll()))
+            {
+                pSaveDatapool->saveID(id,mpdata,mDatasize);
+                meElementState = ESValidSaved;
+                qCDebug(m_categrory) << "saveElement Element: " << mElementID;
+            }
         }
     }
 }

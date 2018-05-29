@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QDataStream>
 #include <QLoggingCategory>
+#include "Datapool/DatapoolIndex.hpp"
 
 class SaveDatapool
 {
@@ -17,18 +18,25 @@ public:
     void openFile();
     void closeFile();
 
-    void setHeader();
-    int readHeader();
+    bool needSaveAll() {return mNeedSaveAll;}
 
-    void saveLine(unsigned int id, char *data, int datasize);
-    void loadLine(unsigned int id, char *data, int &datasize);
+    void prepareBuffer();
+    void closeBuffer();
+
+    void saveID(unsigned int id, char *data, int datasize);
+    void loadID(unsigned int id, char *data, int &datasize);
 
 
 private:
+    QLoggingCategory m_categrory;
     QString mfilename;
     QFile mfile;
-    int mHeaderOffset;
-    QLoggingCategory m_categrory;
+    char mBuffer[8192];
+    unsigned int mbufferindex;
+    unsigned int mPosDatapoolEntry[DIcount];
+    bool mNeedSaveAll;
+    bool mBufferLoaded;
+    bool mBufferReadytoSave;
 };
 
 #endif // SAVEDATAPOOL_HPP
