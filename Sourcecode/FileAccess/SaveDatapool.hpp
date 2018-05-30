@@ -22,6 +22,7 @@ public:
 
     void prepareBuffer();
     void closeBuffer();
+    void loadBuffer();
 
     void saveID(unsigned int id, char *data, int datasize);
     void loadID(unsigned int id, char *data, int &datasize);
@@ -37,6 +38,8 @@ private:
     bool mNeedSaveAll;
     bool mBufferLoaded;
     bool mBufferReadytoSave;
+    unsigned int mbuffersizeload;
+    unsigned int mbufferDIcountload;
 };
 
 #endif // SAVEDATAPOOL_HPP

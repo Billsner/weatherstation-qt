@@ -36,12 +36,13 @@ void DatapoolControll::getElement(unsigned int id, sElementDatapool &element)
 
 void DatapoolControll::loadDatapool()
 {
-    //mSaveDatapool.openFile();
+    mSaveDatapool.openFile();
+    mSaveDatapool.loadBuffer();
     for(int count = 0; count < DIcount; count++)
     {
         mDatapoolElement[count].loadElement(count);       
     }
-    //mSaveDatapool.closeFile();
+    mSaveDatapool.closeFile();
 }
 
 void DatapoolControll::saveDatapool()
@@ -54,5 +55,4 @@ void DatapoolControll::saveDatapool()
     }
     mSaveDatapool.closeBuffer();
     mSaveDatapool.closeFile();
-    loadDatapool();
 }

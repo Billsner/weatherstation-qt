@@ -169,7 +169,33 @@ void DatapoolElement::loadElement(unsigned int id)
         if(ESInt == meElementState)
         {
             meElementState = ESValidLoad;
-            qCDebug(m_categrory) << "loadElement Element: " << mElementID;
+            SaveDatapool *pSaveDatapool = SaveDatapool::getInstance();
+            if(NULL != pSaveDatapool)
+            {
+                if(ESInt == meElementState)
+                {
+                    char *data = NULL;
+                    int datasize = 0;
+                    pSaveDatapool->loadID(id,data,datasize);
+                    if((NULL != data)&&(0 < datasize)&&(MAXDATAPOOLDATASIZE > datasize))
+                    {
+                        if(NULL != mpdata)
+                        {
+                            delete mpdata;
+                            mpdata = NULL;
+                        }
+                        mpdata = new char[datasize];
+                        if(NULL != mpdata)
+                        {
+                            memcpy(mpdata,data,datasize);
+                            mDatasize = datasize;
+                            meElementState = ESValidLoad;;
+                            mReceiverChange = 0xffffffff;
+                            qCDebug(m_categrory) << "loadElement Element: " << mElementID;
+                        }
+                    }
+                }
+            }
         }
     }    
 }
