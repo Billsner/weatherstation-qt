@@ -89,7 +89,7 @@ void SaveDatapool::prepareBuffer()
 
 void SaveDatapool::closeBuffer()
 {
-    int index = 4;
+    unsigned int index = 4;
     if((index+(DIcount*2)) < sizeof(mBuffer))
     {
         for(int diindex = 0; diindex < DIcount; diindex++)
@@ -130,7 +130,7 @@ void SaveDatapool::loadBuffer()
             if((mbuffersizeload >=  bhcount +  (mbufferDIcountload*2))&&(sizeof(mBuffer) >=  bhcount +  (mbufferDIcountload*2)))
             {
                 mBufferLoaded = true;
-                for(int diindex = 0; (diindex < mbufferDIcountload) && (diindex < DIcount); diindex++)
+                for(unsigned int diindex = 0; (diindex < mbufferDIcountload) && (diindex < DIcount); diindex++)
                 {
                     mPosDatapoolEntry[diindex] = static_cast<int>(mBuffer[bhcount+(diindex*2)+1] << 8) + mBuffer[bhcount+(diindex*2)];
                 }
@@ -148,20 +148,20 @@ void SaveDatapool::loadBuffer()
     }
 }
 
-void SaveDatapool::saveID(unsigned int id, char *data, int datasize)
+void SaveDatapool::saveID(saveelement savedata)
 {
-    if(((datasize+mbufferindex+4) < sizeof(mBuffer))&&(id < DIcount))
+    if(((savedata.datasize+mbufferindex+4) < sizeof(mBuffer))&&(savedata.id < DIcount))
     {
-        mPosDatapoolEntry[id] = mbufferindex;
-        mBuffer[mbufferindex + idlow] = static_cast<char>(id&0x00ff);
-        mBuffer[mbufferindex + idhigh] = static_cast<char>((id&0xff00)>>8);
-        mBuffer[mbufferindex + datasizelow] = static_cast<char>(datasize&0x00ff);
-        mBuffer[mbufferindex + datasizehigh] = static_cast<char>((datasize&0xff00)>>8);
+        mPosDatapoolEntry[savedata.id] = mbufferindex;
+        mBuffer[mbufferindex + idlow] = static_cast<char>(savedata.id&0x00ff);
+        mBuffer[mbufferindex + idhigh] = static_cast<char>((savedata.id&0xff00)>>8);
+        mBuffer[mbufferindex + datasizelow] = static_cast<char>(savedata.datasize&0x00ff);
+        mBuffer[mbufferindex + datasizehigh] = static_cast<char>((savedata.datasize&0xff00)>>8);
         mbufferindex = mbufferindex + bicount;
-        if(((mbufferindex+datasize) < sizeof(mBuffer))&&(datasize > 0)&&(NULL != data))
+        if(((mbufferindex+savedata.datasize) < sizeof(mBuffer))&&(savedata.datasize > 0)&&(NULL != savedata.data))
         {
-            memcpy(&mBuffer[mbufferindex],data,datasize);
-            mbufferindex = mbufferindex+datasize;
+            memcpy(&mBuffer[mbufferindex],savedata.data,savedata.datasize);
+            mbufferindex = mbufferindex+savedata.datasize;
         }
     }
     else
@@ -170,27 +170,27 @@ void SaveDatapool::saveID(unsigned int id, char *data, int datasize)
     }
 }
 
-void SaveDatapool::loadID(unsigned int id, char *data, int &datasize)
+void SaveDatapool::loadID(saveelement &loaddata)
 {
-    datasize = 0;
-    if((mbufferDIcountload > id)&&(id < DIcount)&&(true == mBufferLoaded))
+    loaddata.datasize = 0;
+    if((mbufferDIcountload > loaddata.id)&&(loaddata.id < DIcount)&&(true == mBufferLoaded))
     {
-        int bufferindex = mPosDatapoolEntry[id];
+        unsigned int bufferindex = mPosDatapoolEntry[loaddata.id];
         if((bufferindex + bicount < sizeof(mBuffer))&&(bufferindex + bicount < mbuffersizeload))
         {
-            int buffferid = static_cast<int>(mBuffer[bufferindex + idhigh] << 8) + mBuffer[bufferindex + idlow];
-            if(buffferid == id)
+            unsigned int buffferid = static_cast<int>(mBuffer[bufferindex + idhigh] << 8) + mBuffer[bufferindex + idlow];
+            if(buffferid == loaddata.id)
             {
-                datasize = static_cast<int>(mBuffer[bufferindex + datasizehigh] << 8) + mBuffer[bufferindex + datasizelow];
+                loaddata.datasize = static_cast<int>(mBuffer[bufferindex + datasizehigh] << 8) + mBuffer[bufferindex + datasizelow];
             }
-            if((bufferindex + bicount + datasize < sizeof(mBuffer))&&(bufferindex + bicount + datasize < mbuffersizeload))
+            if((bufferindex + bicount + loaddata.datasize < sizeof(mBuffer))&&(bufferindex + bicount + loaddata.datasize < mbuffersizeload))
             {
-                data = &mBuffer[bufferindex + bicount];
-                qCDebug(m_categrory) << "loadID: load data id: " << id;
+                loaddata.data = &mBuffer[bufferindex + bicount];
+                qCDebug(m_categrory) << "loadID: load data id: " << loaddata.id;
             }
             else
             {
-                datasize = 0;
+                loaddata.datasize = 0;
             }
         }
     }

@@ -168,31 +168,30 @@ void DatapoolElement::loadElement(unsigned int id)
         mElementID = id;
         if(ESInt == meElementState)
         {
-            meElementState = ESValidLoad;
             SaveDatapool *pSaveDatapool = SaveDatapool::getInstance();
             if(NULL != pSaveDatapool)
             {
-                if(ESInt == meElementState)
+
+                saveelement loadedata;
+                loadedata.id = mElementID;
+                loadedata.data = NULL;
+                loadedata.datasize = 0;
+                pSaveDatapool->loadID(loadedata);
+                if((NULL != loadedata.data)&&(0 < loadedata.datasize)&&(MAXDATAPOOLDATASIZE > loadedata.datasize))
                 {
-                    char *data = NULL;
-                    int datasize = 0;
-                    pSaveDatapool->loadID(id,data,datasize);
-                    if((NULL != data)&&(0 < datasize)&&(MAXDATAPOOLDATASIZE > datasize))
+                    if(NULL != mpdata)
                     {
-                        if(NULL != mpdata)
-                        {
-                            delete mpdata;
-                            mpdata = NULL;
-                        }
-                        mpdata = new char[datasize];
-                        if(NULL != mpdata)
-                        {
-                            memcpy(mpdata,data,datasize);
-                            mDatasize = datasize;
-                            meElementState = ESValidLoad;;
-                            mReceiverChange = 0xffffffff;
-                            qCDebug(m_categrory) << "loadElement Element: " << mElementID;
-                        }
+                        delete mpdata;
+                        mpdata = NULL;
+                    }
+                    mpdata = new char[loadedata.datasize];
+                    if(NULL != mpdata)
+                    {
+                        memcpy(mpdata,loadedata.data,loadedata.datasize);
+                        mDatasize = loadedata.datasize;
+                        meElementState = ESValidLoad;;
+                        mReceiverChange = 0xffffffff;
+                        qCDebug(m_categrory) << "loadElement Element: " << mElementID;
                     }
                 }
             }
@@ -207,10 +206,14 @@ void DatapoolElement::saveElement(unsigned int id)
     {
         SaveDatapool *pSaveDatapool = SaveDatapool::getInstance();
         if(NULL != pSaveDatapool)
-        {
+        {            
             if((ESValidChanged == meElementState)||(pSaveDatapool->needSaveAll()))
             {
-                pSaveDatapool->saveID(id,mpdata,mDatasize);
+                saveelement saveedata;
+                saveedata.id = mElementID;
+                saveedata.datasize = mDatasize;
+                saveedata.data = mpdata;
+                pSaveDatapool->saveID(saveedata);
                 meElementState = ESValidSaved;
                 qCDebug(m_categrory) << "saveElement Element: " << mElementID;
             }

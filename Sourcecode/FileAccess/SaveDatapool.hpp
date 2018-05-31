@@ -7,6 +7,13 @@
 #include <QLoggingCategory>
 #include "Datapool/DatapoolIndex.hpp"
 
+struct saveelement
+{
+    unsigned int id;
+    char *data;
+    int datasize;
+};
+
 class SaveDatapool
 {
 public:
@@ -24,8 +31,8 @@ public:
     void closeBuffer();
     void loadBuffer();
 
-    void saveID(unsigned int id, char *data, int datasize);
-    void loadID(unsigned int id, char *data, int &datasize);
+    void saveID(saveelement savedata);
+    void loadID(saveelement &loaddata);
 
 
 private:
