@@ -6,7 +6,8 @@ Logging::Logging(const char *category, bool active/* = false*/, bool logcreate /
     m_categrory(category),
     misActive(active),
     mlogcreate(logcreate),
-    mLogLevelLocal(LLcritical)
+    mLogLevelLocal(LLcritical),
+    mwritelocallevel(false)
 {
     if((true == mlogcreate)&&(this != NULL))
     {
@@ -18,7 +19,8 @@ Logging::Logging(const char *category, bool active/* = false*/) :
     m_categrory(category),
     misActive(active),
     mlogcreate(false),
-    mLogLevelLocal(LLcritical)
+    mLogLevelLocal(LLcritical),
+    mwritelocallevel(false)
 {
 
 }
@@ -27,7 +29,8 @@ Logging::Logging(const char *category) :
     m_categrory(category),
     misActive(false),
     mlogcreate(false),
-    mLogLevelLocal(LLcritical)
+    mLogLevelLocal(LLcritical),
+    mwritelocallevel(false)
 {
 
 }

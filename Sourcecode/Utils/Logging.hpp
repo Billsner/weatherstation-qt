@@ -52,14 +52,39 @@ public:
             {
                 m_Stream << "[LLall]: ";
             }
+            mwritelocallevel = true;
         }
         return *this;
     }
 
     template<class T>  Logging &operator<<(const T &msg)
     {
-        if(true == misActive)
+        if((true == misActive)&&(mLogLevelLocal <= mLogLevelGlobal))
         {
+            if(false == mwritelocallevel)
+            {
+                if(mLogLevelLocal == LLcritical)
+                {
+                    m_Stream << "[LLcritical]: ";
+                }
+                else if(mLogLevelLocal == LLwarning)
+                {
+                    m_Stream << "[LLwarning]: ";
+                }
+                else if(mLogLevelLocal == LLdebug)
+                {
+                    m_Stream << "[LLdebug]: ";
+                }
+                else if(mLogLevelLocal == LLinfo)
+                {
+                    m_Stream << "[LLinfo]: ";
+                }
+                else
+                {
+                    m_Stream << "[LLall]: ";
+                }
+                mwritelocallevel = true;
+            }
             m_Stream << msg;
         }
         return *this;
@@ -69,6 +94,30 @@ public:
     {
         if((true == misActive)&&(mLogLevelLocal <= mLogLevelGlobal))
         {
+            if(false == mwritelocallevel)
+            {
+                if(mLogLevelLocal == LLcritical)
+                {
+                    m_Stream << "[LLcritical]: ";
+                }
+                else if(mLogLevelLocal == LLwarning)
+                {
+                    m_Stream << "[LLwarning]: ";
+                }
+                else if(mLogLevelLocal == LLdebug)
+                {
+                    m_Stream << "[LLdebug]: ";
+                }
+                else if(mLogLevelLocal == LLinfo)
+                {
+                    m_Stream << "[LLinfo]: ";
+                }
+                else
+                {
+                    m_Stream << "[LLall]: ";
+                }
+                mwritelocallevel = true;
+            }
             m_Stream << msg;
             if(mLogLevelLocal == LLcritical)
             {
@@ -92,37 +141,18 @@ public:
             }
             std::stringstream emptyStream;
             m_Stream.swap(emptyStream);
-            if(mLogLevelLocal == LLcritical)
-            {
-                m_Stream << "[LLcritical]: ";
-            }
-            else if(mLogLevelLocal == LLwarning)
-            {
-                m_Stream << "[LLwarning]: ";
-            }
-            else if(mLogLevelLocal == LLdebug)
-            {
-                m_Stream << "[LLdebug]: ";
-            }
-            else if(mLogLevelLocal == LLinfo)
-            {
-                m_Stream << "[LLinfo]: ";
-            }
-            else
-            {
-                m_Stream << "[LLall]: ";
-            }
+            mwritelocallevel = false;
         }
         return *this;
     }
 
-private:
+ private:
     QLoggingCategory m_categrory;
     bool misActive;
     bool mlogcreate;
-    static LogLevel mLogLevelGlobal;
-    bool msetlocallevel;
+    static LogLevel mLogLevelGlobal;    
     LogLevel mLogLevelLocal;
+    bool mwritelocallevel;
     std::stringstream m_Stream;
 
 };
