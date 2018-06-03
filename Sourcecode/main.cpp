@@ -1,25 +1,24 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
-#include <QLoggingCategory>
 #include "Threads/DatapoolThread.hpp"
 #include "GUIQML/GetQMLObject.hpp"
+#include "Utils/Logging.hpp"
 
 int main(int argc, char *argv[])
 {
-    QLoggingCategory categrory("main");    
-    QLoggingCategory::setFilterRules(QStringLiteral("thread.DatapoolThread=false"));
-    qCDebug(categrory) << "Start TID " << QThread::currentThreadId();   
+    Logging logger("main",true,true);
+    logger << "Start TID " <= QThread::currentThreadId();
 
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    qCDebug(categrory) << "Load engine";
+    logger <= "Load engine";
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
     int size =  engine.rootObjects().size();
-    qCDebug(categrory) << "size " << size;
+    logger << "size " <= size;
 
     GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
 
@@ -29,7 +28,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        qCDebug(categrory) << "No Object";
+        logger << "No Object";
     }
 
     DatapoolThread mDatapoolThread;
@@ -37,9 +36,9 @@ int main(int argc, char *argv[])
     mDatapoolThread.start(QThread::HighPriority);
 
     app.exec();
-    qCDebug(categrory) << "app.exec";
+    logger <= "app.exec";
 
-    qCDebug(categrory) << "thread exit";
+    logger <= "thread exit";
     mDatapoolThread.quit();
     mDatapoolThread.wait(100);
     GetQMLObject::DestroyGetQMLObject();
