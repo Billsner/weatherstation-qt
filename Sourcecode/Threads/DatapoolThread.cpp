@@ -3,14 +3,16 @@
 #include <QTimer>
 #include <QTime>
 
-DatapoolThread::DatapoolThread(QObject *parent): QThread(parent), m_categrory("thread.DatapoolThread")
+DatapoolThread::DatapoolThread(QObject *parent):
+    QThread(parent),
+    mLogging("thread.DatapoolThread",false,true)
 {
-    qCDebug(m_categrory) << "Constructer";
+
 }
 
 DatapoolThread::~DatapoolThread()
 {
-    qCDebug(m_categrory) << "Destructer";
+
 }
 
 void DatapoolThread::initthread()
@@ -20,14 +22,14 @@ void DatapoolThread::initthread()
 
 void DatapoolThread::initobjects(void)
 {
-    qCDebug(m_categrory) << "initobjects TID: " << this->currentThreadId();
+    mLogging << "initobjects TID: " <= this->currentThreadId();
     mQMLDateTime.init();
     mDatapoolControll.loadDatapool();
 }
 
 void DatapoolThread::run()
 {
-    qCDebug(m_categrory) << "Hello DatapoolThread TID: " << this->currentThreadId();
+    mLogging << "Hello DatapoolThread TID: " <= this->currentThreadId();
     initobjects();
 
     mQMLDateTime.triggertimer();
@@ -38,12 +40,12 @@ void DatapoolThread::run()
     timer.setInterval(1000);
     timer.start();    
     int code = exec();
-    qCDebug(m_categrory) << "EXEC.Code " << code;
+    mLogging << "EXEC.Code " <= code;
 }
 
 void DatapoolThread::timerHit()
 {
-    qCDebug(m_categrory) << QTime::currentTime() << " timerHit TID: " << this->currentThreadId();
+    mLogging << QTime::currentTime().toString().toStdString() << " timerHit TID: " <= this->currentThreadId();
     mQMLDateTime.triggertimer();
 
     static int count = 10;

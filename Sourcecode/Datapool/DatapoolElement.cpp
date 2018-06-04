@@ -12,7 +12,7 @@ DatapoolElement::DatapoolElement() :
     mReceiverChange(0x00000000),
     meElementState(ESInt),
     meElementAction(EANothing),
-    m_categrory("Datapool.DatapoolElement")
+    mLogging("Datapool.DatapoolElement",false,true)
 {
 
 }
@@ -39,7 +39,7 @@ void DatapoolElement::setElement(unsigned int id, sElementDatapool &data)
         mElementID = id;
         if((mDatasize != data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(NULL != data.data))
         {
-            qCDebug(m_categrory) << "Create-Resize Element: " << mElementID;
+            mLogging << "Create-Resize Element: " <= mElementID;
             if(NULL != mpdata)
             {
                 delete mpdata;
@@ -191,7 +191,7 @@ void DatapoolElement::loadElement(unsigned int id)
                         mDatasize = loadedata.datasize;
                         meElementState = ESValidLoad;;
                         mReceiverChange = 0xffffffff;
-                        qCDebug(m_categrory) << "loadElement Element: " << mElementID;
+                        mLogging << "loadElement Element: " <= mElementID;
                     }
                 }
             }
@@ -215,7 +215,7 @@ void DatapoolElement::saveElement(unsigned int id)
                 saveedata.data = mpdata;
                 pSaveDatapool->saveID(saveedata);
                 meElementState = ESValidSaved;
-                qCDebug(m_categrory) << "saveElement Element: " << mElementID;
+                mLogging << "saveElement Element: " <= mElementID;
             }
         }
     }

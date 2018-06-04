@@ -31,7 +31,7 @@ int DatapoolMinorVersion = 1; //change as compatible if datapoolid is add at the
 
 
 SaveDatapool::SaveDatapool() :
-    m_categrory("fileaccess.SaveDatapool"),
+    mLogging("fileaccess.SaveDatapool",false,true),
     mfilename("datapool.data"),
     mfile(mfilename),
     mbufferindex(0),
@@ -57,18 +57,18 @@ void SaveDatapool::openFile()
 {
     if(true == mfile.open(QIODevice::ReadWrite))
     {
-        qCDebug(m_categrory) << "openFile: successful";
+        mLogging <= "openFile: successful";
     }
     else
     {
-        qCDebug(m_categrory) << "openFile: error";
+        mLogging <= "openFile: error";
     }
 }
 
 void SaveDatapool::closeFile()
 {
     mfile.close();
-    qCDebug(m_categrory) << "closeFile";
+    mLogging <= "closeFile";
 }
 
 void SaveDatapool::prepareBuffer()
@@ -83,7 +83,7 @@ void SaveDatapool::prepareBuffer()
         mBuffer[bdiindexlow] = static_cast<char>(DIcount&0x00ff); //2: count of DIcount
         mBuffer[bdiindexhigh] = static_cast<char>((DIcount&0xff00)>>8); //3: count of DIcount
         mbufferindex = bhcount + (DIcount*2);
-        qCDebug(m_categrory) << "prepareBuffer";
+        mLogging <= "prepareBuffer";
     }
 }
 
@@ -104,7 +104,7 @@ void SaveDatapool::closeBuffer()
     {
         QDataStream write(&mfile);
         write.writeRawData(mBuffer,mbufferindex);
-        qCDebug(m_categrory) << "closeBuffer: write";
+        mLogging <= "closeBuffer: write";
     }
 }
 
@@ -121,11 +121,11 @@ void SaveDatapool::loadBuffer()
         {
             if((bufferminorversion == DatapoolMinorVersion)&&(mbufferDIcountload == DIcount))
             {
-                qCDebug(m_categrory) << "loadBuffer: should be the same";
+                mLogging <= "loadBuffer: should be the same";
             }
             else
             {
-                qCDebug(m_categrory) << "loadBuffer: minorchange";
+                mLogging <= "loadBuffer: minorchange";
             }
             if((mbuffersizeload >=  bhcount +  (mbufferDIcountload*2))&&(sizeof(mBuffer) >=  bhcount +  (mbufferDIcountload*2)))
             {
@@ -134,17 +134,17 @@ void SaveDatapool::loadBuffer()
                 {
                     mPosDatapoolEntry[diindex] = static_cast<int>(mBuffer[bhcount+(diindex*2)+1] << 8) + mBuffer[bhcount+(diindex*2)];
                 }
-                qCDebug(m_categrory) << "loadBuffer: loadindexpos";
+                mLogging <= "loadBuffer: loadindexpos";
             }
         }
         else
         {
-            qCDebug(m_categrory) << "loadBuffer: majorchange --> no data";
+            mLogging << LLwarning <= "loadBuffer: majorchange --> no data";
         }
     }
     else
     {
-        qCDebug(m_categrory) << "loadBuffer: readbuffersize to small --> no data";
+        mLogging << LLwarning <= "loadBuffer: readbuffersize to small --> no data";
     }
 }
 
@@ -186,7 +186,7 @@ void SaveDatapool::loadID(saveelement &loaddata)
             if((bufferindex + bicount + loaddata.datasize < sizeof(mBuffer))&&(bufferindex + bicount + loaddata.datasize < mbuffersizeload))
             {
                 loaddata.data = &mBuffer[bufferindex + bicount];
-                qCDebug(m_categrory) << "loadID: load data id: " << loaddata.id;
+                mLogging << "loadID: load data id: " <= loaddata.id;
             }
             else
             {

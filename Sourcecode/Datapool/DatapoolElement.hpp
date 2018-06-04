@@ -2,7 +2,7 @@
 #define DATAPOOLELEMENT_HPP
 
 #include "DatapoolDefinition.hpp"
-#include <QLoggingCategory>
+#include "Utils/Logging.hpp"
 #include <QMutex>
 
 
@@ -31,7 +31,7 @@ private:
     unsigned int mReceiverChange;
     eElementState    meElementState;
     eElementAction   meElementAction;
-    QLoggingCategory m_categrory;
+    Logging mLogging;
     QMutex           m_mutex;
 };
 

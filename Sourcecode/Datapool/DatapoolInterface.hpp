@@ -4,9 +4,10 @@
 #include "DatapoolIndex.hpp"
 #include "DatapoolDefinition.hpp"
 #include "DatapoolControll.hpp"
+#include "Utils/Logging.hpp"
 
 #include <QString>
-#include <QLoggingCategory>
+
 
 class DatapoolInterface
 {
@@ -29,7 +30,7 @@ private:
 
     DatapoolControll *mpDatapoolControll;
     sElementDatapool msElementDatapool;
-    QLoggingCategory m_categrory;
+    Logging mLogging;
 };
 
 #endif // DATAPOOLINTERFACE_HPP

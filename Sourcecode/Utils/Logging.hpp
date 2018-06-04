@@ -17,6 +17,7 @@ enum LogLevel
 class Logging
 {
 public:
+    Logging(const char *category, bool active, bool logcreate, LogLevel loglevellocal);
     Logging(const char *category, bool active, bool logcreate);
     Logging(const char *category, bool active);
     Logging(const char *category);
@@ -24,67 +25,27 @@ public:
     ~Logging();
 
     void setLoggingActive(bool active) {misActive = active;}
+    void setLogLevelLocal(LogLevel loglevel){mLogLevelLocal = loglevel;};
 
     static void setLogLevelGlobal(LogLevel loglevel);    
 
     Logging &operator<<(const LogLevel &loglevel)
     {
-        mLogLevelLocal = loglevel;
-        if((true == misActive)&&(mLogLevelLocal <= mLogLevelGlobal))
+        mCurrentLogLevelLocal = loglevel;
+        if(((true == misActive)||(mCurrentLogLevelLocal == LLcritical))
+                &&(mCurrentLogLevelLocal <= mLogLevelGlobal))
         {
-            if(mLogLevelLocal == LLcritical)
-            {
-                m_Stream << "[LLcritical]: ";
-            }
-            else if(mLogLevelLocal == LLwarning)
-            {
-                m_Stream << "[LLwarning]: ";
-            }
-            else if(mLogLevelLocal == LLdebug)
-            {
-                m_Stream << "[LLdebug]: ";
-            }
-            else if(mLogLevelLocal == LLinfo)
-            {
-                m_Stream << "[LLinfo]: ";
-            }
-            else
-            {
-                m_Stream << "[LLall]: ";
-            }
-            mwritelocallevel = true;
+            createLogHeader();
         }
         return *this;
     }
 
     template<class T>  Logging &operator<<(const T &msg)
     {
-        if((true == misActive)&&(mLogLevelLocal <= mLogLevelGlobal))
+        if(((true == misActive)||(mCurrentLogLevelLocal == LLcritical))
+                &&(mCurrentLogLevelLocal <= mLogLevelGlobal))
         {
-            if(false == mwritelocallevel)
-            {
-                if(mLogLevelLocal == LLcritical)
-                {
-                    m_Stream << "[LLcritical]: ";
-                }
-                else if(mLogLevelLocal == LLwarning)
-                {
-                    m_Stream << "[LLwarning]: ";
-                }
-                else if(mLogLevelLocal == LLdebug)
-                {
-                    m_Stream << "[LLdebug]: ";
-                }
-                else if(mLogLevelLocal == LLinfo)
-                {
-                    m_Stream << "[LLinfo]: ";
-                }
-                else
-                {
-                    m_Stream << "[LLall]: ";
-                }
-                mwritelocallevel = true;
-            }
+            createLogHeader();
             m_Stream << msg;
         }
         return *this;
@@ -92,46 +53,24 @@ public:
 
     template<class T>  Logging &operator<=(const T &msg)
     {
-        if((true == misActive)&&(mLogLevelLocal <= mLogLevelGlobal))
+        if(((true == misActive)||(mCurrentLogLevelLocal == LLcritical))
+            &&(mCurrentLogLevelLocal <= mLogLevelGlobal))
         {
-            if(false == mwritelocallevel)
-            {
-                if(mLogLevelLocal == LLcritical)
-                {
-                    m_Stream << "[LLcritical]: ";
-                }
-                else if(mLogLevelLocal == LLwarning)
-                {
-                    m_Stream << "[LLwarning]: ";
-                }
-                else if(mLogLevelLocal == LLdebug)
-                {
-                    m_Stream << "[LLdebug]: ";
-                }
-                else if(mLogLevelLocal == LLinfo)
-                {
-                    m_Stream << "[LLinfo]: ";
-                }
-                else
-                {
-                    m_Stream << "[LLall]: ";
-                }
-                mwritelocallevel = true;
-            }
+            createLogHeader();
             m_Stream << msg;
-            if(mLogLevelLocal == LLcritical)
+            if(mCurrentLogLevelLocal == LLcritical)
             {
                 qCCritical(m_categrory) << m_Stream.str().c_str();
             }
-            else if(mLogLevelLocal == LLwarning)
+            else if(mCurrentLogLevelLocal == LLwarning)
             {
                 qCWarning(m_categrory) << m_Stream.str().c_str();
             }
-            else if(mLogLevelLocal == LLdebug)
+            else if(mCurrentLogLevelLocal == LLdebug)
             {
                 qCDebug(m_categrory) << m_Stream.str().c_str();
             }
-            else if(mLogLevelLocal == LLinfo)
+            else if(mCurrentLogLevelLocal == LLinfo)
             {
                 qCInfo(m_categrory) << m_Stream.str().c_str();
             }
@@ -141,9 +80,38 @@ public:
             }
             std::stringstream emptyStream;
             m_Stream.swap(emptyStream);
+            mCurrentLogLevelLocal = mLogLevelLocal;
             mwritelocallevel = false;
         }
         return *this;
+    }
+
+    void createLogHeader(void)
+    {
+        if(false == mwritelocallevel)
+        {
+            if(mCurrentLogLevelLocal == LLcritical)
+            {
+                m_Stream << "[LLcritical]: ";
+            }
+            else if(mCurrentLogLevelLocal == LLwarning)
+            {
+                m_Stream << "[LLwarning]: ";
+            }
+            else if(mCurrentLogLevelLocal == LLdebug)
+            {
+                m_Stream << "[LLdebug]: ";
+            }
+            else if(mCurrentLogLevelLocal == LLinfo)
+            {
+                m_Stream << "[LLinfo]: ";
+            }
+            else
+            {
+                m_Stream << "[LLall]: ";
+            }
+            mwritelocallevel = true;
+        }
     }
 
  private:
@@ -152,6 +120,7 @@ public:
     bool mlogcreate;
     static LogLevel mLogLevelGlobal;    
     LogLevel mLogLevelLocal;
+    LogLevel mCurrentLogLevelLocal;
     bool mwritelocallevel;
     std::stringstream m_Stream;
 

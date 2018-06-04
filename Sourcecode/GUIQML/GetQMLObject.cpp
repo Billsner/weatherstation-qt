@@ -3,23 +3,22 @@
 static GetQMLObject *mpGetQMLObject = NULL;
 
 GetQMLObject::GetQMLObject() :
-    m_categrory("GUIQML.GetQMLObject"),
+    mLogging("GUIQML.GetQMLObject",false,true),
     mQMLEngineRootObject(NULL)
 {
-    qCDebug(m_categrory) << "Constructer";
+
 }
 
 GetQMLObject::~GetQMLObject()
 {
-    qCDebug(m_categrory) << "Destructer";
+
 }
 
 GetQMLObject *GetQMLObject::getInstance()
 {
     if(NULL == mpGetQMLObject)
     {
-        mpGetQMLObject = new GetQMLObject;
-        //qCDebug("GetQMLObject") << "getInstance: Create new Instance";
+        mpGetQMLObject = new GetQMLObject;        
     }
     return mpGetQMLObject;
 }
@@ -28,8 +27,7 @@ void GetQMLObject::DestroyGetQMLObject()
 {
     if(NULL != mpGetQMLObject)
     {
-        delete mpGetQMLObject;
-        //qCDebug("GetQMLObject") << "DestroyGetQMLObject: Destroy Instance";
+        delete mpGetQMLObject;        
     }
 }
 
@@ -38,11 +36,11 @@ void GetQMLObject::SetQMLEngineRootObject(QObject *QMLEngineRootObject)
     if(NULL != QMLEngineRootObject)
     {
         mQMLEngineRootObject = QMLEngineRootObject;
-        qCDebug(m_categrory) << "SetQMLEngineRootObject: Valid RootObject";
+        mLogging <= "SetQMLEngineRootObject: Valid RootObject";
     }
     else
     {
-        qCDebug(m_categrory) << "SetQMLEngineRootObject: No RootObject";
+        mLogging << LLcritical <= "SetQMLEngineRootObject: No RootObject";
     }
 }
 
@@ -52,6 +50,10 @@ QObject *GetQMLObject::GetSpcificQMLObject(QString Objectname)
     if(NULL != mQMLEngineRootObject)
     {
         myObject = mQMLEngineRootObject->findChild<QObject*>(Objectname);
+    }
+    else
+    {
+        mLogging << LLcritical <= "GetSpcificQMLObject: No RootObject";
     }
     return myObject;
 }

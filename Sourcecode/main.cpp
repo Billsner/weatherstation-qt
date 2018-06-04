@@ -7,8 +7,9 @@
 
 int main(int argc, char *argv[])
 {
-    Logging logger("main",true,true);
-    logger << "Start TID " <= QThread::currentThreadId();
+    Logging::setLogLevelGlobal(LLinfo);
+    Logging logger("main",false,true,LLdebug);
+    logger << LLcritical << "Start TID " <= QThread::currentThreadId();
 
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        logger << "No Object";
+        logger <= "No Object";
     }
 
     DatapoolThread mDatapoolThread;

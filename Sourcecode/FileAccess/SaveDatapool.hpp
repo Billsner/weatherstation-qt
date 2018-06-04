@@ -4,7 +4,7 @@
 #include <QString>
 #include <QFile>
 #include <QDataStream>
-#include <QLoggingCategory>
+#include "Utils/Logging.hpp"
 #include "Datapool/DatapoolIndex.hpp"
 
 struct saveelement
@@ -36,7 +36,7 @@ public:
 
 
 private:
-    QLoggingCategory m_categrory;
+    Logging mLogging;
     QString mfilename;
     QFile mfile;
     char mBuffer[8192];

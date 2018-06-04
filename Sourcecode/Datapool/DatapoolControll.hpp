@@ -5,7 +5,7 @@
 #include "DatapoolDefinition.hpp"
 #include "DatapoolElement.hpp"
 #include "FileAccess/SaveDatapool.hpp"
-#include <QLoggingCategory>
+#include "Utils/Logging.hpp"
 #include <QMutex>
 
 class DatapoolControll
@@ -25,7 +25,7 @@ public:
 private:
     DatapoolElement mDatapoolElement[DIcount];
     SaveDatapool mSaveDatapool;
-    QLoggingCategory m_categrory;    
+    Logging mLogging;
 };
 
 #endif // DATAPOOLCONTROLL_HPP

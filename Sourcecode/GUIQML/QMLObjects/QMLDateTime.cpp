@@ -8,7 +8,7 @@
 
 
 QMLDateTime::QMLDateTime() :
-    m_categrory("GUIQML.QMLObjects.QMLDateTime"),
+    mLogging("GUIQML.QMLObjects.QMLDateTime",false,true),
     mdateformate("dd.MM.yyyy")
 {
     mClockObject = NULL;
@@ -31,7 +31,7 @@ void QMLDateTime::init()
         }
         else
         {
-            qCDebug(m_categrory) << "init: NULL == mClockObject ";
+            mLogging << LLcritical <= "init: NULL == mClockObject ";
         }
     }
     connect();
@@ -52,7 +52,7 @@ void QMLDateTime::connect()
         }
         else
         {
-            qCDebug(m_categrory) << "connect: NULL == pConnectObject ";
+            mLogging << LLcritical <= "connect: NULL == pConnectObject ";
         }
     }
 }
@@ -60,7 +60,7 @@ void QMLDateTime::connect()
 
 void QMLDateTime::triggertimer(void)
 {
-    qCDebug(m_categrory) << "triggertimer TID: " << QThread::currentThreadId();
+    mLogging << "triggertimer TID: " <= QThread::currentThreadId();
     QTime time = QTime::currentTime();
     setClockTime(time.toString());
     static int count = 0;
@@ -111,18 +111,18 @@ void QMLDateTime::setClockDateDay(QString date, QString day)
     //if(retstring == date)
     if(strcmp(date.toStdString().c_str(),retstring.toStdString().c_str()) == 0)
     {
-        qCDebug(m_categrory) << "setClockDateDay: datapool correct";
+        mLogging <= "setClockDateDay: datapool correct";
     }
     else
     {
-        qCDebug(m_categrory) << "setClockDateDay: datapool error " << date.toStdString().c_str() << " retdate " << retstring.toStdString().c_str();
+        mLogging << LLcritical << "setClockDateDay: datapool error " << date.toStdString().c_str() << " retdate " <= retstring.toStdString().c_str();
     }
 }
 
 
 void QMLDateTime::receiveDateformate(QString format)
 {
-    qCDebug(m_categrory) << "receiveDateformate: " << format << " TID: " << QThread::currentThreadId();
+    mLogging << "receiveDateformate: " << format.toStdString().c_str() << " TID: " <= QThread::currentThreadId();
     mdateformate = format;
     QDate date = QDate::currentDate();
     setClockDateDay(date.toString(mdateformate),date.toString("dddd"));
@@ -130,18 +130,18 @@ void QMLDateTime::receiveDateformate(QString format)
 
 void QMLDateTime::receiveDateformateIndex(int formatid)
 {
-    qCDebug(m_categrory) << "receiveDateformateIndex: " << formatid << " TID: " << QThread::currentThreadId();
+    mLogging << "receiveDateformateIndex: " << formatid << " TID: " <= QThread::currentThreadId();
     DatapoolInterface cDatapoolInterface;
     cDatapoolInterface.setDatapoolInt(DIdataformatId,formatid);
     cDatapoolInterface.setDatapoolInt(DIdataformatId,formatid);
     int datapoolret = 0;
     if(cDatapoolInterface.getDatapoolInt(DIdataformatId, datapoolret) == true)
     {
-        qCDebug(m_categrory) << "receiveDateformateIndex: datapoolret " << datapoolret;
+        mLogging << "receiveDateformateIndex: datapoolret " <= datapoolret;
     }
     else
     {
-        qCDebug(m_categrory) << "receiveDateformateIndex: datapoolret getError";
+        mLogging << LLcritical <= "receiveDateformateIndex: datapoolret getError";
     }
 
 }

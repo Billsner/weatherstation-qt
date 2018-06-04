@@ -2,8 +2,7 @@
 #define DATAPOOLTHREAD_HPP
 
 #include <QThread>
-#include <QLoggingCategory>
-
+#include "Utils/Logging.hpp"
 #include "DatapoolThread.hpp"
 #include "GUIQML/QMLObjects/QMLDateTime.hpp"
 #include "Datapool/DatapoolControll.hpp"
@@ -27,7 +26,7 @@ public slots:
 private:
     void run();
     void initobjects(void);
-    QLoggingCategory m_categrory;
+    Logging mLogging;
     QMLDateTime mQMLDateTime;
     DatapoolControll mDatapoolControll;
 

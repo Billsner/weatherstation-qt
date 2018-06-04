@@ -2,7 +2,7 @@
 #define GETQMLOBJECT_HPP
 
 #include <QObject>
-#include <QLoggingCategory>
+#include "Utils/Logging.hpp"
 
 
 class GetQMLObject
@@ -18,7 +18,7 @@ public:
     QObject *GetSpcificQMLObject(QString Objectname);
 
 private:
-    QLoggingCategory m_categrory;
+    Logging mLogging;
     QObject *mQMLEngineRootObject;
 };
 

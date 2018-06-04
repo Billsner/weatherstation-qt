@@ -2,7 +2,7 @@
 #define QMLDATETIME_HPP
 
 #include <QObject>
-#include <QLoggingCategory>
+#include "Utils/Logging.hpp"
 
 class QMLDateTime: public QObject
 {
@@ -24,7 +24,7 @@ public slots:
     void receiveDateformateIndex(int formatid);
 
 private:
-    QLoggingCategory m_categrory;
+    Logging mLogging;
     QObject *mClockObject;
     QString mdateformate;
 

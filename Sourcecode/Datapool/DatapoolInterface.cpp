@@ -2,7 +2,7 @@
 
 DatapoolInterface::DatapoolInterface() :
     mpDatapoolControll(NULL),
-    m_categrory("Datapool.DatapoolInterface")
+    mLogging("Datapool.DatapoolInterface",false,true)
 {
     msElementDatapool.datasize = 0;
     msElementDatapool.data = NULL;
@@ -24,14 +24,14 @@ bool DatapoolInterface::connectDatapool()
     }
     else
     {
-        qCCritical(m_categrory) << "connectDatapool: No Connection";
+        mLogging << LLcritical <= "connectDatapool: No Connection";
     }
     return ret;
 }
 
 bool DatapoolInterface::setDatapoolInt(unsigned int id, int value)
 {
-    qCDebug(m_categrory) << "setDatapoolInt";
+    mLogging << "setDatapoolInt ";
     bool ret = false;
     if(NULL != mpDatapoolControll)
     {
@@ -49,7 +49,7 @@ bool DatapoolInterface::setDatapoolInt(unsigned int id, int value)
     }
     else
     {
-        qCDebug(m_categrory) << "setDatapoolInt: Try Reconnect";
+        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -57,7 +57,7 @@ bool DatapoolInterface::setDatapoolInt(unsigned int id, int value)
 
 bool DatapoolInterface::getDatapoolInt(unsigned int id, int &value)
 {
-    qCDebug(m_categrory) << "getDatapoolInt";
+    mLogging <= "getDatapoolInt";
     bool ret = false;
     value = 0;
     if(NULL != mpDatapoolControll)
@@ -73,7 +73,7 @@ bool DatapoolInterface::getDatapoolInt(unsigned int id, int &value)
     }
     else
     {
-        qCDebug(m_categrory) << "setDatapoolInt: Try Reconnect";
+        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -89,7 +89,7 @@ bool DatapoolInterface::setDatapoolQString(unsigned int id, QString &value)
             //Delete old array
             delete msElementDatapool.data;
             msElementDatapool.data = NULL;
-            qCDebug(m_categrory) << "setDatapoolQString: delete old array";
+            mLogging <= "setDatapoolQString: delete old array";
         }
         msElementDatapool.id = id;
         msElementDatapool.datasize = value.toStdString().size() + 1;
@@ -102,7 +102,7 @@ bool DatapoolInterface::setDatapoolQString(unsigned int id, QString &value)
     }
     else
     {
-        qCDebug(m_categrory) << "setDatapoolInt: Try Reconnect";
+        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -120,7 +120,7 @@ bool DatapoolInterface::getDatapoolQString(unsigned int id, QString &value)
     }
     else
     {
-        qCDebug(m_categrory) << "setDatapoolInt: Try Reconnect";
+        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -133,13 +133,13 @@ void DatapoolInterface::createDataArray(int size)
         //Delete old array
         delete msElementDatapool.data;
         msElementDatapool.data = NULL;
-        qCDebug(m_categrory) << "createDataArray: delete old array";
+        mLogging <= "createDataArray: delete old array";
     }
     if(NULL == msElementDatapool.data)
     {
         msElementDatapool.data = new char[size];
         msElementDatapool.datasize = size;
-        qCDebug(m_categrory) << "createDataArray: create new Array Size: " << size;
+        mLogging << "createDataArray: create new Array Size: " <= size;
     }
 }
 
@@ -152,16 +152,16 @@ bool DatapoolInterface::serializeInt(int value, char *data, int datasize)
         data[1] = ((0x00ff0000 & value) >> 16);
         data[2] = ((0x0000ff00 & value) >> 0);
         data[3] = ((0x000000ff & value));
-        qCDebug(m_categrory) << "serializeInt: data[0]: " << static_cast<int>(data[0])
+        mLogging << "serializeInt: data[0]: " << static_cast<int>(data[0])
                 << " data[1]: " << static_cast<int>(data[1])
                 << " data[2]: " << static_cast<int>(data[2])
                 << " data[3]: " << static_cast<int>(data[3])
-                << " value: " << value;
+                << " value: " <= value;
         ret = true;
     }
     else
     {
-        qCDebug(m_categrory) << "serializeInt: Error";
+        mLogging << LLcritical <= "serializeInt: Error";
     }
     return ret;
 }
@@ -173,16 +173,16 @@ bool DatapoolInterface::deserializeInt(int &value, char *data, int datasize)
     if((datasize == sizeof(value))&&(NULL != data)&&(datasize == 4))
     {
         value = data[3] + (data[2] << 8) + (data[1] << 16) + (data[0] << 24);
-        qCDebug(m_categrory) << "deserializeInt: data[0]: " << static_cast<int>(data[0])
+        mLogging << "deserializeInt: data[0]: " << static_cast<int>(data[0])
                              << " data[1]: " << static_cast<int>(data[1])
                              << " data[2]: " << static_cast<int>(data[2])
                              << " data[3]: " << static_cast<int>(data[3])
-                             << " value: " << value;
+                             << " value: " <= value;
         ret = true;
     }
     else
     {
-        qCDebug(m_categrory) << "deserializeInt: Error";
+        mLogging << LLcritical <= "deserializeInt: Error";
     }
     return ret;
 }
