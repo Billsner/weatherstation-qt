@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     Datapool/DatapoolElement.cpp \
     Datapool/DatapoolInterface.cpp \
     FileAccess/SaveDatapool.cpp \
-    Utils/Logging.cpp
+    Utils/Logging.cpp \
+    FileAccess/LogFile.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -30,4 +31,5 @@ HEADERS += \
     Datapool/DatapoolIndex.hpp \
     Datapool/DatapoolInterface.hpp \
     FileAccess/SaveDatapool.hpp \
-    Utils/Logging.hpp
+    Utils/Logging.hpp \
+    FileAccess/LogFile.hpp

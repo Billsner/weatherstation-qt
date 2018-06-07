@@ -4,11 +4,15 @@
 #include "Threads/DatapoolThread.hpp"
 #include "GUIQML/GetQMLObject.hpp"
 #include "Utils/Logging.hpp"
+#include "FileAccess/LogFile.hpp"
 
 int main(int argc, char *argv[])
 {
     Logging::setLogLevelGlobal(LLinfo);
-    Logging logger("main",false,true,LLdebug);
+    Logging::setLogMode(LMall);
+    Logfile mLogfile;
+    mLogfile.openFile();
+    Logging logger("main",true,true,LLdebug);
     logger << LLcritical << "Start TID " <= QThread::currentThreadId();
 
 
@@ -43,6 +47,6 @@ int main(int argc, char *argv[])
     mDatapoolThread.quit();
     mDatapoolThread.wait(100);
     GetQMLObject::DestroyGetQMLObject();
-
+    mLogfile.closeFile();
     return 1;
 }

@@ -4,6 +4,7 @@
 #include <QLoggingCategory>
 #include <ostream>
 #include <sstream>
+#include "FileAccess/LogFile.hpp"
 
 enum LogLevel
 {
@@ -11,6 +12,13 @@ enum LogLevel
     LLwarning,
     LLdebug,
     LLinfo
+};
+
+enum LogMode
+{
+    LMoutput,
+    LMfile,
+    LMall
 };
 
 
@@ -27,7 +35,8 @@ public:
     void setLoggingActive(bool active) {misActive = active;}
     void setLogLevelLocal(LogLevel loglevel){mLogLevelLocal = loglevel;};
 
-    static void setLogLevelGlobal(LogLevel loglevel);    
+    static void setLogLevelGlobal(LogLevel loglevel);
+    static void setLogMode(LogMode logmode);
 
     Logging &operator<<(const LogLevel &loglevel)
     {
@@ -58,25 +67,23 @@ public:
         {
             createLogHeader();
             m_Stream << msg;
-            if(mCurrentLogLevelLocal == LLcritical)
-            {
-                qCCritical(m_categrory) << m_Stream.str().c_str();
-            }
-            else if(mCurrentLogLevelLocal == LLwarning)
-            {
-                qCWarning(m_categrory) << m_Stream.str().c_str();
-            }
-            else if(mCurrentLogLevelLocal == LLdebug)
+            if((LMoutput == mLogMode)||(LMall == mLogMode))
             {
                 qCDebug(m_categrory) << m_Stream.str().c_str();
             }
-            else if(mCurrentLogLevelLocal == LLinfo)
+            if((LMfile == mLogMode)||(LMall == mLogMode))
             {
-                qCInfo(m_categrory) << m_Stream.str().c_str();
-            }
-            else
-            {
-                qCInfo(m_categrory) << m_Stream.str().c_str();
+                bool ret = false;
+                Logfile *pLogfile = Logfile::getInstance();
+                if(pLogfile != NULL)
+                {
+                    m_Stream << "\n";
+                    pLogfile->writeLogMsg(m_Stream.str().c_str(),ret);
+                }
+                if(((pLogfile == NULL)||(false == ret))&&(LMall == LMfile))
+                {
+                    qCInfo(m_categrory) << m_Stream.str().c_str();
+                }
             }
             std::stringstream emptyStream;
             m_Stream.swap(emptyStream);
@@ -92,23 +99,23 @@ public:
         {
             if(mCurrentLogLevelLocal == LLcritical)
             {
-                m_Stream << "[LLcritical]: ";
+                m_Stream << mLoggername << " [LLcritical]: ";
             }
             else if(mCurrentLogLevelLocal == LLwarning)
             {
-                m_Stream << "[LLwarning]: ";
+                m_Stream <<  mLoggername << " [LLwarning]: ";
             }
             else if(mCurrentLogLevelLocal == LLdebug)
             {
-                m_Stream << "[LLdebug]: ";
+                m_Stream <<  mLoggername << " [LLdebug]: ";
             }
             else if(mCurrentLogLevelLocal == LLinfo)
             {
-                m_Stream << "[LLinfo]: ";
+                m_Stream <<  mLoggername << " [LLinfo]: ";
             }
             else
             {
-                m_Stream << "[LLall]: ";
+                m_Stream <<  mLoggername << " [LLall]: ";
             }
             mwritelocallevel = true;
         }
@@ -116,9 +123,11 @@ public:
 
  private:
     QLoggingCategory m_categrory;
+    const char *mLoggername;
     bool misActive;
     bool mlogcreate;
-    static LogLevel mLogLevelGlobal;    
+    static LogLevel mLogLevelGlobal;
+    static LogMode mLogMode;
     LogLevel mLogLevelLocal;
     LogLevel mCurrentLogLevelLocal;
     bool mwritelocallevel;

@@ -1,10 +1,12 @@
 #include "Logging.hpp"
 
 LogLevel Logging::mLogLevelGlobal = LLdebug;
+LogMode Logging::mLogMode = LMoutput;
 
 
 Logging::Logging(const char *category, bool active, bool logcreate, LogLevel loglevellocal) :
-    m_categrory(category),
+    m_categrory("QLog"),
+    mLoggername(category),
     misActive(active),
     mlogcreate(logcreate),
     mLogLevelLocal(loglevellocal),
@@ -18,7 +20,8 @@ Logging::Logging(const char *category, bool active, bool logcreate, LogLevel log
 }
 
 Logging::Logging(const char *category, bool active/* = false*/, bool logcreate /*= false*/) :
-    m_categrory(category),
+    m_categrory("QLog"),
+    mLoggername(category),
     misActive(active),
     mlogcreate(logcreate),
     mLogLevelLocal(LLinfo),
@@ -32,7 +35,8 @@ Logging::Logging(const char *category, bool active/* = false*/, bool logcreate /
 }
 
 Logging::Logging(const char *category, bool active/* = false*/) :
-    m_categrory(category),
+    m_categrory("QLog"),
+    mLoggername(category),
     misActive(active),
     mlogcreate(false),
     mLogLevelLocal(LLinfo),
@@ -43,7 +47,8 @@ Logging::Logging(const char *category, bool active/* = false*/) :
 }
 
 Logging::Logging(const char *category) :
-    m_categrory(category),
+    m_categrory("QLog"),
+    mLoggername(category),
     misActive(false),
     mlogcreate(false),
     mLogLevelLocal(LLinfo),
@@ -65,4 +70,9 @@ Logging::~Logging()
 void Logging::setLogLevelGlobal(LogLevel loglevel)
 {
     Logging::mLogLevelGlobal = loglevel;
+}
+
+void Logging::setLogMode(LogMode logmode)
+{
+    Logging::mLogMode = logmode;
 }
