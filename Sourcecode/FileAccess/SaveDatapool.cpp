@@ -26,12 +26,12 @@ enum bufferitemindex
     bicount
 };
 
-int DatapoolMajorVersion = 1; //change as incompatible if datapoolid is add at start or in the middle
-int DatapoolMinorVersion = 1; //change as compatible if datapoolid is add at the end
+static int DatapoolMajorVersion = 1; //change as incompatible if datapoolid is add at start or in the middle
+static int DatapoolMinorVersion = 1; //change as compatible if datapoolid is add at the end
 
 
 SaveDatapool::SaveDatapool() :
-    mLogging("fileaccess.SaveDatapool",false,true),
+    mLogging("fileaccess.SaveDatapool",true,false),
     mfilename("datapool.data"),
     mfile(mfilename),
     mbufferindex(0),
@@ -89,7 +89,7 @@ void SaveDatapool::prepareBuffer()
 
 void SaveDatapool::closeBuffer()
 {
-    unsigned int index = 4;
+    unsigned int index = bhcount;
     if((index+(DIcount*2)) < sizeof(mBuffer))
     {
         for(int diindex = 0; diindex < DIcount; diindex++)
@@ -102,6 +102,7 @@ void SaveDatapool::closeBuffer()
     }
     if((true == mBufferReadytoSave)&&(mbufferindex < sizeof(mBuffer)))
     {
+        //printBUffer();
         QDataStream write(&mfile);
         write.writeRawData(mBuffer,mbufferindex);
         mLogging <= "closeBuffer: write";
@@ -112,10 +113,11 @@ void SaveDatapool::loadBuffer()
 {
     QDataStream read(&mfile);
     mbuffersizeload = read.readRawData(mBuffer,sizeof(mBuffer));
+    //printBUffer();
     if((bhcount <= mbuffersizeload)&&(bhcount <= sizeof(mBuffer)))
     {
-        char buffermajorversion = static_cast<int>(mBuffer[bmajorhigh] << 8) + mBuffer[bmajorlow];
-        char bufferminorversion = static_cast<int>(mBuffer[bminorhigh] << 8) + mBuffer[bminorlow];
+        int buffermajorversion = static_cast<int>(mBuffer[bmajorhigh] << 8) + mBuffer[bmajorlow];
+        int bufferminorversion = static_cast<int>(mBuffer[bminorhigh] << 8) + mBuffer[bminorlow];
         mbufferDIcountload = static_cast<int>(mBuffer[bdiindexhigh] << 8) + mBuffer[bdiindexlow];
         if(buffermajorversion == DatapoolMajorVersion)
         {
@@ -125,7 +127,10 @@ void SaveDatapool::loadBuffer()
             }
             else
             {
-                mLogging <= "loadBuffer: minorchange";
+                mLogging << "loadBuffer: minorchange bufferminorversion: " << bufferminorversion
+                         << " DatapoolMinorVersion: " << DatapoolMinorVersion
+                         << " mbufferDIcountload: " << mbufferDIcountload
+                         << " DIcount " <= DIcount;
             }
             if((mbuffersizeload >=  bhcount +  (mbufferDIcountload*2))&&(sizeof(mBuffer) >=  bhcount +  (mbufferDIcountload*2)))
             {
@@ -133,6 +138,7 @@ void SaveDatapool::loadBuffer()
                 for(unsigned int diindex = 0; (diindex < mbufferDIcountload) && (diindex < DIcount); diindex++)
                 {
                     mPosDatapoolEntry[diindex] = static_cast<int>(mBuffer[bhcount+(diindex*2)+1] << 8) + mBuffer[bhcount+(diindex*2)];
+                    mLogging << "loadBuffer: mPosDatapoolEntry[diindex]: " << mPosDatapoolEntry[diindex] << " diindex: " <= diindex;
                 }
                 mLogging <= "loadBuffer: loadindexpos";
             }
@@ -152,7 +158,7 @@ void SaveDatapool::saveID(saveelement savedata)
 {
     if(((savedata.datasize+mbufferindex+4) < sizeof(mBuffer))&&(savedata.id < DIcount))
     {
-        mPosDatapoolEntry[savedata.id] = mbufferindex;
+        mPosDatapoolEntry[savedata.id] = mbufferindex;    
         mBuffer[mbufferindex + idlow] = static_cast<char>(savedata.id&0x00ff);
         mBuffer[mbufferindex + idhigh] = static_cast<char>((savedata.id&0xff00)>>8);
         mBuffer[mbufferindex + datasizelow] = static_cast<char>(savedata.datasize&0x00ff);
@@ -183,6 +189,10 @@ void SaveDatapool::loadID(saveelement &loaddata)
             {
                 loaddata.datasize = static_cast<int>(mBuffer[bufferindex + datasizehigh] << 8) + mBuffer[bufferindex + datasizelow];
             }
+            else
+            {
+                mLogging << "loadID: error id: " << loaddata.id  << " bufferid " <= buffferid;
+            }
             if((bufferindex + bicount + loaddata.datasize < sizeof(mBuffer))&&(bufferindex + bicount + loaddata.datasize < mbuffersizeload))
             {
                 loaddata.data = &mBuffer[bufferindex + bicount];
@@ -191,7 +201,19 @@ void SaveDatapool::loadID(saveelement &loaddata)
             else
             {
                 loaddata.datasize = 0;
+                mLogging << "loadID: load data 0 id: " <= loaddata.id;
             }
         }
     }
+}
+
+void SaveDatapool::printBUffer()
+{
+    mLogging << " sizeof(mBuffer): " <= sizeof(mBuffer);
+    mLogging <= " sizeof(mBuffer): All";
+    for(int i = 0; i < 50; i++)
+    {
+        mLogging << " index: " << i << " Data: " <= static_cast<int>(mBuffer[i]);
+    }
+
 }

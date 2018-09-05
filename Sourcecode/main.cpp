@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     Logging::setLogMode(LMall);
     Logfile mLogfile;
     mLogfile.openFile();
-    Logging logger("main",true,true,LLdebug);
+    Logging logger("main",true,false,LLdebug);
     logger << LLcritical << "Start TID " <= QThread::currentThreadId();
 
 

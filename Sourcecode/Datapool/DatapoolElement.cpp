@@ -12,7 +12,7 @@ DatapoolElement::DatapoolElement() :
     mReceiverChange(0x00000000),
     meElementState(ESInt),
     meElementAction(EANothing),
-    mLogging("Datapool.DatapoolElement",false,true)
+    mLogging("Datapool.DatapoolElement",true,false)
 {
 
 }
@@ -194,7 +194,19 @@ void DatapoolElement::loadElement(unsigned int id)
                         mLogging << "loadElement Element: " <= mElementID;
                     }
                 }
+                else
+                {
+                    mLogging << "loadElement Element: " << mElementID << " Errordata size: " << loadedata.datasize << " data: " <= loadedata.data;
+                }
             }
+            else
+            {
+                mLogging << "loadElement Element: " << mElementID <= " Error pSaveDatapool";
+            }
+        }
+        else
+        {
+            mLogging << "loadElement Element: " << mElementID <= " Error Element exist";
         }
     }    
 }

@@ -33,7 +33,7 @@ public:
     ~Logging();
 
     void setLoggingActive(bool active) {misActive = active;}
-    void setLogLevelLocal(LogLevel loglevel){mLogLevelLocal = loglevel;};
+    void setLogLevelLocal(LogLevel loglevel){mLogLevelLocal = loglevel;}
 
     static void setLogLevelGlobal(LogLevel loglevel);
     static void setLogMode(LogMode logmode);

@@ -8,10 +8,11 @@
 
 
 QMLDateTime::QMLDateTime() :
-    mLogging("GUIQML.QMLObjects.QMLDateTime",false,true),
+    mLogging("GUIQML.QMLObjects.QMLDateTime",true,false),
     mdateformate("dd.MM.yyyy")
 {
     mClockObject = NULL;
+    mSettingsObject = NULL;
 }
 
 QMLDateTime::~QMLDateTime()
@@ -33,27 +34,29 @@ void QMLDateTime::init()
         {
             mLogging << LLcritical <= "init: NULL == mClockObject ";
         }
+        mSettingsObject = pGetQMLObject->GetSpcificQMLObject("Settings");
+        if(NULL != mSettingsObject)
+        {
+
+        }
+        else
+        {
+            mLogging << LLcritical <= "init: NULL == mSettingsObject ";
+        }
     }
     connect();
 }
 
 void QMLDateTime::connect()
 {
-    GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
-    if(NULL != pGetQMLObject)
+    if(NULL != mSettingsObject)
     {
-        QObject *pConnectObject = pGetQMLObject->GetSpcificQMLObject("Settings");
-        if(NULL != pConnectObject)
-        {
-            QObject::connect(pConnectObject, SIGNAL(signaldateformat(QString)), this, SLOT(receiveDateformate(QString)), Qt::QueuedConnection);
-            QObject::connect(pConnectObject, SIGNAL(signaldateformatid(int)), this, SLOT(receiveDateformateIndex(int)), Qt::QueuedConnection);
-
-
-        }
-        else
-        {
-            mLogging << LLcritical <= "connect: NULL == pConnectObject ";
-        }
+        QObject::connect(mSettingsObject, SIGNAL(signaldateformat(QString)), this, SLOT(receiveDateformate(QString)), Qt::QueuedConnection);
+        QObject::connect(mSettingsObject, SIGNAL(signaldateformatid(int)), this, SLOT(receiveDateformateIndex(int)), Qt::QueuedConnection);
+    }
+    else
+    {
+        mLogging << LLcritical <= "connect: NULL == pConnectObject ";
     }
 }
 
@@ -73,6 +76,40 @@ void QMLDateTime::triggertimer(void)
     else
     {
         count--;
+    }
+}
+
+void QMLDateTime::setDataformat2GUI(void)
+{
+    int datapoolret = 0;
+    DatapoolInterface cDatapoolInterface;
+    if(cDatapoolInterface.getDatapoolInt(DIdataformatId, datapoolret) == true)
+    {
+        mLogging << "setDataformat2GUI: DIdataformatId: " <= datapoolret;
+        QVariant dateformat(datapoolret);
+        QString retstring;
+        DatapoolInterface cDatapoolInterface;
+        QMetaObject::invokeMethod(mSettingsObject, "setDateFormat", Qt::QueuedConnection,
+                Q_ARG(QVariant, dateformat));
+        switch(datapoolret)
+        {
+        case 0:
+            mdateformate = "dd.MM.yyyy";
+            break;
+        case 1:
+            mdateformate = "yyyy.MM.dd";
+            break;
+        case 2:
+            mdateformate = "yyyy.dd.MM";
+            break;
+        default:
+            mdateformate = "dd.MM.yyyy";
+            break;
+        }
+    }
+    else
+    {
+        mLogging <= "setDataformat2GUI: ErrorLoading";
     }
 }
 
@@ -108,7 +145,6 @@ void QMLDateTime::setClockDateDay(QString date, QString day)
             Q_ARG(QVariant, cppdate),Q_ARG(QVariant, cppday));
     cDatapoolInterface.setDatapoolQString(DIdate,date);
     cDatapoolInterface.getDatapoolQString(DIdate,retstring);
-    //if(retstring == date)
     if(strcmp(date.toStdString().c_str(),retstring.toStdString().c_str()) == 0)
     {
         mLogging <= "setClockDateDay: datapool correct";
@@ -132,7 +168,6 @@ void QMLDateTime::receiveDateformateIndex(int formatid)
 {
     mLogging << "receiveDateformateIndex: " << formatid << " TID: " <= QThread::currentThreadId();
     DatapoolInterface cDatapoolInterface;
-    cDatapoolInterface.setDatapoolInt(DIdataformatId,formatid);
     cDatapoolInterface.setDatapoolInt(DIdataformatId,formatid);
     int datapoolret = 0;
     if(cDatapoolInterface.getDatapoolInt(DIdataformatId, datapoolret) == true)

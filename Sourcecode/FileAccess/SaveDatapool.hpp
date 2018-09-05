@@ -36,6 +36,8 @@ public:
 
 
 private:
+    void printBUffer();
+
     Logging mLogging;
     QString mfilename;
     QFile mfile;

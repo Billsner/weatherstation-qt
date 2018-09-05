@@ -4,7 +4,7 @@
 static DatapoolControll *mpDatapoolControll = NULL;
 
 DatapoolControll::DatapoolControll() :
-    mLogging("Datapool.DatapoolControll",false,true)
+    mLogging("Datapool.DatapoolControll",true,false)
 {
     mpDatapoolControll = this;
 }
@@ -39,7 +39,7 @@ void DatapoolControll::getElement(unsigned int id, sElementDatapool &element)
 
 void DatapoolControll::loadDatapool()
 {
-    mLogging <= "loadDatapool";
+    mLogging << "loadDatapool count: " <= DIcount;
     mSaveDatapool.openFile();
     mSaveDatapool.loadBuffer();
     for(int count = 0; count < DIcount; count++)
@@ -51,7 +51,7 @@ void DatapoolControll::loadDatapool()
 
 void DatapoolControll::saveDatapool()
 {
-    mLogging <= "saveDatapool";
+    mLogging << "saveDatapool count: " <= DIcount;
     mSaveDatapool.openFile();
     mSaveDatapool.prepareBuffer();
     for(int count = 0; count < DIcount; count++)

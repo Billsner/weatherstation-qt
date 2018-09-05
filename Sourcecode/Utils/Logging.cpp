@@ -13,7 +13,7 @@ Logging::Logging(const char *category, bool active, bool logcreate, LogLevel log
     mCurrentLogLevelLocal(loglevellocal),
     mwritelocallevel(false)
 {
-    if((true == mlogcreate)&&(this != NULL))
+    if(true == mlogcreate)
     {
         *this << "Constructer  this: " <= this;
     }
@@ -28,7 +28,7 @@ Logging::Logging(const char *category, bool active/* = false*/, bool logcreate /
     mCurrentLogLevelLocal(LLinfo),
     mwritelocallevel(false)
 {
-    if((true == mlogcreate)&&(this != NULL))
+    if(true == mlogcreate)
     {
         *this << "Constructer  this: " <= this;
     }

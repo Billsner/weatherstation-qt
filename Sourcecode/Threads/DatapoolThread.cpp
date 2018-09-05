@@ -22,9 +22,11 @@ void DatapoolThread::initthread()
 
 void DatapoolThread::initobjects(void)
 {
-    mLogging << "initobjects TID: " <= this->currentThreadId();
-    mQMLDateTime.init();
+    mLogging << "initobjects TID: " <= this->currentThreadId();    
     mDatapoolControll.loadDatapool();
+    mQMLDateTime.init();
+    mQMLDateTime.setDataformat2GUI();
+
 }
 
 void DatapoolThread::run()
