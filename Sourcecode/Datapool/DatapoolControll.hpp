@@ -4,6 +4,7 @@
 #include "DatapoolIndex.hpp"
 #include "DatapoolDefinition.hpp"
 #include "DatapoolElement.hpp"
+#include "DatapoolTrigger.hpp"
 #include "FileAccess/SaveDatapool.hpp"
 #include "Utils/Logging.hpp"
 #include <QMutex>
@@ -21,6 +22,8 @@ public:
 
     void loadDatapool();
     void saveDatapool();
+
+    void regTriggerInstance(DatapoolTrigger *pDatapoolTrigger, int instanceID);
 
 private:
     DatapoolElement mDatapoolElement[DIcount];

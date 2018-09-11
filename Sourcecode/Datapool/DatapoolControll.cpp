@@ -61,3 +61,8 @@ void DatapoolControll::saveDatapool()
     mSaveDatapool.closeBuffer();
     mSaveDatapool.closeFile();
 }
+
+void DatapoolControll::regTriggerInstance(DatapoolTrigger *pDatapoolTrigger, int instanceID)
+{
+    mLogging << "regTriggerInstance instanceID: " <= instanceID;
+}

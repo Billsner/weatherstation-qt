@@ -25,7 +25,7 @@ void DatapoolThread::initobjects(void)
     mLogging << "initobjects TID: " <= this->currentThreadId();    
     mDatapoolControll.loadDatapool();
     mQMLStatusLine.init();
-    mQMLStatusLine.setDataformat2GUI();
+    //mQMLStatusLine.setDataformat2GUI();
 
 }
 

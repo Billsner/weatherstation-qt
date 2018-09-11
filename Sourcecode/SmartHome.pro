@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     Utils/Logging.cpp \
     FileAccess/LogFile.cpp \
     GUIQML/QMLObjects/QMLSettings.cpp \
-    GUIQML/QMLObjects/QMLStatusLine.cpp
+    GUIQML/QMLObjects/QMLStatusLine.cpp \
+    Datapool/DatapoolTrigger.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -34,4 +35,5 @@ HEADERS += \
     Utils/Logging.hpp \
     FileAccess/LogFile.hpp \
     GUIQML/QMLObjects/QMLSettings.hpp \
-    GUIQML/QMLObjects/QMLStatusLine.hpp
+    GUIQML/QMLObjects/QMLStatusLine.hpp \
+    Datapool/DatapoolTrigger.hpp
