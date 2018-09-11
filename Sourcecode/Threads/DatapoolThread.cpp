@@ -17,15 +17,15 @@ DatapoolThread::~DatapoolThread()
 
 void DatapoolThread::initthread()
 {
-    mQMLDateTime.moveToThread(this);
+    mQMLStatusLine.moveToThread(this);
 }
 
 void DatapoolThread::initobjects(void)
 {
     mLogging << "initobjects TID: " <= this->currentThreadId();    
     mDatapoolControll.loadDatapool();
-    mQMLDateTime.init();
-    mQMLDateTime.setDataformat2GUI();
+    mQMLStatusLine.init();
+    mQMLStatusLine.setDataformat2GUI();
 
 }
 
@@ -34,7 +34,7 @@ void DatapoolThread::run()
     mLogging << "Hello DatapoolThread TID: " <= this->currentThreadId();
     initobjects();
 
-    mQMLDateTime.triggertimer();
+    mQMLStatusLine.triggertimer();
 
     //Timer
     QTimer timer;
@@ -48,7 +48,7 @@ void DatapoolThread::run()
 void DatapoolThread::timerHit()
 {
     mLogging << QTime::currentTime().toString().toStdString() << " timerHit TID: " <= this->currentThreadId();
-    mQMLDateTime.triggertimer();
+    mQMLStatusLine.triggertimer();
 
     static int count = 10;
     if(0 == count)

@@ -4,14 +4,15 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     Threads/DatapoolThread.cpp \
-    GUIQML/QMLObjects/QMLDateTime.cpp \
     GUIQML/GetQMLObject.cpp \
     Datapool/DatapoolControll.cpp \
     Datapool/DatapoolElement.cpp \
     Datapool/DatapoolInterface.cpp \
     FileAccess/SaveDatapool.cpp \
     Utils/Logging.cpp \
-    FileAccess/LogFile.cpp
+    FileAccess/LogFile.cpp \
+    GUIQML/QMLObjects/QMLSettings.cpp \
+    GUIQML/QMLObjects/QMLStatusLine.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -23,7 +24,6 @@ include(deployment.pri)
 
 HEADERS += \
     Threads/DatapoolThread.hpp \
-    GUIQML/QMLObjects/QMLDateTime.hpp \
     GUIQML/GetQMLObject.hpp \
     Datapool/DatapoolControll.hpp \
     Datapool/DatapoolElement.hpp \
@@ -32,4 +32,6 @@ HEADERS += \
     Datapool/DatapoolInterface.hpp \
     FileAccess/SaveDatapool.hpp \
     Utils/Logging.hpp \
-    FileAccess/LogFile.hpp
+    FileAccess/LogFile.hpp \
+    GUIQML/QMLObjects/QMLSettings.hpp \
+    GUIQML/QMLObjects/QMLStatusLine.hpp

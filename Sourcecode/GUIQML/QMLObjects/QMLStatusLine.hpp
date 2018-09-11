@@ -1,15 +1,15 @@
-#ifndef QMLDATETIME_HPP
-#define QMLDATETIME_HPP
+#ifndef QMLSTATUSLINE_HPP
+#define QMLSTATUSLINE_HPP
 
 #include <QObject>
 #include "Utils/Logging.hpp"
 
-class QMLDateTime: public QObject
+class QMLStatusLine: public QObject
 {
     Q_OBJECT
 public:
-    QMLDateTime();
-    ~QMLDateTime();
+    QMLStatusLine();
+    ~QMLStatusLine();
 
     void init();
 
@@ -39,4 +39,4 @@ private:
 
 };
 
-#endif // QMLDATETIME_HPP
+#endif // QMLSTATUSLINE_HPP

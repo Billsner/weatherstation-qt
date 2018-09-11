@@ -1,4 +1,4 @@
-#include "QMLDateTime.hpp"
+#include "QMLStatusLine.hpp"
 #include <QThread>
 #include <QMetaObject>
 #include <QVariant>
@@ -7,20 +7,20 @@
 #include "Datapool/DatapoolInterface.hpp"
 
 
-QMLDateTime::QMLDateTime() :
-    mLogging("GUIQML.QMLObjects.QMLDateTime",true,false),
+QMLStatusLine::QMLStatusLine() :
+    mLogging("GUIQML.QMLObjects.QMLStatusLine",true,false),
     mdateformate("dd.MM.yyyy")
 {
     mClockObject = NULL;
     mSettingsObject = NULL;
 }
 
-QMLDateTime::~QMLDateTime()
+QMLStatusLine::~QMLStatusLine()
 {
 
 }
 
-void QMLDateTime::init()
+void QMLStatusLine::init()
 {
     GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
     if(NULL != pGetQMLObject)
@@ -47,7 +47,7 @@ void QMLDateTime::init()
     connect();
 }
 
-void QMLDateTime::connect()
+void QMLStatusLine::connect()
 {
     if(NULL != mSettingsObject)
     {
@@ -61,7 +61,7 @@ void QMLDateTime::connect()
 }
 
 
-void QMLDateTime::triggertimer(void)
+void QMLStatusLine::triggertimer(void)
 {
     mLogging << "triggertimer TID: " <= QThread::currentThreadId();
     QTime time = QTime::currentTime();
@@ -79,7 +79,7 @@ void QMLDateTime::triggertimer(void)
     }
 }
 
-void QMLDateTime::setDataformat2GUI(void)
+void QMLStatusLine::setDataformat2GUI(void)
 {
     int datapoolret = 0;
     DatapoolInterface cDatapoolInterface;
@@ -113,21 +113,21 @@ void QMLDateTime::setDataformat2GUI(void)
     }
 }
 
-void QMLDateTime::setClockTime(QString time)
+void QMLStatusLine::setClockTime(QString time)
 {
     QVariant cpptime(time);
     QMetaObject::invokeMethod(mClockObject, "setclock", Qt::QueuedConnection,
             Q_ARG(QVariant, cpptime));
 }
 
-void QMLDateTime::setClockDate(QString date)
+void QMLStatusLine::setClockDate(QString date)
 {
     QVariant cppdate(date);    
     QMetaObject::invokeMethod(mClockObject, "setdate", Qt::QueuedConnection,
             Q_ARG(QVariant, cppdate));    
 }
 
-void QMLDateTime::setClockDay(QString day)
+void QMLStatusLine::setClockDay(QString day)
 {
     QVariant cppday(day);
     QMetaObject::invokeMethod(mClockObject, "setday", Qt::QueuedConnection,
@@ -135,7 +135,7 @@ void QMLDateTime::setClockDay(QString day)
 
 }
 
-void QMLDateTime::setClockDateDay(QString date, QString day)
+void QMLStatusLine::setClockDateDay(QString date, QString day)
 {
     QVariant cppdate(date);
     QVariant cppday(day);
@@ -156,7 +156,7 @@ void QMLDateTime::setClockDateDay(QString date, QString day)
 }
 
 
-void QMLDateTime::receiveDateformate(QString format)
+void QMLStatusLine::receiveDateformate(QString format)
 {
     mLogging << "receiveDateformate: " << format.toStdString().c_str() << " TID: " <= QThread::currentThreadId();
     mdateformate = format;
@@ -164,7 +164,7 @@ void QMLDateTime::receiveDateformate(QString format)
     setClockDateDay(date.toString(mdateformate),date.toString("dddd"));
 }
 
-void QMLDateTime::receiveDateformateIndex(int formatid)
+void QMLStatusLine::receiveDateformateIndex(int formatid)
 {
     mLogging << "receiveDateformateIndex: " << formatid << " TID: " <= QThread::currentThreadId();
     DatapoolInterface cDatapoolInterface;

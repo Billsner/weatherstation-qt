@@ -4,7 +4,7 @@
 #include <QThread>
 #include "Utils/Logging.hpp"
 #include "DatapoolThread.hpp"
-#include "GUIQML/QMLObjects/QMLDateTime.hpp"
+#include "GUIQML/QMLObjects/QMLStatusLine.hpp"
 #include "Datapool/DatapoolControll.hpp"
 
 
@@ -27,7 +27,7 @@ private:
     void run();
     void initobjects(void);
     Logging mLogging;
-    QMLDateTime mQMLDateTime;
+    QMLStatusLine mQMLStatusLine;
     DatapoolControll mDatapoolControll;
 
 };
