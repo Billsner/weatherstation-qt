@@ -51,9 +51,10 @@ void QMLStatusLine::triggertimer(void)
     static int count = 0;
     if(0 == count)
     {
-        QDate date = QDate::currentDate();        
+        QDate date = QDate::currentDate();
+        getDateFormat();
         setClockDateDay(date.toString(mdateformate),date.toString("dddd"));
-        count = 300;
+        count = 10;
     }
     else
     {
@@ -66,21 +67,6 @@ void QMLStatusLine::setClockTime(QString time)
     QVariant cpptime(time);
     QMetaObject::invokeMethod(mClockObject, "setclock", Qt::QueuedConnection,
             Q_ARG(QVariant, cpptime));
-}
-
-void QMLStatusLine::setClockDate(QString date)
-{
-    QVariant cppdate(date);    
-    QMetaObject::invokeMethod(mClockObject, "setdate", Qt::QueuedConnection,
-            Q_ARG(QVariant, cppdate));    
-}
-
-void QMLStatusLine::setClockDay(QString day)
-{
-    QVariant cppday(day);
-    QMetaObject::invokeMethod(mClockObject, "setday", Qt::QueuedConnection,
-            Q_ARG(QVariant, cppday));
-
 }
 
 void QMLStatusLine::setClockDateDay(QString date, QString day)

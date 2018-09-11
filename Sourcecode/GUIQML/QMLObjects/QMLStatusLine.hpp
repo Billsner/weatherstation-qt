@@ -24,8 +24,6 @@ private:
     QString mdateformate;
 
     void setClockTime(QString time);
-    void setClockDate(QString date);
-    void setClockDay(QString day);
     void setClockDateDay(QString date,QString day);
 
     void getDateFormat(void);

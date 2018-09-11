@@ -2,7 +2,7 @@
 
 DatapoolInterface::DatapoolInterface() :
     mpDatapoolControll(NULL),
-    mLogging("Datapool.DatapoolInterface",true,false)
+    mLogging("Datapool.DatapoolInterface",false,false)
 {
     msElementDatapool.DataState = ESInt;
     msElementDatapool.datasize = 0;

@@ -5,6 +5,7 @@
 #include "Utils/Logging.hpp"
 #include "DatapoolThread.hpp"
 #include "GUIQML/QMLObjects/QMLStatusLine.hpp"
+#include "GUIQML/QMLObjects/QMLSettings.hpp"
 #include "Datapool/DatapoolControll.hpp"
 
 
@@ -28,6 +29,7 @@ private:
     void initobjects(void);
     Logging mLogging;
     QMLStatusLine mQMLStatusLine;
+    QMLSettings mQMLSettings;
     DatapoolControll mDatapoolControll;
 
 };

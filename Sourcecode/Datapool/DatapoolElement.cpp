@@ -12,7 +12,7 @@ DatapoolElement::DatapoolElement() :
     mReceiverChange(0x00000000),
     meElementState(ESInt),
     meElementAction(EANothing),
-    mLogging("Datapool.DatapoolElement",true,false)
+    mLogging("Datapool.DatapoolElement",false,false)
 {
 
 }

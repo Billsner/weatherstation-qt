@@ -4,7 +4,7 @@
 static int mInstancecount = 1;
 
 DatapoolTrigger::DatapoolTrigger() :
-    mLogging("Datapool.DatapoolTrigger",true,false),
+    mLogging("Datapool.DatapoolTrigger",false,false),
     minstanceID(mInstancecount)
 {
     mInstancecount++;
