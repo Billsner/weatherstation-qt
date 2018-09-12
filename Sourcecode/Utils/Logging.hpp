@@ -2,24 +2,10 @@
 #define LOGGING_HPP
 
 #include <QLoggingCategory>
+#include "LoggingServer.hpp"
 #include <ostream>
 #include <sstream>
 #include "FileAccess/LogFile.hpp"
-
-enum LogLevel
-{
-    LLcritical,
-    LLwarning,
-    LLdebug,
-    LLinfo
-};
-
-enum LogMode
-{
-    LMoutput,
-    LMfile,
-    LMall
-};
 
 
 class Logging
@@ -73,16 +59,11 @@ public:
             }
             if((LMfile == mLogMode)||(LMall == mLogMode))
             {
-                bool ret = false;
                 Logfile *pLogfile = Logfile::getInstance();
                 if(pLogfile != NULL)
                 {
                     m_Stream << "\n";
-                    pLogfile->writeLogMsg(m_Stream.str().c_str(),ret);
-                }
-                if(((pLogfile == NULL)||(false == ret))&&(LMall == LMfile))
-                {
-                    qCInfo(m_categrory) << m_Stream.str().c_str();
+                    pLogfile->writeLogMsg(m_Stream.str().c_str());
                 }
             }
             std::stringstream emptyStream;

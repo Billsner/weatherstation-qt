@@ -48,18 +48,16 @@ void Logfile::closeFile()
     m_mutex.unlock();
 }
 
-void Logfile::writeLogMsg(const char *msg, bool &ret)
+void Logfile::writeLogMsg(const char *msg)
 {
     m_mutex.lock();
     if((NULL != msg)&&(true == mfileopen))
     {
         QTextStream toFile(&mfile);
         toFile << msg;
-        ret = true;
     }
     else
     {
-        ret = false;
         qCInfo(m_categrory) << "writeLogMsg: mfileopen: " << mfileopen;
     }
     m_mutex.unlock();

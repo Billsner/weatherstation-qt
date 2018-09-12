@@ -15,7 +15,7 @@ public:
 
     void openFile();
     void closeFile();
-    void writeLogMsg(const char *msg, bool &ret);
+    void writeLogMsg(const char *msg);
 
 
 
