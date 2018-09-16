@@ -2,14 +2,17 @@
 #define LOGGINGSERVER_HPP
 
 #include <QMutex>
+#include "FileAccess/LogFile.hpp"
+#include "FileAccess/LogINI.hpp"
 
 enum LogLevel
 {
+    LLOFF,
     LLcritical,
     LLwarning,
     LLdebug,
     LLinfo,
-    LLOFF
+    LLALL
 };
 
 enum LogMode
@@ -27,9 +30,10 @@ public:
     LoggingServer();
     ~LoggingServer();
 
-    LoggingServer *getInstance() {return mpLoggingServer;}
+    static LoggingServer *getInstance();
 
     void init();
+    void finish();
 
     void getGlobalLogLevel(LogLevel &level);
     void getGlobalLogMode(LogMode &mode);
@@ -41,11 +45,15 @@ public:
     void getLoggerActive(int loggerID, bool &active);
     void getLoggerCreate(int loggerID, bool &create);
 
+    void writeLogMsg(const char *msg);
+
 private:
-    LoggingServer *mpLoggingServer;
     LogLevel mGlobalLogLevel;
     LogMode mGlobalLogMode;
     QMutex m_mutex;
+    QMutex m_mutexlogfile;
+    Logfile mLogfile;
+    LogINI mLogINI;
 };
 
 #endif // LOGGINGSERVER_HPP

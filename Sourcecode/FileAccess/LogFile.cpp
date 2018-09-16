@@ -1,26 +1,18 @@
 #include "LogFile.hpp"
 
 #include <QTextStream>
-#include <QLoggingCategory>
-
-static Logfile *mpLogfile = NULL;
-QLoggingCategory m_categrory("FileAccess.LogFile");
 
 Logfile::Logfile() :
     mfile("Log.log"),
-    mfileopen(false)
+    mfileopen(false),
+    m_categrory("FileAccess.LogFile")
 {
-    mpLogfile = this;
+
 }
 
 Logfile::~Logfile()
 {
-    mpLogfile = NULL;
-}
 
-Logfile *Logfile::getInstance()
-{
-    return mpLogfile;
 }
 
 void Logfile::openFile()

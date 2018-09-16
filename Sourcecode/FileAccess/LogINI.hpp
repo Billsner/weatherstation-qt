@@ -1,28 +1,29 @@
-#ifndef LOGFILE_HPP
-#define LOGFILE_HPP
+#ifndef LOGINI_HPP
+#define LOGINI_HPP
 
 #include <QFile>
 #include <QDataStream>
 #include <QLoggingCategory>
 #include <QMutex>
 
-class Logfile
+class LogINI
 {
 public:
-    Logfile();
-    ~Logfile();
+    LogINI();
+    ~LogINI();
 
     void openFile();
     void closeFile();
-    void writeLogMsg(const char *msg);
+    void writeLoggerList(const char *msg);
 
 
 
 private:
-    QFile mfile;
+    QFile mfileINI;
+    QFile mfileLogger;
     QMutex m_mutex;
     bool mfileopen;
     QLoggingCategory m_categrory;
 };
 
-#endif // LOGFILE_HPP
+#endif // LOGINI_HPP

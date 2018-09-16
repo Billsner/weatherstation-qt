@@ -1,18 +1,18 @@
 #include "Logging.hpp"
 
-LogLevel Logging::mLogLevelGlobal = LLdebug;
-LogMode Logging::mLogMode = LMoutput;
-
-
 Logging::Logging(const char *category, bool active, bool logcreate, LogLevel loglevellocal) :
     m_categrory("QLog"),
     mLoggername(category),
     misActive(active),
     mlogcreate(logcreate),
+    mLogLevelGlobal(LLdebug),
+    mLogMode(LMoutput),
     mLogLevelLocal(loglevellocal),
     mCurrentLogLevelLocal(loglevellocal),
-    mwritelocallevel(false)
+    mwritelocallevel(false),
+    mpLoggingServer(NULL)
 {
+    getLoggingSettings();
     if(true == mlogcreate)
     {
         *this << "Constructer  this: " <= this;
@@ -22,12 +22,16 @@ Logging::Logging(const char *category, bool active, bool logcreate, LogLevel log
 Logging::Logging(const char *category, bool active/* = false*/, bool logcreate /*= false*/) :
     m_categrory("QLog"),
     mLoggername(category),
-    misActive(active),
+    misActive(active),    
     mlogcreate(logcreate),
+    mLogLevelGlobal(LLdebug),
+    mLogMode(LMoutput),
     mLogLevelLocal(LLinfo),
     mCurrentLogLevelLocal(LLinfo),
-    mwritelocallevel(false)
+    mwritelocallevel(false),
+    mpLoggingServer(NULL)
 {
+    getLoggingSettings();
     if(true == mlogcreate)
     {
         *this << "Constructer  this: " <= this;
@@ -39,11 +43,14 @@ Logging::Logging(const char *category, bool active/* = false*/) :
     mLoggername(category),
     misActive(active),
     mlogcreate(false),
+    mLogLevelGlobal(LLdebug),
+    mLogMode(LMoutput),
     mLogLevelLocal(LLinfo),
     mCurrentLogLevelLocal(LLinfo),
-    mwritelocallevel(false)
+    mwritelocallevel(false),
+    mpLoggingServer(NULL)
 {
-
+    getLoggingSettings();
 }
 
 Logging::Logging(const char *category) :
@@ -51,11 +58,14 @@ Logging::Logging(const char *category) :
     mLoggername(category),
     misActive(false),
     mlogcreate(false),
+    mLogLevelGlobal(LLdebug),
+    mLogMode(LMoutput),
     mLogLevelLocal(LLinfo),
     mCurrentLogLevelLocal(LLinfo),
-    mwritelocallevel(false)
+    mwritelocallevel(false),
+    mpLoggingServer(NULL)
 {
-
+    getLoggingSettings();
 }
 
 Logging::~Logging()
@@ -66,13 +76,14 @@ Logging::~Logging()
     }
 }
 
-
-void Logging::setLogLevelGlobal(LogLevel loglevel)
+void Logging::getLoggingSettings()
 {
-    Logging::mLogLevelGlobal = loglevel;
-}
-
-void Logging::setLogMode(LogMode logmode)
-{
-    Logging::mLogMode = logmode;
+    mpLoggingServer = LoggingServer::getInstance();
+    if(NULL != mpLoggingServer)
+    {
+        int loggerid = invalidLogID;
+        mpLoggingServer->getLoggerID(mLoggername,loggerid);
+        mpLoggingServer->getGlobalLogLevel(mLogLevelGlobal);
+        mpLoggingServer->getGlobalLogMode(mLogMode);
+    }
 }

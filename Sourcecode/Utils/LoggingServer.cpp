@@ -1,22 +1,39 @@
 #include "LoggingServer.hpp"
+#include <QMutex>
 
+static LoggingServer *mpLoggingServer = NULL;
 
 LoggingServer::LoggingServer() :
-    mpLoggingServer(this),
-    mGlobalLogLevel(LLcritical),
-    mGlobalLogMode(LMoutput)
+    mGlobalLogLevel(LLOFF),
+    mGlobalLogMode(LMall)
 {
-
+    mpLoggingServer = this;
 }
 
 LoggingServer::~LoggingServer()
 {
+    mpLoggingServer = NULL;
+}
 
+LoggingServer *LoggingServer::getInstance()
+{
+    return mpLoggingServer;
 }
 
 void LoggingServer::init()
 {
+    m_mutexlogfile.lock();
+    mLogfile.openFile();
+    mLogINI.openFile();
+    m_mutexlogfile.unlock();
+}
 
+void LoggingServer::finish()
+{
+    m_mutexlogfile.lock();
+    mLogfile.closeFile();
+    mLogINI.closeFile();
+    m_mutexlogfile.unlock();
 }
 
 void LoggingServer::getGlobalLogLevel(LogLevel &level)
@@ -37,7 +54,8 @@ void LoggingServer::getGlobalLogMode(LogMode &mode)
 void LoggingServer::getLoggerID(const char *category, int &ID)
 {
     m_mutex.lock();
-
+    mLogINI.writeLoggerList(category);
+    ID = invalidLogID;
     m_mutex.unlock();
 }
 
@@ -67,4 +85,11 @@ void LoggingServer::getLoggerCreate(int loggerID, bool &create)
     m_mutex.lock();
 
     m_mutex.unlock();
+}
+
+void LoggingServer::writeLogMsg(const char *msg)
+{
+    m_mutexlogfile.lock();
+    mLogfile.writeLogMsg(msg);
+    m_mutexlogfile.unlock();
 }

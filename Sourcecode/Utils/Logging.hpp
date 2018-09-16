@@ -21,8 +21,7 @@ public:
     void setLoggingActive(bool active) {misActive = active;}
     void setLogLevelLocal(LogLevel loglevel){mLogLevelLocal = loglevel;}
 
-    static void setLogLevelGlobal(LogLevel loglevel);
-    static void setLogMode(LogMode logmode);
+    void getLoggingSettings();
 
     Logging &operator<<(const LogLevel &loglevel)
     {
@@ -58,12 +57,11 @@ public:
                 qCDebug(m_categrory) << m_Stream.str().c_str();
             }
             if((LMfile == mLogMode)||(LMall == mLogMode))
-            {
-                Logfile *pLogfile = Logfile::getInstance();
-                if(pLogfile != NULL)
+            {                
+                if(mpLoggingServer != NULL)
                 {
                     m_Stream << "\n";
-                    pLogfile->writeLogMsg(m_Stream.str().c_str());
+                    mpLoggingServer->writeLogMsg(m_Stream.str().c_str());
                 }
             }
             std::stringstream emptyStream;
@@ -107,12 +105,13 @@ public:
     const char *mLoggername;
     bool misActive;
     bool mlogcreate;
-    static LogLevel mLogLevelGlobal;
-    static LogMode mLogMode;
+    LogLevel mLogLevelGlobal;
+    LogMode mLogMode;
     LogLevel mLogLevelLocal;
     LogLevel mCurrentLogLevelLocal;
     bool mwritelocallevel;
     std::stringstream m_Stream;
+    LoggingServer *mpLoggingServer;
 
 };
 
