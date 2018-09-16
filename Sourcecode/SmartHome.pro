@@ -40,4 +40,5 @@ HEADERS += \
     GUIQML/QMLObjects/QMLStatusLine.hpp \
     Datapool/DatapoolTrigger.hpp \
     Utils/LoggingServer.hpp \
-    FileAccess/LogINI.hpp
+    FileAccess/LogINI.hpp \
+    Utils/LoggingDef.hpp

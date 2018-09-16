@@ -3,9 +3,7 @@
 
 static LoggingServer *mpLoggingServer = NULL;
 
-LoggingServer::LoggingServer() :
-    mGlobalLogLevel(LLOFF),
-    mGlobalLogMode(LMall)
+LoggingServer::LoggingServer()
 {
     mpLoggingServer = this;
 }
@@ -39,14 +37,14 @@ void LoggingServer::finish()
 void LoggingServer::getGlobalLogLevel(LogLevel &level)
 {
     m_mutex.lock();
-    level = mGlobalLogLevel;
+    mLogINI.getGlobalLogLevel(level);
     m_mutex.unlock();
 }
 
 void LoggingServer::getGlobalLogMode(LogMode &mode)
 {
     m_mutex.lock();
-    mode = mGlobalLogMode;
+    mLogINI.getGlobalLogMode(mode);
     m_mutex.unlock();
 }
 

@@ -4,25 +4,7 @@
 #include <QMutex>
 #include "FileAccess/LogFile.hpp"
 #include "FileAccess/LogINI.hpp"
-
-enum LogLevel
-{
-    LLOFF,
-    LLcritical,
-    LLwarning,
-    LLdebug,
-    LLinfo,
-    LLALL
-};
-
-enum LogMode
-{
-    LMoutput,
-    LMfile,
-    LMall
-};
-
-const int invalidLogID = -1;
+#include "Utils/LoggingDef.hpp"
 
 class LoggingServer
 {
@@ -48,8 +30,6 @@ public:
     void writeLogMsg(const char *msg);
 
 private:
-    LogLevel mGlobalLogLevel;
-    LogMode mGlobalLogMode;
     QMutex m_mutex;
     QMutex m_mutexlogfile;
     Logfile mLogfile;

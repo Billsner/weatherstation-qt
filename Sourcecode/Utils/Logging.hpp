@@ -2,6 +2,7 @@
 #define LOGGING_HPP
 
 #include <QLoggingCategory>
+#include "Utils/LoggingDef.hpp"
 #include "LoggingServer.hpp"
 #include <ostream>
 #include <sstream>
