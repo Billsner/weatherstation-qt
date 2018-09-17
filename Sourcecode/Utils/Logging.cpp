@@ -82,8 +82,23 @@ void Logging::getLoggingSettings()
     if(NULL != mpLoggingServer)
     {
         int loggerid = invalidLogID;
-        mpLoggingServer->getLoggerID(mLoggername,loggerid);
         mpLoggingServer->getGlobalLogLevel(mLogLevelGlobal);
         mpLoggingServer->getGlobalLogMode(mLogMode);
+        mpLoggingServer->getLoggerID(mLoggername,loggerid);
+        if(loggerid != invalidLogID)
+        {
+            mpLoggingServer->getLoggerActive(loggerid,misActive);
+            mpLoggingServer->getLoggerCreate(loggerid,mlogcreate);
+            mpLoggingServer->getLoggerLevel(loggerid,mLogLevelLocal);
+            mpLoggingServer->getLoggerMode(loggerid,mLogMode);
+        }
+        else
+        {
+            misActive = false;
+            mlogcreate = false;
+            mLogLevelLocal = LLOFF;
+            mLogMode = LMoutput;
+        }
+        qCInfo(m_categrory) << "log config: " << mLoggername << misActive << mlogcreate << mLogLevelLocal << mLogMode << loggerid;
     }
 }

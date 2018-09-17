@@ -52,8 +52,8 @@ void LoggingServer::getGlobalLogMode(LogMode &mode)
 void LoggingServer::getLoggerID(const char *category, int &ID)
 {
     m_mutex.lock();
+    mLogINI.getLoggerID(category,ID);
     mLogINI.writeLoggerList(category);
-    ID = invalidLogID;
     m_mutex.unlock();
 }
 

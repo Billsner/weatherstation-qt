@@ -7,7 +7,7 @@
 #include <QMutex>
 #include <QString>
 #include "Utils/LoggingDef.hpp"
-
+#include <vector>
 
 class LogINI
 {
@@ -23,15 +23,23 @@ public:
     void getGlobalLogLevel(LogLevel &level){level = mGlobalLogLevel;}
     void getGlobalLogMode(LogMode &mode){mode = mGlobalLogMode;}
 
+    void getLoggerID(QString LoggerName, int &loggerid);
+    void getLogLevel(int Loggerid, LogLevel &level);
+    void getLogMode(int Loggerid, LogMode &mod);
+    void getLogActive(int Loggerid, bool &active);
+    void getLogConstr(int Loggerid, bool &constr);
+
     void writeLoggerList(const char *msg);
 
 private:
 
     void processReadLine(QString line);
+    void setLogger(QString LoggerEntry);
+
     LogLevel getLogLevelFromString(QString level);
     LogMode getLogModFromString(QString mod);
-
-
+    bool getLogActiveFromString(QString active);
+    bool getLogContrFromString(QString constr);
 
     QFile mfileINI;
     QFile mfileLogger;
@@ -41,6 +49,9 @@ private:
 
     LogLevel mGlobalLogLevel;
     LogMode mGlobalLogMode;
+    int LoggerArraySIze;
+    std::vector<slogger> mvLogger;
+    
 };
 
 #endif // LOGINI_HPP

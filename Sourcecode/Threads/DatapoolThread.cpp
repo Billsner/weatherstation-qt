@@ -5,7 +5,7 @@
 
 DatapoolThread::DatapoolThread(QObject *parent):
     QThread(parent),
-    mLogging("thread.DatapoolThread",false,true)
+    mLogging("thread.DatapoolThread")
 {
 
 }

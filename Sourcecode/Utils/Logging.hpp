@@ -19,16 +19,13 @@ public:
 
     ~Logging();
 
-    void setLoggingActive(bool active) {misActive = active;}
-    void setLogLevelLocal(LogLevel loglevel){mLogLevelLocal = loglevel;}
-
     void getLoggingSettings();
 
     Logging &operator<<(const LogLevel &loglevel)
     {
         mCurrentLogLevelLocal = loglevel;
-        if(((true == misActive)||(mCurrentLogLevelLocal == LLcritical))
-                &&(mCurrentLogLevelLocal <= mLogLevelGlobal))
+        if(((true == misActive)&&(mCurrentLogLevelLocal <= mLogLevelLocal))
+                ||(mCurrentLogLevelLocal <= mLogLevelGlobal))
         {
             createLogHeader();
         }
@@ -37,8 +34,8 @@ public:
 
     template<class T>  Logging &operator<<(const T &msg)
     {
-        if(((true == misActive)||(mCurrentLogLevelLocal == LLcritical))
-                &&(mCurrentLogLevelLocal <= mLogLevelGlobal))
+        if(((true == misActive)&&(mCurrentLogLevelLocal <= mLogLevelLocal))
+                ||(mCurrentLogLevelLocal <= mLogLevelGlobal))
         {
             createLogHeader();
             m_Stream << msg;
@@ -48,14 +45,14 @@ public:
 
     template<class T>  Logging &operator<=(const T &msg)
     {
-        if(((true == misActive)||(mCurrentLogLevelLocal == LLcritical))
-            &&(mCurrentLogLevelLocal <= mLogLevelGlobal))
+        if(((true == misActive)&&(mCurrentLogLevelLocal <= mLogLevelLocal))
+                ||(mCurrentLogLevelLocal <= mLogLevelGlobal))
         {
             createLogHeader();
             m_Stream << msg;
             if((LMoutput == mLogMode)||(LMall == mLogMode))
             {
-                qCDebug(m_categrory) << m_Stream.str().c_str();
+                qCInfo(m_categrory) << m_Stream.str().c_str();
             }
             if((LMfile == mLogMode)||(LMall == mLogMode))
             {                
