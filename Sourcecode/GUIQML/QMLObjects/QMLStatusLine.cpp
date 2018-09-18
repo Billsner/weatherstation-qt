@@ -8,7 +8,7 @@
 
 
 QMLStatusLine::QMLStatusLine() :
-    mLogging("GUIQML.QMLObjects.QMLStatusLine",true,false),
+    mLogging("GUIQML.QMLObjects.QMLStatusLine"),
     mdateformate("dd.MM.yyyy")
 {
     mClockObject = NULL;

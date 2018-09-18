@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     LoggingServer cLoggingServer;
     cLoggingServer.init();
 
-    Logging logger("main",true,false,LLdebug);
+    Logging logger("main");
     logger << LLcritical << "Start TID " <= QThread::currentThreadId();
 
 

@@ -3,7 +3,7 @@
 static GetQMLObject *mpGetQMLObject = NULL;
 
 GetQMLObject::GetQMLObject() :
-    mLogging("GUIQML.GetQMLObject",false,true),
+    mLogging("GUIQML.GetQMLObject"),
     mQMLEngineRootObject(NULL)
 {
 

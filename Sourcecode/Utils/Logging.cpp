@@ -1,67 +1,15 @@
 #include "Logging.hpp"
+#include <QTime>
 
-Logging::Logging(const char *category, bool active, bool logcreate, LogLevel loglevellocal) :
-    m_categrory("QLog"),
-    mLoggername(category),
-    misActive(active),
-    mlogcreate(logcreate),
-    mLogLevelGlobal(LLdebug),
-    mLogMode(LMoutput),
-    mLogLevelLocal(loglevellocal),
-    mCurrentLogLevelLocal(loglevellocal),
-    mwritelocallevel(false),
-    mpLoggingServer(NULL)
-{
-    getLoggingSettings();
-    if(true == mlogcreate)
-    {
-        *this << "Constructer  this: " <= this;
-    }
-}
-
-Logging::Logging(const char *category, bool active/* = false*/, bool logcreate /*= false*/) :
-    m_categrory("QLog"),
-    mLoggername(category),
-    misActive(active),    
-    mlogcreate(logcreate),
-    mLogLevelGlobal(LLdebug),
-    mLogMode(LMoutput),
-    mLogLevelLocal(LLinfo),
-    mCurrentLogLevelLocal(LLinfo),
-    mwritelocallevel(false),
-    mpLoggingServer(NULL)
-{
-    getLoggingSettings();
-    if(true == mlogcreate)
-    {
-        *this << "Constructer  this: " <= this;
-    }
-}
-
-Logging::Logging(const char *category, bool active/* = false*/) :
-    m_categrory("QLog"),
-    mLoggername(category),
-    misActive(active),
-    mlogcreate(false),
-    mLogLevelGlobal(LLdebug),
-    mLogMode(LMoutput),
-    mLogLevelLocal(LLinfo),
-    mCurrentLogLevelLocal(LLinfo),
-    mwritelocallevel(false),
-    mpLoggingServer(NULL)
-{
-    getLoggingSettings();
-}
-
-Logging::Logging(const char *category) :
-    m_categrory("QLog"),
-    mLoggername(category),
+Logging::Logging(const char *Loggername) :
+    m_categrory("CLog"),
+    mLoggername(Loggername),
     misActive(false),
     mlogcreate(false),
-    mLogLevelGlobal(LLdebug),
-    mLogMode(LMoutput),
-    mLogLevelLocal(LLinfo),
-    mCurrentLogLevelLocal(LLinfo),
+    mLogLevelGlobal(LLOFF),
+    mLogMode(LMnoLog),
+    mLogLevelLocal(LLOFF),
+    mCurrentLogLevelLocal(LLOFF),
     mwritelocallevel(false),
     mpLoggingServer(NULL)
 {
@@ -96,9 +44,39 @@ void Logging::getLoggingSettings()
         {
             misActive = false;
             mlogcreate = false;
-            mLogLevelLocal = LLOFF;
+            mLogLevelLocal = LLcritical;
             mLogMode = LMoutput;
+            *this << LLcritical << "log config: default config " << mLoggername << misActive << mlogcreate << mLogLevelLocal << mLogMode << loggerid;
         }
-        qCInfo(m_categrory) << "log config: " << mLoggername << misActive << mlogcreate << mLogLevelLocal << mLogMode << loggerid;
+        *this << LLinfo << "log config: " << mLoggername << misActive << mlogcreate << mLogLevelLocal << mLogMode << loggerid;
+    }
+}
+
+void Logging::createLogHeader(void)
+{
+    if(false == mwritelocallevel)
+    {
+        m_Stream << QTime::currentTime().toString("hh:mm:ss.zzz").toStdString() << " ";
+        if(mCurrentLogLevelLocal == LLcritical)
+        {
+            m_Stream << mLoggername << " [LLcritical]: " ;
+        }
+        else if(mCurrentLogLevelLocal == LLwarning)
+        {
+            m_Stream <<  mLoggername << " [LLwarning]: ";
+        }
+        else if(mCurrentLogLevelLocal == LLdebug)
+        {
+            m_Stream <<  mLoggername << " [LLdebug]: ";
+        }
+        else if(mCurrentLogLevelLocal == LLinfo)
+        {
+            m_Stream <<  mLoggername << " [LLinfo]: ";
+        }
+        else
+        {
+            m_Stream <<  mLoggername << " [LLall]: ";
+        }
+        mwritelocallevel = true;
     }
 }

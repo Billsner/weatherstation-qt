@@ -26,7 +26,7 @@ void LogINI::openFile()
     if(true == mfileINI.open(QIODevice::ReadOnly))
     {
         mfileopen = true;
-        qCInfo(m_categrory) << "openFile mfileINI: success";
+        //qCInfo(m_categrory) << "openFile mfileINI: success";
         loadINI();
     }
     else
@@ -36,7 +36,7 @@ void LogINI::openFile()
     }
     if(true == mfileLogger.open(QIODevice::ReadWrite))
     {
-        qCInfo(m_categrory) << "openFile mfileLogger: success";
+        //qCInfo(m_categrory) << "openFile mfileLogger: success";
     }
     else
     {
@@ -51,7 +51,7 @@ void LogINI::closeFile()
     mfileINI.close();
     mfileLogger.close();
     mfileopen = false;
-    qCInfo(m_categrory) << "closeFile";
+    //qCInfo(m_categrory) << "closeFile";
     m_mutex.unlock();
 }
 
@@ -75,7 +75,7 @@ void LogINI::getLoggerID(QString LoggerName, int &loggerid)
             loggerid = static_cast<int>(i);
         }
     }
-    qCInfo(m_categrory) << "getLoggerID: LoggerName: " << LoggerName << " id " << loggerid;
+    //qCInfo(m_categrory) << "getLoggerID: LoggerName: " << LoggerName << " id " << loggerid;
 }
 
 void LogINI::getLogLevel(int Loggerid, LogLevel &level)
@@ -118,13 +118,13 @@ void LogINI::processReadLine(QString line)
     {
         QString level = line.section(" ",1,1);
         mGlobalLogLevel = getLogLevelFromString(level);
-        qCInfo(m_categrory) << "processReadLine mGlobalLogLevel " << mGlobalLogLevel;
+        //qCInfo(m_categrory) << "processReadLine mGlobalLogLevel " << mGlobalLogLevel;
     }
     else if(line.contains("GlobalLogMode"))
     {
         QString mod = line.section(" ",1,1);
         mGlobalLogMode = getLogModFromString(mod);
-        qCInfo(m_categrory) << "processReadLinemGlobalLogMode " << mGlobalLogMode;
+        //qCInfo(m_categrory) << "processReadLinemGlobalLogMode " << mGlobalLogMode;
     }
     else
     {
@@ -134,13 +134,13 @@ void LogINI::processReadLine(QString line)
 
 void LogINI::setLogger(QString LoggerEntry)
 {
-    qCInfo(m_categrory) << "setLogger: " << LoggerEntry;
+    //qCInfo(m_categrory) << "setLogger: " << LoggerEntry;
     QString loggername = LoggerEntry.section(" ",0,0);
     int loggerid = invalidLogID;
     getLoggerID(loggername,loggerid);
     if(loggerid == invalidLogID)
     {
-        qCInfo(m_categrory) << "setLogger loggername: " << loggername;
+        //qCInfo(m_categrory) << "setLogger loggername: " << loggername;
         QString loggerlevel = LoggerEntry.section(" ",1,1);
         QString loggermode = LoggerEntry.section(" ",2,2);
         QString loggeractive = LoggerEntry.section(" ",3,3);
@@ -152,7 +152,7 @@ void LogINI::setLogger(QString LoggerEntry)
         newlogger.logon = getLogActiveFromString(loggeractive);
         newlogger.logconstr = getLogContrFromString(loggercronstr);
         mvLogger.push_back(newlogger);
-        qCInfo(m_categrory) << "setLogger loggername: " << loggername << " Size " << mvLogger.size();
+        //qCInfo(m_categrory) << "setLogger loggername: " << loggername << " Size " << mvLogger.size();
     }
 }
 
@@ -180,14 +180,18 @@ LogLevel LogINI::getLogLevelFromString(QString level)
     {
         ret = LLALL;
     }
-    qCInfo(m_categrory) << "getLogLevelFromString: " << level  << " ret " << ret;
+    //qCInfo(m_categrory) << "getLogLevelFromString: " << level  << " ret " << ret;
     return ret;
 }
 
 LogMode LogINI::getLogModFromString(QString mod)
 {
-    LogMode ret = LMoutput;    
-    if(mod == "LMfile")
+    LogMode ret = LMnoLog;
+    if(mod == "LMnoLog")
+    {
+        ret = LMnoLog;
+    }
+    else if(mod == "LMfile")
     {
         ret = LMfile;
     }
@@ -195,7 +199,7 @@ LogMode LogINI::getLogModFromString(QString mod)
     {
         ret = LMall;
     }
-    qCInfo(m_categrory) << "getLogModFromString: " << mod  << " ret " << ret;
+    //qCInfo(m_categrory) << "getLogModFromString: " << mod  << " ret " << ret;
     return ret;
 }
 
@@ -206,7 +210,7 @@ bool LogINI::getLogActiveFromString(QString active)
     {
         ret = true;
     }
-    qCInfo(m_categrory) << "getLogActiveFromString: " << active << " ret " << ret;
+    //qCInfo(m_categrory) << "getLogActiveFromString: " << active << " ret " << ret;
     return ret;
 }
 
@@ -217,7 +221,7 @@ bool LogINI::getLogContrFromString(QString constr)
     {
         ret = true;
     }
-    qCInfo(m_categrory) << "getLogContrFromString: " << constr << " ret " << ret;
+    //qCInfo(m_categrory) << "getLogContrFromString: " << constr << " ret " << ret;
     return ret;
 }
 
@@ -231,7 +235,7 @@ void LogINI::writeLoggerList(const char *msg)
     }
     else
     {
-        qCInfo(m_categrory) << "writeLogMsg: mfileopen: " << mfileopen;
+        //qCInfo(m_categrory) << "writeLogMsg: mfileopen: " << mfileopen;
     }
     m_mutex.unlock();
 }

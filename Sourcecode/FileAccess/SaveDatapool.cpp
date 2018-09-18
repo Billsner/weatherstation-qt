@@ -31,7 +31,7 @@ static int DatapoolMinorVersion = 1; //change as compatible if datapoolid is add
 
 
 SaveDatapool::SaveDatapool() :
-    mLogging("fileaccess.SaveDatapool",true,false),
+    mLogging("fileaccess.SaveDatapool"),
     mfilename("datapool.data"),
     mfile(mfilename),
     mbufferindex(0),

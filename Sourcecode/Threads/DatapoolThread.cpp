@@ -1,7 +1,7 @@
 #include "DatapoolThread.hpp"
 #include "Datapool/DatapoolInterface.hpp"
 #include <QTimer>
-#include <QTime>
+//#include <QTime>
 
 DatapoolThread::DatapoolThread(QObject *parent):
     QThread(parent),
@@ -49,7 +49,7 @@ void DatapoolThread::run()
 
 void DatapoolThread::timerHit()
 {
-    mLogging << QTime::currentTime().toString().toStdString() << " timerHit TID: " <= this->currentThreadId();
+    mLogging << " timerHit TID: " <= this->currentThreadId();
     mQMLStatusLine.triggertimer();
     mQMLSettings.triggertimer();
 

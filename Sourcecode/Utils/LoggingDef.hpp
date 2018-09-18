@@ -15,6 +15,7 @@ enum LogLevel
 
 enum LogMode
 {
+    LMnoLog,
     LMoutput,
     LMfile,
     LMall

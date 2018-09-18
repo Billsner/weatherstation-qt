@@ -21,7 +21,7 @@ void Logfile::openFile()
     if(true == mfile.open(QIODevice::WriteOnly))
     {
         mfileopen = true;
-        qCInfo(m_categrory) << "openFile: success";
+        //qCInfo(m_categrory) << "openFile: success";
     }
     else
     {
@@ -36,7 +36,7 @@ void Logfile::closeFile()
     m_mutex.lock();
     mfile.close();
     mfileopen = false;
-    qCInfo(m_categrory) << "closeFile";
+    //qCInfo(m_categrory) << "closeFile";
     m_mutex.unlock();
 }
 

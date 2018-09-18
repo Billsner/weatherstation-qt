@@ -4,7 +4,7 @@
 static DatapoolControll *mpDatapoolControll = NULL;
 
 DatapoolControll::DatapoolControll() :
-    mLogging("Datapool.DatapoolControll",false,false)
+    mLogging("Datapool.DatapoolControll")
 {
     mpDatapoolControll = this;
 }

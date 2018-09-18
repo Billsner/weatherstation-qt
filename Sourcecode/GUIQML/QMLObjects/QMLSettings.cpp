@@ -8,7 +8,7 @@
 
 
 QMLSettings::QMLSettings() :
-    mLogging("GUIQML.QMLObjects.QMLSettings",true,false)
+    mLogging("GUIQML.QMLObjects.QMLSettings")
 {
    mSettingsObject = NULL;
 }

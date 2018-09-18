@@ -12,9 +12,6 @@
 class Logging
 {
 public:
-    Logging(const char *category, bool active, bool logcreate, LogLevel loglevellocal);
-    Logging(const char *category, bool active, bool logcreate);
-    Logging(const char *category, bool active);
     Logging(const char *category);
 
     ~Logging();
@@ -70,13 +67,13 @@ public:
         return *this;
     }
 
-    void createLogHeader(void)
+    void createLogHeader(void);/*
     {
         if(false == mwritelocallevel)
         {
             if(mCurrentLogLevelLocal == LLcritical)
             {
-                m_Stream << mLoggername << " [LLcritical]: ";
+                m_Stream << mLoggername << " [LLcritical]: " ;
             }
             else if(mCurrentLogLevelLocal == LLwarning)
             {
@@ -94,9 +91,10 @@ public:
             {
                 m_Stream <<  mLoggername << " [LLall]: ";
             }
+            m_Stream << QTime::currentTime().toString().toStdString() ;
             mwritelocallevel = true;
         }
-    }
+    }*/
 
  private:
     QLoggingCategory m_categrory;

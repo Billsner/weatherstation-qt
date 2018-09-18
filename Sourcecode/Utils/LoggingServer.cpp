@@ -60,28 +60,28 @@ void LoggingServer::getLoggerID(const char *category, int &ID)
 void LoggingServer::getLoggerLevel(int loggerID, LogLevel &level)
 {
     m_mutex.lock();
-
+    mLogINI.getLogLevel(loggerID,level);
     m_mutex.unlock();
 }
 
 void LoggingServer::getLoggerMode(int loggerID, LogMode &mode)
 {
     m_mutex.lock();
-
+    mLogINI.getLogMode(loggerID,mode);
     m_mutex.unlock();
 }
 
 void LoggingServer::getLoggerActive(int loggerID, bool &active)
 {
     m_mutex.lock();
-
+    mLogINI.getLogActive(loggerID,active);
     m_mutex.unlock();
 }
 
 void LoggingServer::getLoggerCreate(int loggerID, bool &create)
 {
     m_mutex.lock();
-
+    mLogINI.getLogConstr(loggerID,create);
     m_mutex.unlock();
 }
 
