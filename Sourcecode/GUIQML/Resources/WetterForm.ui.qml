@@ -4,66 +4,60 @@ import QtQuick.Layouts 1.0
 
 PageBackground {
     id: pageBackground1
-    property alias groupBox1: groupBox1
 
-    GridLayout {
-        x: 148
-        y: 159
-        anchors.horizontalCenterOffset: 94
-        anchors.horizontalCenter: parent.horizontalCenter
-        columnSpacing: 20
-        rowSpacing: 20
-        rows: 2
-        columns: 2
+    GroupBox {
+        id: groupBox
+        x: 22
+        y: 20
+        width: 132
+        height: 186
+        title: qsTr("Heute")
 
-        GroupBox {
-            id: groupBox1
-            Layout.fillHeight: false
-            Layout.fillWidth: false
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            title: qsTr("Living Room")
+        Text {
+            id: text3
+            x: 12
+            y: -9
+            width: 88
+            height: 17
+            color: "#f9f8f8"
+            text: "Min:"
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+        }
 
-            GridLayout {
-                rows: 3
-                columns: 2
+        Text {
+            id: text2
+            x: 12
+            y: 14
+            width: 88
+            height: 17
+            color: "#f9f8f8"
+            text: "Max:"
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            font.pixelSize: 12
+        }
 
-                Switch {
-                    id: switch1
-                    text: qsTr("All")
-                }
+        GridLayout {
+            x: 352
+            y: 75
+            anchors.horizontalCenterOffset: 94
+            anchors.horizontalCenter: parent.horizontalCenter
+            columnSpacing: 20
+            rowSpacing: 20
+            rows: 2
+            columns: 2
+        }
 
-                Slider {
-                    id: slider1
-                    Layout.preferredHeight: 25
-                    Layout.preferredWidth: 180
-                    value: 0.5
-                }
 
-                Switch {
-                    id: switch2
-                    text: qsTr("Central")
-                }
-
-                Slider {
-                    id: slider2
-                    Layout.preferredHeight: 25
-                    Layout.preferredWidth: 180
-                    value: 0.5
-                }
-
-                Switch {
-                    id: switch3
-                    text: qsTr("Corner")
-                }
-
-                Slider {
-                    id: slider3
-                    Layout.preferredHeight: 25
-                    Layout.preferredWidth: 180
-                    value: 0.5
-                }
-            }
+        Image {
+            id: image1
+            x: 4
+            y: 41
+            width: 100
+            height: 90
+            source: "Data-Pic-Images/Pictures/WetterIcons/30.png"
         }
     }
-
 }
