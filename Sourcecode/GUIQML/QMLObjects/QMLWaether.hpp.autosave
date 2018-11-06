@@ -1,0 +1,30 @@
+#ifndef QMLWAETHER_HPP
+#define QMLWAETHER_HPP
+
+#include <QObject>
+#include "Utils/Logging.hpp"
+
+
+class QMLWaether
+{
+    Q_OBJECT
+public:
+    QMLWaether();
+    ~QMLWaether();
+    
+    void init();
+
+    void triggertimer(void);
+    
+signals:
+    
+public slots:
+    
+private:
+    
+    
+    void connect(); 
+    
+};
+
+#endif // QMLWAETHER_HPP

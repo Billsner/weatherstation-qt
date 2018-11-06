@@ -3,7 +3,6 @@
 
 #include <QThread>
 #include "Utils/Logging.hpp"
-#include "DatapoolThread.hpp"
 #include "GUIQML/QMLObjects/QMLStatusLine.hpp"
 #include "GUIQML/QMLObjects/QMLSettings.hpp"
 #include "Datapool/DatapoolControll.hpp"

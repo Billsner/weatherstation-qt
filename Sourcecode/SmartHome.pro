@@ -15,7 +15,9 @@ SOURCES += main.cpp \
     GUIQML/QMLObjects/QMLStatusLine.cpp \
     Datapool/DatapoolTrigger.cpp \
     Utils/LoggingServer.cpp \
-    FileAccess/LogINI.cpp
+    FileAccess/LogINI.cpp \
+    GUIQML/QMLObjects/QMLWeather.cpp \
+    Threads/WeatherThread.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -41,4 +43,6 @@ HEADERS += \
     Datapool/DatapoolTrigger.hpp \
     Utils/LoggingServer.hpp \
     FileAccess/LogINI.hpp \
-    Utils/LoggingDef.hpp
+    Utils/LoggingDef.hpp \
+    GUIQML/QMLObjects/QMLWeather.hpp \
+    Threads/WeatherThread.hpp

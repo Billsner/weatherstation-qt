@@ -1,7 +1,5 @@
 #include "DatapoolThread.hpp"
-#include "Datapool/DatapoolInterface.hpp"
 #include <QTimer>
-//#include <QTime>
 
 DatapoolThread::DatapoolThread(QObject *parent):
     QThread(parent),
