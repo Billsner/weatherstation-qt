@@ -4,6 +4,10 @@ import QtQuick.Layouts 1.0
 
 PageBackground {
     id: pageBackground1
+    objectName: "WeatherWindow"
+
+    //signal signaldateformatid(int formatid)
+    property alias today: today
 
     GroupBox {
         id: groupBox
@@ -52,7 +56,7 @@ PageBackground {
 
 
         Image {
-            id: image1
+            id: today
             x: 4
             y: 41
             width: 100

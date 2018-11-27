@@ -26,6 +26,7 @@ private:
 
 
     void connect();
+    void setToday();
 
 };
 

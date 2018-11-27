@@ -16,6 +16,7 @@ WeatherThread::~WeatherThread()
 void WeatherThread::initthread()
 {
     mQMLWeather.moveToThread(this);
+    mtimer.moveToThread(this);
 }
 
 void WeatherThread::initobjects(void)
@@ -35,6 +36,7 @@ void WeatherThread::run()
 void WeatherThread::timerHit()
 {
     mQMLWeather.triggertimer();
+    mLogging << "timerHit ";
 }
 
 void WeatherThread::startTimer(int ms)
