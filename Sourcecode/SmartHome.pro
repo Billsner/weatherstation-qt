@@ -17,7 +17,9 @@ SOURCES += main.cpp \
     Utils/LoggingServer.cpp \
     FileAccess/LogINI.cpp \
     GUIQML/QMLObjects/QMLWeather.cpp \
-    Threads/WeatherThread.cpp
+    Threads/WeatherThread.cpp \
+    weather/WeatherPicInfo.cpp \
+    weather/WeatherPicWarning.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -45,4 +47,7 @@ HEADERS += \
     FileAccess/LogINI.hpp \
     Utils/LoggingDef.hpp \
     GUIQML/QMLObjects/QMLWeather.hpp \
-    Threads/WeatherThread.hpp
+    Threads/WeatherThread.hpp \
+    weather/WeatherPicInfo.hpp \
+    weather/weatherdef.hpp \
+    weather/WeatherPicWarning.hpp

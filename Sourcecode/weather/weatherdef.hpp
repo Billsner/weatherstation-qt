@@ -1,0 +1,4 @@
+#ifndef WEATHERDEF_HPP
+#define WEATHERDEF_HPP
+
+#endif // WEATHERDEF_HPP
