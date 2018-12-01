@@ -1,6 +1,8 @@
 #include "QMLWeather.hpp"
 #include "GUIQML/GetQMLObject.hpp"
 #include "Datapool/DatapoolInterface.hpp"
+#include "weather/weatherdef.hpp"
+#include "weather/WeatherPicInfo.hpp"
 
 QMLWeather::QMLWeather() :
     mLogging("GUIQML.QMLObjects.QMLWeather"),
@@ -52,7 +54,7 @@ void QMLWeather::triggertimer(void)
      mLogging << LLinfo <= "triggertimer ";
      if(0 == count)
      {
-         count = 10;
+         count = 2;
          setToday();
      }
      else
@@ -64,29 +66,19 @@ void QMLWeather::triggertimer(void)
 void QMLWeather::setToday()
 {
     static int picid = 0;
-    QString picpath;
-    switch(picid)
-    {
-    case 0:
-        picpath = "Data-Pic-Images/Pictures/WetterIcons/0-8.png";
-        break;
-    case 1:
-        picpath = "Data-Pic-Images/Pictures/WetterIcons/2-8.png";
-        break;
-    case 2:
-        picpath = "Data-Pic-Images/Pictures/WetterIcons/5-8.png";
-        break;
-
-    default:
-        picpath = "Data-Pic-Images/Pictures/WetterIcons/eis.png";
-        picid = -1;
-        break;
-    }
+    WeatherPicInfo cPicInfo;
+    QString picpath = cPicInfo.getPicPath(static_cast<eWeatherStatus>(picid));
     picid++;
+    if(picid >= static_cast<int>(weatherstatuscount))
+    {
+        picid = 0;
+    }
 
-
-    QVariant today(picpath);
-    DatapoolInterface cDatapoolInterface;
-    QMetaObject::invokeMethod(mweather, "setToday", Qt::QueuedConnection,
-            Q_ARG(QVariant, today));
+    if(!picpath.isEmpty())
+    {
+        QVariant today(picpath);
+        DatapoolInterface cDatapoolInterface;
+        QMetaObject::invokeMethod(mweather, "setToday", Qt::QueuedConnection,
+                                  Q_ARG(QVariant, today));
+    }
 }

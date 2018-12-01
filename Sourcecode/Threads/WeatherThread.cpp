@@ -30,13 +30,14 @@ void WeatherThread::run()
     initobjects();
     startTimer(1000);
     int code = exec();
+    stopTimer();
     mLogging << "run: exit code: " <= code;
 }
 
 void WeatherThread::timerHit()
 {
     mQMLWeather.triggertimer();
-    mLogging << "timerHit ";
+    mLogging <= "timerHit ";
 }
 
 void WeatherThread::startTimer(int ms)
@@ -44,4 +45,9 @@ void WeatherThread::startTimer(int ms)
     connect(&mtimer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
     mtimer.setInterval(ms);
     mtimer.start();
+}
+
+void WeatherThread::stopTimer()
+{
+    mtimer.stop();
 }
