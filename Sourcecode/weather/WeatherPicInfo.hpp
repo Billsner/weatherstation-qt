@@ -4,8 +4,9 @@
 #include <QStringList>
 #include "weatherdef.hpp"
 
-const QStringList pathImage2PICID =
+const QStringList pathImageStatus2PICID =
 {
+    "Data-Pic-Images/Pictures/WetterIcons/no_info.png", //ws_no_info,
     "Data-Pic-Images/Pictures/WetterIcons/0-8.png", //wolkenlos,
     "Data-Pic-Images/Pictures/WetterIcons/2-8.png", //heiter,
     "Data-Pic-Images/Pictures/WetterIcons/2-8.png", //gering_bewölkt,

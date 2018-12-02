@@ -3,6 +3,7 @@
 #include "Datapool/DatapoolInterface.hpp"
 #include "weather/weatherdef.hpp"
 #include "weather/WeatherPicInfo.hpp"
+#include "weather/WeatherPicWarning.hpp"
 
 QMLWeather::QMLWeather() :
     mLogging("GUIQML.QMLObjects.QMLWeather"),
@@ -56,6 +57,7 @@ void QMLWeather::triggertimer(void)
      {
          count = 2;
          setToday();
+         setWarning();
      }
      else
      {
@@ -69,7 +71,7 @@ void QMLWeather::setToday()
     WeatherPicInfo cPicInfo;
     QString picpath = cPicInfo.getPicPath(static_cast<eWeatherStatus>(picid));
     picid++;
-    if(picid >= static_cast<int>(weatherstatuscount))
+    if(picid >= static_cast<int>(ws_count))
     {
         picid = 0;
     }
@@ -79,6 +81,26 @@ void QMLWeather::setToday()
         QVariant today(picpath);
         DatapoolInterface cDatapoolInterface;
         QMetaObject::invokeMethod(mweather, "setToday", Qt::QueuedConnection,
+                                  Q_ARG(QVariant, today));
+    }
+}
+
+void QMLWeather::setWarning()
+{
+    static int picid = 0;
+    WeatherPicWarning cPicInfo;
+    QString picpath = cPicInfo.getPicPath(static_cast<eWeatherWarning>(picid));
+    picid++;
+    if(picid >= static_cast<int>(ww_count))
+    {
+        picid = 0;
+    }
+
+    if(!picpath.isEmpty())
+    {
+        QVariant today(picpath);
+        DatapoolInterface cDatapoolInterface;
+        QMetaObject::invokeMethod(mweather, "setWarning", Qt::QueuedConnection,
                                   Q_ARG(QVariant, today));
     }
 }

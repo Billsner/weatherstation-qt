@@ -13,9 +13,9 @@ WeatherPicInfo::~WeatherPicInfo()
 QString WeatherPicInfo::getPicPath(eWeatherStatus id)
 {
     QString ret = "";
-    if( id < pathImage2PICID.size())
+    if( id < pathImageStatus2PICID.size())
     {
-        ret = pathImage2PICID.at(id);
+        ret = pathImageStatus2PICID.at(id);
     }
     return ret;
 }

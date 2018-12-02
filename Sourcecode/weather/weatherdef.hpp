@@ -3,6 +3,7 @@
 
 enum eWeatherStatus
 {
+    ws_no_info,
     ws_wolkenlos,
     ws_heiter,
     ws_gering_bewoelkt,
@@ -46,6 +47,7 @@ enum eWeatherStatus
 
 enum eWeatherWarning
 {
+    ww_no_warning,
     ww_eis_level1,
     ww_eis_level2,
     ww_eis_level3,
@@ -82,6 +84,14 @@ enum eWeatherWarning
     ww_hagel_level2,
     ww_hagel_level3,
     ww_hagel_level4,
+    ww_hitze_level1,
+    ww_hitze_level2,
+    ww_hitze_level3,
+    ww_hitze_level4,
+    ww_schnee_level1,
+    ww_schnee_level2,
+    ww_schnee_level3,
+    ww_schnee_level4,
 
     ww_count
 };

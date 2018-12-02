@@ -23,7 +23,6 @@
         <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_frost_2.png</file>
         <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_frost_3.png</file>
         <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_frost_4.png</file>
-        <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_gewitter3.png</file>
         <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_gewitter_1.png</file>
         <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_gewitter_2.png</file>
         <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_gewitter_4.png</file>
@@ -130,5 +129,8 @@
         <file>Data-Pic-Images/Pictures/WetterIcons/eis.png</file>
         <file>Data-Pic-Images/Pictures/WetterIcons/Uebersicht_Wettericons.pdf</file>
         <file>Data-Pic-Images/Pictures/WetterIcons/zuordnung_begriffe_wettericons.pdf</file>
+        <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_icons_gewitter_3.png</file>
+        <file>Data-Pic-Images/Pictures/WarningIcons_Big/warn_no_warning.png</file>
+        <file>Data-Pic-Images/Pictures/WetterIcons/no_info.png</file>
     </qresource>
 </RCC>
