@@ -119,4 +119,112 @@ PageBackground {
             source: "Data-Pic-Images/Pictures/WarningIcons_Big/warn_no_warning.png"
         }
     }
+
+    GroupBox {
+        id: todayGB1
+        x: 189
+        y: 20
+        width: 132
+        height: 186
+        Text {
+            id: todayMin1
+            x: 12
+            y: -9
+            width: 88
+            height: 17
+            color: "#f9f8f8"
+            text: "Min:"
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            font.pixelSize: 12
+        }
+
+        Text {
+            id: todayMax1
+            x: 12
+            y: 14
+            width: 88
+            height: 17
+            color: "#f9f8f8"
+            text: "Max:"
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            font.pixelSize: 12
+        }
+
+        GridLayout {
+            x: 352
+            y: 75
+            rows: 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenterOffset: 94
+            columnSpacing: 20
+            columns: 2
+            rowSpacing: 20
+        }
+
+        Image {
+            id: todayImage1
+            x: 4
+            y: 41
+            width: 100
+            height: 90
+            source: "Data-Pic-Images/Pictures/WetterIcons/no_info.png"
+        }
+        title: qsTr("Morgen")
+    }
+
+    GroupBox {
+        id: todayGB2
+        x: 362
+        y: 20
+        width: 132
+        height: 186
+        Text {
+            id: todayMin2
+            x: 12
+            y: -9
+            width: 88
+            height: 17
+            color: "#f9f8f8"
+            text: "Min:"
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            font.pixelSize: 12
+        }
+
+        Text {
+            id: todayMax2
+            x: 12
+            y: 14
+            width: 88
+            height: 17
+            color: "#f9f8f8"
+            text: "Max:"
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            font.pixelSize: 12
+        }
+
+        GridLayout {
+            x: 352
+            y: 75
+            rows: 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenterOffset: 94
+            columns: 2
+            columnSpacing: 20
+            rowSpacing: 20
+        }
+
+        Image {
+            id: todayImage2
+            x: 4
+            y: 41
+            width: 100
+            height: 90
+            source: "Data-Pic-Images/Pictures/WetterIcons/no_info.png"
+        }
+        title: qsTr("Übermorgen")
+    }
 }

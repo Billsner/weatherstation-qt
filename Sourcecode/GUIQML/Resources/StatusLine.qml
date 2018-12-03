@@ -1,32 +1,28 @@
 import QtQuick 2.4
 import QtQuick.Dialogs 1.2
 
-StatusLineForm {
+StatusLineForm
+{
     objectName: "statusbar"
 
-    function setclock(cpptime) {
+    function setclock(cpptime)
+    {
         visibleTime.text = cpptime;
-        print("setclock")
-
+        //print("setclock")
     }
 
 
-    function setdate(cppdate) {
-        visibleDate.text = cppdate;
-        print("setdate")
-
-    }
-
-    function setday(cppday) {
-        visibleDayName.text = cppday;
-        print("setday")
-
-    }
-
-    function setdateday(cppdate, cppday) {
+    function setdateday(cppdate, cppday)
+    {
         visibleDate.text = cppdate;
         visibleDayName.text = cppday;
-        print("setdate")
+        print("setdateday")
+    }
 
+    function setTemp(tempIn, tempOut)
+    {
+        visibleValueTempIn.text = tempIn;
+        visibleValueTempOut.text = tempOut;
+        print("setTemp")
     }
 }
