@@ -59,42 +59,14 @@ public:
                     mpLoggingServer->writeLogMsg(m_Stream.str().c_str());
                 }
             }
-            std::stringstream emptyStream;
-            //m_Stream.swap(emptyStream);
+            m_Stream.str().clear();
             mCurrentLogLevelLocal = mLogLevelLocal;
             mwritelocallevel = false;
         }
         return *this;
     }
 
-    void createLogHeader(void);/*
-    {
-        if(false == mwritelocallevel)
-        {
-            if(mCurrentLogLevelLocal == LLcritical)
-            {
-                m_Stream << mLoggername << " [LLcritical]: " ;
-            }
-            else if(mCurrentLogLevelLocal == LLwarning)
-            {
-                m_Stream <<  mLoggername << " [LLwarning]: ";
-            }
-            else if(mCurrentLogLevelLocal == LLdebug)
-            {
-                m_Stream <<  mLoggername << " [LLdebug]: ";
-            }
-            else if(mCurrentLogLevelLocal == LLinfo)
-            {
-                m_Stream <<  mLoggername << " [LLinfo]: ";
-            }
-            else
-            {
-                m_Stream <<  mLoggername << " [LLall]: ";
-            }
-            m_Stream << QTime::currentTime().toString().toStdString() ;
-            mwritelocallevel = true;
-        }
-    }*/
+    void createLogHeader(void);
 
  private:
     QLoggingCategory m_categrory;
