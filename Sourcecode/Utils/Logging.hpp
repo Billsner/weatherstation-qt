@@ -60,7 +60,7 @@ public:
                 }
             }
             std::stringstream emptyStream;
-            m_Stream.swap(emptyStream);
+            //m_Stream.swap(emptyStream);
             mCurrentLogLevelLocal = mLogLevelLocal;
             mwritelocallevel = false;
         }
