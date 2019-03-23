@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.8.2, 2019-03-17T22:01:29. -->
+<!-- Written by QtCreator 4.8.2, 2019-03-23T23:12:43. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -57,14 +57,6 @@
   <valuemap type="QVariantMap">
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
-   <value type="bool" key="ClangTools.BuildBeforeAnalysis">false</value>
-   <value type="QString" key="ClangTools.DiagnosticConfig">Builtin.TidyAndClazy</value>
-   <valuelist type="QVariantList" key="ClangTools.SelectedDirs">
-    <value type="QString">/home/anmaanrami/Develop/Weatherstation/Sourcecode/SmartHome.pro</value>
-   </valuelist>
-   <valuelist type="QVariantList" key="ClangTools.SelectedFiles"/>
-   <valuelist type="QVariantList" key="ClangTools.SuppressedDiagnostics"/>
-   <value type="bool" key="ClangTools.UseGlobalSettings">true</value>
   </valuemap>
  </data>
  <data>
@@ -289,7 +281,7 @@
        <value type="QString">/opt/qt5pi/sysroot</value>
       </valuelist>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedTimes">
-       <value type="QDateTime">2019-03-17T21:53:26.007</value>
+       <value type="QDateTime">2019-03-23T22:44:10.060</value>
       </valuelist>
       <value type="bool" key="RemoteLinux.GenericDirectUploadStep.IgnoreMissingFiles">false</value>
       <value type="bool" key="RemoteLinux.GenericDirectUploadStep.Incremental">true</value>
@@ -614,7 +606,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/anmaanrami/Develop/Weatherstation/build-SmartHome-Desktop_Qt_5_10_1_GCC_64bit-Debug</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default"></value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

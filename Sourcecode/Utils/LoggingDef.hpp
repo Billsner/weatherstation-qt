@@ -2,6 +2,7 @@
 #define LOGGINGDEF_HPP
 
 #include <QString>
+#include <stdint.h>
 
 enum LogLevel
 {
@@ -30,6 +31,6 @@ struct slogger
     bool logconstr;
 };
 
-const int invalidLogID = -1;
+const uint32_t invalidLogID = 0xffffffff;
 
 #endif // LOGGINGDEF_HPP

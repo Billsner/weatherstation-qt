@@ -8,6 +8,7 @@
 #include <QString>
 #include "Utils/LoggingDef.hpp"
 #include <vector>
+#include <stdint.h>
 
 class LogINI
 {
@@ -23,11 +24,11 @@ public:
     void getGlobalLogLevel(LogLevel &level){level = mGlobalLogLevel;}
     void getGlobalLogMode(LogMode &mode){mode = mGlobalLogMode;}
 
-    void getLoggerID(QString LoggerName, int &loggerid);
-    void getLogLevel(int Loggerid, LogLevel &level);
-    void getLogMode(int Loggerid, LogMode &mod);
-    void getLogActive(int Loggerid, bool &active);
-    void getLogConstr(int Loggerid, bool &constr);
+    void getLoggerID(QString LoggerName, uint32_t &loggerid);
+    void getLogLevel(uint32_t Loggerid, LogLevel &level);
+    void getLogMode(uint32_t Loggerid, LogMode &mod);
+    void getLogActive(uint32_t Loggerid, bool &active);
+    void getLogConstr(uint32_t Loggerid, bool &constr);
 
     void writeLoggerList(const char *msg);
 

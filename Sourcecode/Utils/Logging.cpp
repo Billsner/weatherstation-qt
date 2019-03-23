@@ -29,7 +29,7 @@ void Logging::getLoggingSettings()
     mpLoggingServer = LoggingServer::getInstance();
     if(NULL != mpLoggingServer)
     {
-        int loggerid = invalidLogID;
+        uint32_t loggerid = invalidLogID;
         mpLoggingServer->getGlobalLogLevel(mLogLevelGlobal);
         mpLoggingServer->getGlobalLogMode(mLogMode);
         mpLoggingServer->getLoggerID(mLoggername,loggerid);

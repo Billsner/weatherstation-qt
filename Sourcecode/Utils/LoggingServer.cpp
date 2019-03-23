@@ -49,7 +49,7 @@ void LoggingServer::getGlobalLogMode(LogMode &mode)
 }
 
 //Loggerfuntions
-void LoggingServer::getLoggerID(const char *category, int &ID)
+void LoggingServer::getLoggerID(const char *category, uint32_t &ID)
 {
     m_mutex.lock();
     mLogINI.getLoggerID(category,ID);
@@ -57,28 +57,28 @@ void LoggingServer::getLoggerID(const char *category, int &ID)
     m_mutex.unlock();
 }
 
-void LoggingServer::getLoggerLevel(int loggerID, LogLevel &level)
+void LoggingServer::getLoggerLevel(uint32_t loggerID, LogLevel &level)
 {
     m_mutex.lock();
     mLogINI.getLogLevel(loggerID,level);
     m_mutex.unlock();
 }
 
-void LoggingServer::getLoggerMode(int loggerID, LogMode &mode)
+void LoggingServer::getLoggerMode(uint32_t loggerID, LogMode &mode)
 {
     m_mutex.lock();
     mLogINI.getLogMode(loggerID,mode);
     m_mutex.unlock();
 }
 
-void LoggingServer::getLoggerActive(int loggerID, bool &active)
+void LoggingServer::getLoggerActive(uint32_t loggerID, bool &active)
 {
     m_mutex.lock();
     mLogINI.getLogActive(loggerID,active);
     m_mutex.unlock();
 }
 
-void LoggingServer::getLoggerCreate(int loggerID, bool &create)
+void LoggingServer::getLoggerCreate(uint32_t loggerID, bool &create)
 {
     m_mutex.lock();
     mLogINI.getLogConstr(loggerID,create);

@@ -65,46 +65,46 @@ void LogINI::loadINI(void)
     }
 }
 
-void LogINI::getLoggerID(QString LoggerName, int &loggerid)
+void LogINI::getLoggerID(QString LoggerName, unsigned int &loggerid)
 {
     loggerid = invalidLogID;
     for(unsigned int i = 0; (i < mvLogger.size()) && (loggerid == invalidLogID); i++)
     {
         if(mvLogger[i].loggername == LoggerName)
         {
-            loggerid = static_cast<int>(i);
+            loggerid = i;
         }
     }
     //qCInfo(m_categrory) << "getLoggerID: LoggerName: " << LoggerName << " id " << loggerid;
 }
 
-void LogINI::getLogLevel(int Loggerid, LogLevel &level)
+void LogINI::getLogLevel(uint32_t Loggerid, LogLevel &level)
 {
-    if((Loggerid < mvLogger.size())&&(Loggerid >= 0))
+    if((Loggerid < mvLogger.size()))
     {
        level = mvLogger[Loggerid].loglevel;
     }
 }
 
-void LogINI::getLogMode(int Loggerid, LogMode &mod)
+void LogINI::getLogMode(uint32_t Loggerid, LogMode &mod)
 {
-    if((Loggerid < mvLogger.size())&&(Loggerid >= 0))
+    if((Loggerid < mvLogger.size()))
     {
        mod = mvLogger[Loggerid].logmode;
     }
 }
 
-void LogINI::getLogActive(int Loggerid, bool &active)
+void LogINI::getLogActive(uint32_t Loggerid, bool &active)
 {
-    if((Loggerid < mvLogger.size())&&(Loggerid >= 0))
+    if((Loggerid < mvLogger.size()))
     {
        active = mvLogger[Loggerid].logon;
     }
 }
 
-void LogINI::getLogConstr(int Loggerid, bool &constr)
+void LogINI::getLogConstr(uint32_t Loggerid, bool &constr)
 {
-    if((Loggerid < mvLogger.size())&&(Loggerid >= 0))
+    if((Loggerid < mvLogger.size()))
     {
        constr = mvLogger[Loggerid].logconstr;
     }
@@ -136,7 +136,7 @@ void LogINI::setLogger(QString LoggerEntry)
 {
     //qCInfo(m_categrory) << "setLogger: " << LoggerEntry;
     QString loggername = LoggerEntry.section(" ",0,0);
-    int loggerid = invalidLogID;
+    uint32_t loggerid = invalidLogID;
     getLoggerID(loggername,loggerid);
     if(loggerid == invalidLogID)
     {

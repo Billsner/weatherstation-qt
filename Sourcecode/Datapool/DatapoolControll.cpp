@@ -64,5 +64,8 @@ void DatapoolControll::saveDatapool()
 
 void DatapoolControll::regTriggerInstance(DatapoolTrigger *pDatapoolTrigger, int instanceID)
 {
-    mLogging << "regTriggerInstance instanceID: " <= instanceID;
+    if(pDatapoolTrigger == NULL)
+    {
+        mLogging << "regTriggerInstance instanceID: " <= instanceID;
+    }
 }
