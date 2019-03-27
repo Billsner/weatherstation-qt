@@ -1,6 +1,8 @@
 #ifndef DATAPOOLDEFINITION_HPP
 #define DATAPOOLDEFINITION_HPP
 
+#include <stdint.h>
+
 enum eElementState
 {
     ESInt           = 0,
@@ -29,9 +31,9 @@ enum eElementDataType
 
 struct sElementDatapool
 {
-    int id;
-    int datasize;
-    char *data;
+    uint32_t id;
+    uint32_t datasize;
+    uint8_t *data;
     eElementState DataState;
     eElementAction DateAction;
 };

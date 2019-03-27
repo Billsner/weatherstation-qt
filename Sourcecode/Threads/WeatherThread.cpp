@@ -40,7 +40,7 @@ void WeatherThread::timerHit()
     mLogging <= "timerHit ";
 }
 
-void WeatherThread::startTimer(int ms)
+void WeatherThread::startTimer(int32_t ms)
 {
     connect(&mtimer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
     mtimer.setInterval(ms);

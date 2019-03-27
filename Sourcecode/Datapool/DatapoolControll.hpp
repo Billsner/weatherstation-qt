@@ -8,6 +8,7 @@
 #include "FileAccess/SaveDatapool.hpp"
 #include "Utils/Logging.hpp"
 #include <QMutex>
+#include <stdint.h>
 
 class DatapoolControll
 {
@@ -17,13 +18,13 @@ public:
 
     static DatapoolControll *getInstance();
 
-    void setElement(unsigned int id, sElementDatapool &data);
-    void getElement(unsigned int id, sElementDatapool &element);
+    void setElement(uint32_t id, sElementDatapool &data);
+    void getElement(uint32_t id, sElementDatapool &element);
 
     void loadDatapool();
     void saveDatapool();
 
-    void regTriggerInstance(DatapoolTrigger *pDatapoolTrigger, int instanceID);
+    void regTriggerInstance(DatapoolTrigger *pDatapoolTrigger, uint32_t instanceID);
 
 private:
     DatapoolElement mDatapoolElement[DIcount];

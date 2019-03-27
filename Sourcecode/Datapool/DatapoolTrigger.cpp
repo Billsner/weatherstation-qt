@@ -1,7 +1,7 @@
 #include "DatapoolTrigger.hpp"
 #include "DatapoolControll.hpp"
 
-static int mInstancecount = 1;
+static uint32_t mInstancecount = 1;
 
 DatapoolTrigger::DatapoolTrigger() :
     mLogging("Datapool.DatapoolTrigger"),
@@ -15,7 +15,7 @@ DatapoolTrigger::~DatapoolTrigger()
 
 }
 
-void DatapoolTrigger::triggerbyDatapool(unsigned int id, int instance)
+void DatapoolTrigger::triggerbyDatapool(uint32_t id, uint32_t instance)
 {
     mLogging << "triggerbyDatapool id: " << id << " instance: " <= instance;
     if(instance == minstanceID)
@@ -25,7 +25,7 @@ void DatapoolTrigger::triggerbyDatapool(unsigned int id, int instance)
 }
 
 
-bool DatapoolTrigger::registerDatapoolTrigger(int datapoolid)
+bool DatapoolTrigger::registerDatapoolTrigger(uint32_t datapoolid)
 {
     mLogging << "registerDatapoolTrigger datapoolid: " <= datapoolid;
     bool ret = false;

@@ -30,7 +30,7 @@ bool DatapoolInterface::connectDatapool()
     return ret;
 }
 
-bool DatapoolInterface::setDatapoolInt(unsigned int id, int value)
+bool DatapoolInterface::setDatapoolInt(uint32_t id, int32_t value)
 {
     mLogging << "setDatapoolInt ";
     bool ret = false;
@@ -56,7 +56,7 @@ bool DatapoolInterface::setDatapoolInt(unsigned int id, int value)
     return ret;
 }
 
-bool DatapoolInterface::getDatapoolInt(unsigned int id, int &value)
+bool DatapoolInterface::getDatapoolInt(uint32_t id, int32_t &value)
 {
     mLogging <= "getDatapoolInt";
     bool ret = false;
@@ -80,7 +80,7 @@ bool DatapoolInterface::getDatapoolInt(unsigned int id, int &value)
     return ret;
 }
 
-bool DatapoolInterface::setDatapoolQString(unsigned int id, QString &value)
+bool DatapoolInterface::setDatapoolQString(uint32_t id, QString &value)
 {
     bool ret = false;
     if(NULL != mpDatapoolControll)
@@ -94,7 +94,7 @@ bool DatapoolInterface::setDatapoolQString(unsigned int id, QString &value)
         }
         msElementDatapool.id = id;
         msElementDatapool.datasize = value.toStdString().size() + 1;
-        msElementDatapool.data = const_cast<char *>(value.toStdString().c_str());
+        msElementDatapool.data = reinterpret_cast<uint8_t *>(const_cast<char*>(value.toStdString().c_str()));
         mpDatapoolControll->setElement(id,msElementDatapool);
         //Set to 0 because only use pointer and no reserved memory to reduse copy of data
         msElementDatapool.datasize = 0;
@@ -109,13 +109,13 @@ bool DatapoolInterface::setDatapoolQString(unsigned int id, QString &value)
     return ret;
 }
 
-bool DatapoolInterface::getDatapoolQString(unsigned int id, QString &value)
+bool DatapoolInterface::getDatapoolQString(uint32_t id, QString &value)
 {
     bool ret = false;
     if(NULL != mpDatapoolControll)
     {
         mpDatapoolControll->getElement(id,msElementDatapool);
-        const std::string svalue(msElementDatapool.data,msElementDatapool.datasize);
+        const std::string svalue(reinterpret_cast<char*>(msElementDatapool.data),msElementDatapool.datasize);
         value = QString::fromStdString(svalue);
         ret = true;
     }
@@ -127,7 +127,7 @@ bool DatapoolInterface::getDatapoolQString(unsigned int id, QString &value)
     return ret;
 }
 
-void DatapoolInterface::createDataArray(int size)
+void DatapoolInterface::createDataArray(uint32_t size)
 {
     if((NULL != msElementDatapool.data)&&(size != msElementDatapool.datasize))
     {
@@ -138,21 +138,21 @@ void DatapoolInterface::createDataArray(int size)
     }
     if(NULL == msElementDatapool.data)
     {
-        msElementDatapool.data = new char[size];
+        msElementDatapool.data = new uint8_t[size];
         msElementDatapool.datasize = size;
         mLogging << "createDataArray: create new Array Size: " <= size;
     }
 }
 
-bool DatapoolInterface::serializeInt(int value, char *data, int datasize)
+bool DatapoolInterface::serializeInt(int32_t value, uint8_t *data, uint32_t datasize)
 {
     bool ret = false;
     if((datasize == sizeof(value))&&(NULL != data)&&(datasize == 4))
     {
-        data[0] = ((0xff000000 & value) >> 24);
-        data[1] = ((0x00ff0000 & value) >> 16);
-        data[2] = ((0x0000ff00 & value) >> 0);
-        data[3] = ((0x000000ff & value));
+        data[0] = static_cast<uint8_t>((0xff000000 & value) >> 24);
+        data[1] = static_cast<uint8_t>((0x00ff0000 & value) >> 16);
+        data[2] = static_cast<uint8_t>((0x0000ff00 & value) >> 0);
+        data[3] = static_cast<uint8_t>((0x000000ff & value));
         mLogging << "serializeInt: data[0]: " << static_cast<int>(data[0])
                 << " data[1]: " << static_cast<int>(data[1])
                 << " data[2]: " << static_cast<int>(data[2])
@@ -167,7 +167,7 @@ bool DatapoolInterface::serializeInt(int value, char *data, int datasize)
     return ret;
 }
 
-bool DatapoolInterface::deserializeInt(int &value, char *data, int datasize)
+bool DatapoolInterface::deserializeInt(int32_t &value, uint8_t *data, uint32_t datasize)
 {
     bool ret = false;
     value = 0;

@@ -6,12 +6,13 @@
 #include <QDataStream>
 #include "Utils/Logging.hpp"
 #include "Datapool/DatapoolIndex.hpp"
+#include <stdint.h>
 
 struct saveelement
 {
-    unsigned int id;
-    char *data;
-    int datasize;
+    uint32_t id;
+    uint8_t *data;
+    uint32_t datasize;
 };
 
 class SaveDatapool
@@ -41,14 +42,14 @@ private:
     Logging mLogging;
     QString mfilename;
     QFile mfile;
-    char mBuffer[8192];
-    unsigned int mbufferindex;
-    unsigned int mPosDatapoolEntry[DIcount];
+    uint8_t mBuffer[8192];
+    uint32_t mbufferindex;
+    uint32_t mPosDatapoolEntry[DIcount];
     bool mNeedSaveAll;
     bool mBufferLoaded;
     bool mBufferReadytoSave;
-    unsigned int mbuffersizeload;
-    unsigned int mbufferDIcountload;
+    uint32_t mbuffersizeload;
+    uint32_t mbufferDIcountload;
 };
 
 #endif // SAVEDATAPOOL_HPP

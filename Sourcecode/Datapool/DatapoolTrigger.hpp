@@ -2,6 +2,7 @@
 #define DATAPOOLTRIGGER_HPP
 
 #include "Utils/Logging.hpp"
+#include <stdint.h>
 
 class DatapoolTrigger
 {
@@ -9,16 +10,16 @@ public:
     DatapoolTrigger();
     virtual ~DatapoolTrigger();
 
-    void triggerbyDatapool(unsigned int id, int instance);
-    bool registerDatapoolTrigger(int datapoolid);
+    void triggerbyDatapool(uint32_t id, uint32_t instance);
+    bool registerDatapoolTrigger(uint32_t datapoolid);
 
-    virtual void receiveDatapoolID(unsigned int id) = 0;
+    virtual void receiveDatapoolID(uint32_t id) = 0;
 
 
 
 private:
     Logging mLogging;
-    int minstanceID;
+    uint32_t minstanceID;
 
 };
 

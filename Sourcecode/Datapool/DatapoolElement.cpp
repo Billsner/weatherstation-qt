@@ -3,12 +3,12 @@
 #include <QMutexLocker>
 #include "FileAccess/SaveDatapool.hpp"
 
-static int MAXDATAPOOLDATASIZE = 100;
+static uint32_t MAXDATAPOOLDATASIZE = 100;
 
 DatapoolElement::DatapoolElement() :
     mElementID(0xffffffff),
     mDatasize(0),
-    mpdata(NULL),
+    mpdata(nullptr),
     mReceiverChange(0x00000000),
     meElementState(ESInt),
     meElementAction(EANothing),
@@ -20,33 +20,33 @@ DatapoolElement::DatapoolElement() :
 DatapoolElement::~DatapoolElement()
 {
     QMutexLocker Locker(&m_mutex);
-    if(NULL != mpdata)
+    if(nullptr != mpdata)
     {
         delete mpdata;
-        mpdata = NULL;
+        mpdata = nullptr;
         mDatasize = 0;
     }
 }
 
-void DatapoolElement::setElement(unsigned int id, sElementDatapool &data)
+void DatapoolElement::setElement(uint32_t id, sElementDatapool &data)
 {
     QMutexLocker Locker(&m_mutex);
     data.DataState = ESError;
-    if((NULL != data.data)
+    if((nullptr != data.data)
             &&(0 != data.datasize)
             &&((id == mElementID)||(0xffffffff == mElementID)))
     {
         mElementID = id;
-        if((mDatasize != data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(NULL != data.data))
+        if((mDatasize != data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(nullptr != data.data))
         {
             mLogging << "Create-Resize Element: " <= mElementID;
-            if(NULL != mpdata)
+            if(nullptr != mpdata)
             {
                 delete mpdata;
-                mpdata = NULL;
+                mpdata = nullptr;
             }
-            mpdata = new char[data.datasize];
-            if(NULL != mpdata)
+            mpdata = new uint8_t [data.datasize];
+            if(nullptr != mpdata)
             {
                 memcpy(mpdata,data.data,data.datasize);
                 mDatasize = data.datasize;
@@ -59,7 +59,7 @@ void DatapoolElement::setElement(unsigned int id, sElementDatapool &data)
             }
 
         }
-        else if((mDatasize == data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(NULL != mpdata)&&(NULL != data.data))
+        else if((mDatasize == data.datasize)&&(MAXDATAPOOLDATASIZE > data.datasize)&&(nullptr != mpdata)&&(nullptr != data.data))
         {
             if(0 != memcmp(mpdata,data.data,mDatasize))
             {
@@ -80,7 +80,7 @@ void DatapoolElement::setElement(unsigned int id, sElementDatapool &data)
     }
 }
 
-void DatapoolElement::setElementAction(unsigned int id, eElementAction elementaction, bool &ret)
+void DatapoolElement::setElementAction(uint32_t id, eElementAction elementaction, bool &ret)
 {
     QMutexLocker Locker(&m_mutex);
     ret = false;
@@ -91,7 +91,7 @@ void DatapoolElement::setElementAction(unsigned int id, eElementAction elementac
     }
 }
 
-void DatapoolElement::getElement(unsigned int id, sElementDatapool &element)
+void DatapoolElement::getElement(uint32_t id, sElementDatapool &element)
 {
     QMutexLocker Locker(&m_mutex);
     element.DataState = ESError;
@@ -100,16 +100,16 @@ void DatapoolElement::getElement(unsigned int id, sElementDatapool &element)
     {
         element.DateAction = meElementAction;
         element.DataState = meElementState;
-        if((0 != mDatasize) && (NULL != mpdata) && (MAXDATAPOOLDATASIZE > mDatasize))
+        if((0 != mDatasize) && (nullptr != mpdata) && (MAXDATAPOOLDATASIZE > mDatasize))
         {
             element.datasize = mDatasize;
-            if(NULL != element.data)
+            if(nullptr != element.data)
             {
                 delete element.data;
-                element.data = NULL;
+                element.data = nullptr;
             }
-            element.data = new char[element.datasize];
-            if(NULL != element.data)
+            element.data = new uint8_t [element.datasize];
+            if(nullptr != element.data)
             {
                 memcpy(element.data,mpdata,element.datasize);                
             }
@@ -129,7 +129,7 @@ void DatapoolElement::getElement(unsigned int id, sElementDatapool &element)
     }
 }
 
-void DatapoolElement::getElementState(unsigned int id, eElementState &ret)
+void DatapoolElement::getElementState(uint32_t id, eElementState &ret)
 {
     QMutexLocker Locker(&m_mutex);
     ret = ESError;
@@ -139,7 +139,7 @@ void DatapoolElement::getElementState(unsigned int id, eElementState &ret)
     }
 }
 
-void DatapoolElement::getElementAction(unsigned int id, eElementAction &ret)
+void DatapoolElement::getElementAction(uint32_t id, eElementAction &ret)
 {
     QMutexLocker Locker(&m_mutex);
     ret = EANothing;
@@ -149,7 +149,7 @@ void DatapoolElement::getElementAction(unsigned int id, eElementAction &ret)
     }
 }
 
-void DatapoolElement::isElementReceiverChangeValid(unsigned int id, unsigned int receiver, bool &ret)
+void DatapoolElement::isElementReceiverChangeValid(uint32_t id, uint32_t receiver, bool &ret)
 {
     QMutexLocker Locker(&m_mutex);
     ret = false;
@@ -160,7 +160,7 @@ void DatapoolElement::isElementReceiverChangeValid(unsigned int id, unsigned int
     }
 }
 
-void DatapoolElement::loadElement(unsigned int id)
+void DatapoolElement::loadElement(uint32_t id)
 {
     QMutexLocker Locker(&m_mutex);
     if((id == mElementID)||(0xffffffff == mElementID))
@@ -169,23 +169,23 @@ void DatapoolElement::loadElement(unsigned int id)
         if(ESInt == meElementState)
         {
             SaveDatapool *pSaveDatapool = SaveDatapool::getInstance();
-            if(NULL != pSaveDatapool)
+            if(nullptr != pSaveDatapool)
             {
 
                 saveelement loadedata;
                 loadedata.id = mElementID;
-                loadedata.data = NULL;
+                loadedata.data = nullptr;
                 loadedata.datasize = 0;
                 pSaveDatapool->loadID(loadedata);
-                if((NULL != loadedata.data)&&(0 < loadedata.datasize)&&(MAXDATAPOOLDATASIZE > loadedata.datasize))
+                if((nullptr != loadedata.data)&&(0 < loadedata.datasize)&&(MAXDATAPOOLDATASIZE > loadedata.datasize))
                 {
-                    if(NULL != mpdata)
+                    if(nullptr != mpdata)
                     {
                         delete mpdata;
-                        mpdata = NULL;
+                        mpdata = nullptr;
                     }
-                    mpdata = new char[loadedata.datasize];
-                    if(NULL != mpdata)
+                    mpdata = new uint8_t [loadedata.datasize];
+                    if(nullptr != mpdata)
                     {
                         memcpy(mpdata,loadedata.data,loadedata.datasize);
                         mDatasize = loadedata.datasize;
@@ -211,13 +211,13 @@ void DatapoolElement::loadElement(unsigned int id)
     }    
 }
 
-void DatapoolElement::saveElement(unsigned int id)
+void DatapoolElement::saveElement(uint32_t id)
 {    
     QMutexLocker Locker(&m_mutex);
     if(id == mElementID)
     {
         SaveDatapool *pSaveDatapool = SaveDatapool::getInstance();
-        if(NULL != pSaveDatapool)
+        if(nullptr != pSaveDatapool)
         {            
             if((ESValidChanged == meElementState)||(pSaveDatapool->needSaveAll()))
             {

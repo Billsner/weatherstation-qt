@@ -19,7 +19,7 @@ DatapoolControll *DatapoolControll::getInstance()
     return mpDatapoolControll;
 }
 
-void DatapoolControll::setElement(unsigned int id, sElementDatapool &data)
+void DatapoolControll::setElement(uint32_t id, sElementDatapool &data)
 {    
     if(id < DIcount)
     {
@@ -28,7 +28,7 @@ void DatapoolControll::setElement(unsigned int id, sElementDatapool &data)
     }
 }
 
-void DatapoolControll::getElement(unsigned int id, sElementDatapool &element)
+void DatapoolControll::getElement(uint32_t id, sElementDatapool &element)
 {
     if(id < DIcount)
     {        
@@ -62,7 +62,7 @@ void DatapoolControll::saveDatapool()
     mSaveDatapool.closeFile();
 }
 
-void DatapoolControll::regTriggerInstance(DatapoolTrigger *pDatapoolTrigger, int instanceID)
+void DatapoolControll::regTriggerInstance(DatapoolTrigger *pDatapoolTrigger, uint32_t instanceID)
 {
     if(pDatapoolTrigger == NULL)
     {

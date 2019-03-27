@@ -5,6 +5,7 @@
 #include "Utils/Logging.hpp"
 #include "GUIQML/QMLObjects/QMLWeather.hpp"
 #include <QTimer>
+#include <stdint.h>
 
 class WeatherThread : public QThread
 {
@@ -23,7 +24,7 @@ public slots:
 private:
     void run();
     void initobjects(void);
-    void startTimer(int ms);
+    void startTimer(int32_t ms);
     void stopTimer();
 
 
