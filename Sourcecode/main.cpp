@@ -3,6 +3,7 @@
 #include <QQuickView>
 #include "Threads/datapoolthread.hpp"
 #include "Threads/weatherthread.hpp"
+#include "Threads/onlineservicethread.hpp"
 #include "GUIQML/getqmlobject.hpp"
 #include "Utils/logging.hpp"
 #include "Utils/loggingserver.hpp"
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
 
     //Forward rootobject to Object-class
     GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();
-    if(NULL != pGetQMLObject)
+    if(nullptr != pGetQMLObject)
     {
         pGetQMLObject->SetQMLEngineRootObject(engine.rootObjects().value(0));
     }
@@ -47,6 +48,11 @@ int main(int argc, char *argv[])
     mWeatherThread.initthread();
     mWeatherThread.start(QThread::NormalPriority);
 
+    //start OnlineServiceThread
+    OnlineServiceThread mOnlineServiceThread;
+    mOnlineServiceThread.initthread();
+    mOnlineServiceThread.start(QThread::NormalPriority);
+
     app.exec();
     logger <= "app.exec";
 
@@ -55,6 +61,8 @@ int main(int argc, char *argv[])
     mDatapoolThread.wait(10); // todo check if it is valid to call wait after quit
     mWeatherThread.quit();
     mWeatherThread.wait(10);
+    mOnlineServiceThread.quit();
+    mOnlineServiceThread.wait(10);
     GetQMLObject::DestroyGetQMLObject();
     cLoggingServer.finish();
     return 1;

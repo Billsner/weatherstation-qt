@@ -21,7 +21,6 @@ public:
     static bool isHttpRedirect(QNetworkReply *reply);
 
 public slots:
-    void execute();
     void downloadFinished(QNetworkReply *reply);
     void sslErrors(const QList<QSslError> &errors);
 

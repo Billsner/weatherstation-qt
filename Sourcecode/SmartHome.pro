@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     Utils/logging.cpp \
     Utils/loggingserver.cpp \
     weather/weatherpicinfo.cpp \
-    weather/weatherpicwarning.cpp
+    weather/weatherpicwarning.cpp \
+    Threads/onlineservicethread.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -52,7 +53,8 @@ HEADERS += \
     Utils/loggingdef.hpp \
     Utils/loggingserver.hpp \
     weather/weatherpicinfo.hpp \
-    weather/weatherpicwarning.hpp
+    weather/weatherpicwarning.hpp \
+    Threads/onlineservicethread.hpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -69,27 +69,6 @@ bool DownloadManager::isHttpRedirect(QNetworkReply *reply)
            || statusCode == 305 || statusCode == 307 || statusCode == 308;
 }
 
-void DownloadManager::execute()
-{
-    QStringList args = QCoreApplication::instance()->arguments();
-    args.takeFirst();           // skip the first argument, which is the program's name
-    if (args.isEmpty()) {
-        printf("Qt Download example - downloads all URLs in parallel\n"
-               "Usage: download url1 [url2... urlN]\n"
-               "\n"
-               "Downloads the URLs passed in the command-line to the local directory\n"
-               "If the target file already exists, a .0, .1, .2, etc. is appended to\n"
-               "differentiate.\n");
-        QCoreApplication::instance()->quit();
-        return;
-    }
-
-    for (const QString &arg : qAsConst(args)) {
-        QUrl url = QUrl::fromEncoded(arg.toLocal8Bit());
-        doDownload(url);
-    }
-}
-
 void DownloadManager::sslErrors(const QList<QSslError> &sslErrors)
 {
 #if QT_CONFIG(ssl)

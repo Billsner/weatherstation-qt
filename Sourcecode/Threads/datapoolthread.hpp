@@ -6,13 +6,14 @@
 #include "GUIQML/QMLObjects/qmlstatusline.hpp"
 #include "GUIQML/QMLObjects/qmlsettings.hpp"
 #include "Datapool/datapoolcontroll.hpp"
+#include <QTimer>
 
 
 class DatapoolThread : public QThread
 {
     Q_OBJECT
 public:
-    DatapoolThread(QObject *parent = NULL);
+    DatapoolThread(QObject *parent = nullptr);
     ~DatapoolThread();
 
     void initthread();
@@ -26,11 +27,14 @@ public slots:
 private:
     void run();
     void initobjects(void);
+    void startTimer(int32_t ms);
+    void stopTimer();
+
     Logging mLogging;
     QMLStatusLine mQMLStatusLine;
     QMLSettings mQMLSettings;
+    QTimer mtimer;
     DatapoolControll mDatapoolControll;
-
 };
 
 #endif // DATAPOOLTHREAD_HPP

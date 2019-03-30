@@ -1,18 +1,17 @@
-#ifndef WEATHERTHREAD_HPP
-#define WEATHERTHREAD_HPP
+#ifndef ONLINESERVICETHREAD_HPP
+#define ONLINESERVICETHREAD_HPP
 
 #include <QThread>
 #include "Utils/logging.hpp"
-#include "GUIQML/QMLObjects/qmlweather.hpp"
 #include <QTimer>
 #include <stdint.h>
 
-class WeatherThread : public QThread
+class OnlineServiceThread : public QThread
 {
     Q_OBJECT
 public:
-    WeatherThread(QObject *parent = nullptr);
-    ~WeatherThread();
+    OnlineServiceThread(QObject *parent = nullptr);
+    ~OnlineServiceThread();
 
     void initthread();
 signals:
@@ -29,8 +28,7 @@ private:
 
     Logging mLogging;
     QTimer mtimer;
-    QMLWeather mQMLWeather;
 
 };
 
-#endif // WEATHERTHREAD_HPP
+#endif // ONLINESERVICETHREAD_HPP

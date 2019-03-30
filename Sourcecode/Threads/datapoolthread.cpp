@@ -16,7 +16,8 @@ DatapoolThread::~DatapoolThread()
 void DatapoolThread::initthread()
 {
     mQMLSettings.moveToThread(this);
-    mQMLStatusLine.moveToThread(this);    
+    mQMLStatusLine.moveToThread(this);
+    mtimer.moveToThread(this);
 }
 
 void DatapoolThread::initobjects(void)
@@ -36,13 +37,22 @@ void DatapoolThread::run()
 
     mQMLStatusLine.triggertimer();
 
-    //Timer
-    QTimer timer;
-    connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
-    timer.setInterval(1000);
-    timer.start();    
+    startTimer(1000);
     int code = exec();
+    stopTimer();
     mLogging << "EXEC.Code " <= code;
+}
+
+void DatapoolThread::startTimer(int32_t ms)
+{
+    connect(&mtimer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
+    mtimer.setInterval(ms);
+    mtimer.start();
+}
+
+void DatapoolThread::stopTimer()
+{
+    mtimer.stop();
 }
 
 void DatapoolThread::timerHit()
