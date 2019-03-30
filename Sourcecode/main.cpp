@@ -1,11 +1,11 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
-#include "Threads/DatapoolThread.hpp"
-#include "Threads/WeatherThread.hpp"
-#include "GUIQML/GetQMLObject.hpp"
-#include "Utils/Logging.hpp"
-#include "Utils/LoggingServer.hpp"
+#include "Threads/datapoolthread.hpp"
+#include "Threads/weatherthread.hpp"
+#include "GUIQML/getqmlobject.hpp"
+#include "Utils/logging.hpp"
+#include "Utils/loggingserver.hpp"
 
 int main(int argc, char *argv[])
 {

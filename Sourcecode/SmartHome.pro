@@ -3,23 +3,24 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    Threads/DatapoolThread.cpp \
-    GUIQML/GetQMLObject.cpp \
-    Datapool/DatapoolControll.cpp \
-    Datapool/DatapoolElement.cpp \
-    Datapool/DatapoolInterface.cpp \
-    FileAccess/SaveDatapool.cpp \
-    Utils/Logging.cpp \
-    FileAccess/LogFile.cpp \
-    GUIQML/QMLObjects/QMLSettings.cpp \
-    GUIQML/QMLObjects/QMLStatusLine.cpp \
-    Datapool/DatapoolTrigger.cpp \
-    Utils/LoggingServer.cpp \
-    FileAccess/LogINI.cpp \
-    GUIQML/QMLObjects/QMLWeather.cpp \
-    Threads/WeatherThread.cpp \
-    weather/WeatherPicInfo.cpp \
-    weather/WeatherPicWarning.cpp
+    OnlineServices/downloadmanager.cpp \
+    Datapool/datapoolcontroll.cpp \
+    Datapool/datapoolelement.cpp \
+    Datapool/datapoolinterface.cpp \
+    Datapool/datapooltrigger.cpp \
+    FileAccess/logfile.cpp \
+    FileAccess/logini.cpp \
+    FileAccess/savedatapool.cpp \
+    GUIQML/QMLObjects/qmlsettings.cpp \
+    GUIQML/QMLObjects/qmlstatusline.cpp \
+    GUIQML/QMLObjects/qmlweather.cpp \
+    GUIQML/getqmlobject.cpp \
+    Threads/datapoolthread.cpp \
+    Threads/weatherthread.cpp \
+    Utils/logging.cpp \
+    Utils/loggingserver.cpp \
+    weather/weatherpicinfo.cpp \
+    weather/weatherpicwarning.cpp
 
 RESOURCES += GUIQML/Resources/qml.qrc
 
@@ -30,27 +31,28 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    Threads/DatapoolThread.hpp \
-    GUIQML/GetQMLObject.hpp \
-    Datapool/DatapoolControll.hpp \
-    Datapool/DatapoolElement.hpp \
-    Datapool/DatapoolDefinition.hpp \
-    Datapool/DatapoolIndex.hpp \
-    Datapool/DatapoolInterface.hpp \
-    FileAccess/SaveDatapool.hpp \
-    Utils/Logging.hpp \
-    FileAccess/LogFile.hpp \
-    GUIQML/QMLObjects/QMLSettings.hpp \
-    GUIQML/QMLObjects/QMLStatusLine.hpp \
-    Datapool/DatapoolTrigger.hpp \
-    Utils/LoggingServer.hpp \
-    FileAccess/LogINI.hpp \
-    Utils/LoggingDef.hpp \
-    GUIQML/QMLObjects/QMLWeather.hpp \
-    Threads/WeatherThread.hpp \
-    weather/WeatherPicInfo.hpp \
     weather/weatherdef.hpp \
-    weather/WeatherPicWarning.hpp
+    OnlineServices/downloadmanager.hpp \
+    Datapool/datapoolcontroll.hpp \
+    Datapool/datapooldefinition.hpp \
+    Datapool/datapoolelement.hpp \
+    Datapool/datapoolindex.hpp \
+    Datapool/datapoolinterface.hpp \
+    Datapool/datapooltrigger.hpp \
+    FileAccess/logfile.hpp \
+    FileAccess/logini.hpp \
+    FileAccess/savedatapool.hpp \
+    GUIQML/QMLObjects/qmlsettings.hpp \
+    GUIQML/QMLObjects/qmlstatusline.hpp \
+    GUIQML/QMLObjects/qmlweather.hpp \
+    GUIQML/getqmlobject.hpp \
+    Threads/datapoolthread.hpp \
+    Threads/weatherthread.hpp \
+    Utils/logging.hpp \
+    Utils/loggingdef.hpp \
+    Utils/loggingserver.hpp \
+    weather/weatherpicinfo.hpp \
+    weather/weatherpicwarning.hpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
