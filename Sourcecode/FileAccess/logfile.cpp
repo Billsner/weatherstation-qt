@@ -1,9 +1,10 @@
 #include "logfile.hpp"
-
 #include <QTextStream>
+#include <QDir>
+#include <QDate>
 
 Logfile::Logfile() :
-    mfile("Log.log"),
+    mfile(),
     mfileopen(false),
     m_categrory("FileAccess.LogFile")
 {
@@ -18,6 +19,22 @@ Logfile::~Logfile()
 void Logfile::openFile()
 {
     m_mutex.lock();
+    QDir cfgfolder("log");
+    if(!cfgfolder.exists())
+    {
+        QDir appfolder("");
+        if(!appfolder.mkdir("log"))
+        {
+            qCInfo(m_categrory) << "openFile: error create folder";
+        }
+    }
+    QDate currentdate = QDate::currentDate();;
+    QString filename = "./log/" + currentdate.toString("yyyy")
+            +currentdate.toString("MM")
+            +currentdate.toString("dd")
+            + "_Log.txt";
+    qCInfo(m_categrory) << "openFile: " << filename;
+    mfile.setFileName(filename);
     if(true == mfile.open(QIODevice::WriteOnly))
     {
         mfileopen = true;

@@ -2,11 +2,12 @@
 
 #include <QTextStream>
 #include <QLoggingCategory>
+#include <QDir>
 
 LogINI::LogINI() :
-    mfileINI("Log.ini"),
-    mfileLogger("LogLogger.ini"),
+    mfileINI("./cfg/Log.ini"),
     mfileopen(false),
+    mwritedefaultini(false),
     m_categrory("FileAccess.LogINI"),
     mGlobalLogLevel(LLOFF),
     mGlobalLogMode(LMoutput)
@@ -23,24 +24,25 @@ LogINI::~LogINI()
 void LogINI::openFile()
 {
     m_mutex.lock();
-    if(true == mfileINI.open(QIODevice::ReadOnly))
+    QDir cfgfolder("cfg");
+    if(!cfgfolder.exists())
+    {
+        QDir appfolder("");
+        if(!appfolder.mkdir("cfg"))
+        {
+            qCInfo(m_categrory) << "mkdir cfg failed";
+        }
+    }
+    if(true == mfileINI.open(QIODevice::ReadWrite))
     {
         mfileopen = true;
-        //qCInfo(m_categrory) << "openFile mfileINI: success";
         loadINI();
     }
     else
     {
         mfileopen = false;
         qCInfo(m_categrory) << "openFile mfileINI: failed";
-    }
-    if(true == mfileLogger.open(QIODevice::ReadWrite))
-    {
-        //qCInfo(m_categrory) << "openFile mfileLogger: success";
-    }
-    else
-    {
-        qCInfo(m_categrory) << "openFile mfileLogger: failed";
+
     }
     m_mutex.unlock();
 }
@@ -48,8 +50,7 @@ void LogINI::openFile()
 void LogINI::closeFile()
 {
     m_mutex.lock();
-    mfileINI.close();
-    mfileLogger.close();
+    mfileINI.close();    
     mfileopen = false;
     //qCInfo(m_categrory) << "closeFile";
     m_mutex.unlock();
@@ -68,7 +69,7 @@ void LogINI::loadINI(void)
 void LogINI::getLoggerID(QString LoggerName, unsigned int &loggerid)
 {
     loggerid = invalidLogID;
-    for(unsigned int i = 0; (i < mvLogger.size()) && (loggerid == invalidLogID); i++)
+    for(uint32_t i = 0; (i < mvLogger.size()) && (loggerid == invalidLogID); i++)
     {
         if(mvLogger[i].loggername == LoggerName)
         {
@@ -230,8 +231,16 @@ void LogINI::writeLoggerList(const char *msg)
     m_mutex.lock();
     if(nullptr != msg)
     {
-        QTextStream toFile(&mfileLogger);
-        toFile << msg << endl;
+        QString newLogger(msg);
+        uint32_t loggerid = invalidLogID;
+        getLoggerID(newLogger,loggerid);
+        if(loggerid == invalidLogID)
+        {
+            newLogger = newLogger + " LLcritical" + " LMall";
+            QTextStream toFile(&mfileINI);
+            setLogger(newLogger);
+            toFile << newLogger << endl;
+        }
     }
     else
     {

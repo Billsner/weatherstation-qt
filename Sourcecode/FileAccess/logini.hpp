@@ -43,9 +43,9 @@ private:
     bool getLogContrFromString(QString constr);
 
     QFile mfileINI;
-    QFile mfileLogger;
     QMutex m_mutex;
     bool mfileopen;
+    bool mwritedefaultini;
     QLoggingCategory m_categrory;
 
     LogLevel mGlobalLogLevel;

@@ -53,7 +53,10 @@ void LoggingServer::getLoggerID(const char *category, uint32_t &ID)
 {
     m_mutex.lock();
     mLogINI.getLoggerID(category,ID);
-    mLogINI.writeLoggerList(category);
+    if(ID == invalidLogID)
+    {
+        mLogINI.writeLoggerList(category);
+    }
     m_mutex.unlock();
 }
 

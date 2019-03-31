@@ -1,6 +1,7 @@
 #include "savedatapool.hpp"
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
 
 static SaveDatapool *mpSaveDatapool = nullptr;
 
@@ -32,7 +33,7 @@ static const uint32_t DatapoolMinorVersion = 1; //change as compatible if datapo
 
 SaveDatapool::SaveDatapool() :
     mLogging("fileaccess.SaveDatapool"),
-    mfilename("datapool.data"),
+    mfilename("./cfg/datapool.data"),
     mfile(mfilename),
     mbufferindex(0),
     mNeedSaveAll(true),
@@ -55,6 +56,16 @@ SaveDatapool *SaveDatapool::getInstance()
 
 void SaveDatapool::openFile()
 {
+    QDir cfgfolder("cfg");
+    if(!cfgfolder.exists())
+    {
+        mLogging <= "openFile: folder cfg not exists";
+        QDir appfolder("");
+        if(!appfolder.mkdir("cfg"))
+        {
+            mLogging <= "openFile: error create folder";
+        }
+    }
     if(true == mfile.open(QIODevice::ReadWrite))
     {
         mLogging <= "openFile: successful";
@@ -127,10 +138,10 @@ void SaveDatapool::loadBuffer()
             }
             else
             {
-                mLogging << "loadBuffer: minorchange bufferminorversion: " << bufferminorversion
+                (mLogging << "loadBuffer: minorchange bufferminorversion: " << bufferminorversion
                          << " DatapoolMinorVersion: " << DatapoolMinorVersion
                          << " mbufferDIcountload: " << mbufferDIcountload
-                         << " DIcount " <= DIcount;
+                         << " DIcount ") <= DIcount;
             }
             if((mbuffersizeload >=  bhcount +  (mbufferDIcountload*2))&&(sizeof(mBuffer) >=  bhcount +  (mbufferDIcountload*2)))
             {

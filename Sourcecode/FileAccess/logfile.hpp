@@ -5,6 +5,7 @@
 #include <QDataStream>
 #include <QLoggingCategory>
 #include <QMutex>
+#include <QDir>
 
 class Logfile
 {
