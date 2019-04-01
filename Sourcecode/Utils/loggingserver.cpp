@@ -55,7 +55,8 @@ void LoggingServer::getLoggerID(const char *category, uint32_t &ID)
     mLogINI.getLoggerID(category,ID);
     if(ID == invalidLogID)
     {
-        mLogINI.writeLoggerList(category);
+        mLogINI.writeDefaultLogEntry(category);
+        mLogINI.getLoggerID(category,ID);
     }
     m_mutex.unlock();
 }

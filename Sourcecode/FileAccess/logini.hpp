@@ -30,7 +30,7 @@ public:
     void getLogActive(uint32_t Loggerid, bool &active);
     void getLogConstr(uint32_t Loggerid, bool &constr);
 
-    void writeLoggerList(const char *msg);
+    void writeDefaultLogEntry(const char *msg);
 
 private:
 
@@ -42,10 +42,10 @@ private:
     bool getLogActiveFromString(QString active);
     bool getLogContrFromString(QString constr);
 
+    void writeDefaultGlobalLog(void);
+
     QFile mfileINI;
     QMutex m_mutex;
-    bool mfileopen;
-    bool mwritedefaultini;
     QLoggingCategory m_categrory;
 
     LogLevel mGlobalLogLevel;

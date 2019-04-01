@@ -10,22 +10,20 @@
 
 int main(int argc, char *argv[])
 {
-    LoggingServer cLoggingServer;
-    cLoggingServer.init();
-
-    Logging logger("main");
-    logger << LLcritical << "Start TID " <= QThread::currentThreadId();
-
-
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
     //Create QQmlApplicationEngine
     QQmlApplicationEngine engine;
+
+    LoggingServer cLoggingServer;
+    cLoggingServer.init();
+    Logging logger("main");
+    (logger << LLcritical << "Start TID " )<= QThread::currentThreadId();
     logger <= "Load engine";
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
     int size =  engine.rootObjects().size();
-    logger << "size " <= size;
+    (logger << "size " )<= size;
 
     //Forward rootobject to Object-class
     GetQMLObject *pGetQMLObject = GetQMLObject::getInstance();

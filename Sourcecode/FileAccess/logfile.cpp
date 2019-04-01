@@ -2,6 +2,7 @@
 #include <QTextStream>
 #include <QDir>
 #include <QDate>
+#include <QCoreApplication>
 
 Logfile::Logfile() :
     mfile(),
@@ -19,6 +20,7 @@ Logfile::~Logfile()
 void Logfile::openFile()
 {
     m_mutex.lock();
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
     QDir cfgfolder("log");
     if(!cfgfolder.exists())
     {

@@ -3,11 +3,10 @@
 #include <QTextStream>
 #include <QLoggingCategory>
 #include <QDir>
+#include <QCoreApplication>
 
 LogINI::LogINI() :
     mfileINI("./cfg/Log.ini"),
-    mfileopen(false),
-    mwritedefaultini(false),
     m_categrory("FileAccess.LogINI"),
     mGlobalLogLevel(LLOFF),
     mGlobalLogMode(LMoutput)
@@ -24,6 +23,17 @@ LogINI::~LogINI()
 void LogINI::openFile()
 {
     m_mutex.lock();
+    bool  fileexists = false;
+
+    if(!QDir::setCurrent(QCoreApplication::applicationDirPath()))
+    {
+         qCInfo(m_categrory) << "openFile mfileINI: Path: " << QCoreApplication::applicationDirPath();
+    }
+    else
+    {
+        qCInfo(m_categrory) << "openFile mfileINI: Path change to: " << QCoreApplication::applicationDirPath();
+    }
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
     QDir cfgfolder("cfg");
     if(!cfgfolder.exists())
     {
@@ -33,14 +43,23 @@ void LogINI::openFile()
             qCInfo(m_categrory) << "mkdir cfg failed";
         }
     }
+    if(mfileINI.exists())
+    {
+        fileexists = true;
+    }
     if(true == mfileINI.open(QIODevice::ReadWrite))
     {
-        mfileopen = true;
-        loadINI();
+        if(fileexists == true)
+        {
+            loadINI();
+        }
+        else
+        {
+            writeDefaultGlobalLog();
+        }
     }
     else
     {
-        mfileopen = false;
         qCInfo(m_categrory) << "openFile mfileINI: failed";
 
     }
@@ -50,8 +69,7 @@ void LogINI::openFile()
 void LogINI::closeFile()
 {
     m_mutex.lock();
-    mfileINI.close();    
-    mfileopen = false;
+    mfileINI.close();
     //qCInfo(m_categrory) << "closeFile";
     m_mutex.unlock();
 }
@@ -226,7 +244,7 @@ bool LogINI::getLogContrFromString(QString constr)
     return ret;
 }
 
-void LogINI::writeLoggerList(const char *msg)
+void LogINI::writeDefaultLogEntry(const char *msg)
 {
     m_mutex.lock();
     if(nullptr != msg)
@@ -236,7 +254,7 @@ void LogINI::writeLoggerList(const char *msg)
         getLoggerID(newLogger,loggerid);
         if(loggerid == invalidLogID)
         {
-            newLogger = newLogger + " LLcritical" + " LMall";
+            newLogger = newLogger + " LLinfo" + " LMall";
             QTextStream toFile(&mfileINI);
             setLogger(newLogger);
             toFile << newLogger << endl;
@@ -249,6 +267,18 @@ void LogINI::writeLoggerList(const char *msg)
     m_mutex.unlock();
 }
 
+void LogINI::writeDefaultGlobalLog(void)
+{
+    QString newLogger("GlobalLogLevel");
+    newLogger = newLogger + " LLcritical";
+    mGlobalLogLevel = LLcritical;
+    QTextStream toFile(&mfileINI);
+    toFile << newLogger << endl;
+    newLogger = "GlobalLogMode";
+    newLogger = newLogger + " LMall";
+    mGlobalLogMode = LMall;
+    toFile << newLogger << endl;
+}
 
 
 

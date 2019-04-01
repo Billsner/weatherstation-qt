@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDir>
+#include <QCoreApplication>
 
 static SaveDatapool *mpSaveDatapool = nullptr;
 
@@ -56,6 +57,7 @@ SaveDatapool *SaveDatapool::getInstance()
 
 void SaveDatapool::openFile()
 {
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
     QDir cfgfolder("cfg");
     if(!cfgfolder.exists())
     {
