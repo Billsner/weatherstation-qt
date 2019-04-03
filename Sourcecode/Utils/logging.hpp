@@ -53,13 +53,13 @@ public:
             }
             if((LMfile == mLogMode)||(LMall == mLogMode))
             {                
-                if(mpLoggingServer != NULL)
+                if(mpLoggingServer != nullptr)
                 {
                     m_Stream << "\n";
                     mpLoggingServer->writeLogMsg(m_Stream.str().c_str());
                 }
             }
-            m_Stream.str().clear();
+            m_Stream.str(std::string());
             mCurrentLogLevelLocal = mLogLevelLocal;
             mwritelocallevel = false;
         }

@@ -22,7 +22,7 @@ void DatapoolThread::initthread()
 
 void DatapoolThread::initobjects(void)
 {
-    mLogging << "initobjects TID: " <= this->currentThreadId();    
+    (mLogging << "initobjects TID: ") <= this->currentThreadId();
     mDatapoolControll.loadDatapool();
     mQMLSettings.init();
     mQMLStatusLine.init();    
@@ -32,7 +32,7 @@ void DatapoolThread::initobjects(void)
 
 void DatapoolThread::run()
 {
-    mLogging << "Hello DatapoolThread TID: " <= this->currentThreadId();
+    (mLogging << "Hello DatapoolThread TID: ") <= this->currentThreadId();
     initobjects();
 
     mQMLStatusLine.triggertimer();
@@ -40,7 +40,7 @@ void DatapoolThread::run()
     startTimer(1000);
     int code = exec();
     stopTimer();
-    mLogging << "EXEC.Code " <= code;
+    (mLogging << "EXEC.Code ") <= code;
 }
 
 void DatapoolThread::startTimer(int32_t ms)
@@ -57,7 +57,7 @@ void DatapoolThread::stopTimer()
 
 void DatapoolThread::timerHit()
 {
-    mLogging << " timerHit TID: " <= this->currentThreadId();
+    (mLogging << " timerHit TID: ") <= this->currentThreadId();
     mQMLStatusLine.triggertimer();
     mQMLSettings.triggertimer();
 

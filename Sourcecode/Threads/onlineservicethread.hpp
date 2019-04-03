@@ -5,6 +5,7 @@
 #include "Utils/logging.hpp"
 #include <QTimer>
 #include <stdint.h>
+#include "OnlineServices/downloadmanager.hpp"
 
 class OnlineServiceThread : public QThread
 {
@@ -28,6 +29,7 @@ private:
 
     Logging mLogging;
     QTimer mtimer;
+    DownloadManager mDownloadManager;
 
 };
 

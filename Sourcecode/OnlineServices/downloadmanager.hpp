@@ -15,6 +15,11 @@ public:
     DownloadManager();
     ~DownloadManager();
 
+    void init();
+    void movetoThread(QThread *thread);
+
+    void triggertimer(void);
+
     void doDownload(const QUrl &url);
     static QString saveFileName(const QUrl &url);
     bool saveToDisk(const QString &filename, QIODevice *data);
