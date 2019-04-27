@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QDir>
 #include <QCoreApplication>
+#include "Datapool/datapoolindex.hpp"
 
 static SaveDatapool *mpSaveDatapool = nullptr;
 
@@ -27,10 +28,6 @@ enum bufferitemindex
 
     bicount
 };
-
-static const uint32_t DatapoolMajorVersion = 2; //change as incompatible if datapoolid is add at start or in the middle
-static const uint32_t DatapoolMinorVersion = 1; //change as compatible if datapoolid is add at the end
-
 
 SaveDatapool::SaveDatapool() :
     mLogging("fileaccess.SaveDatapool"),

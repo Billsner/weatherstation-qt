@@ -1,4 +1,6 @@
 #include "onlineservicethread.hpp"
+#include "Datapool/datapoolinterface.hpp"
+#include <QDate>
 
 
 OnlineServiceThread::OnlineServiceThread(QObject *parent /*= NULL*/) :
@@ -37,12 +39,11 @@ void OnlineServiceThread::run()
 
 void OnlineServiceThread::timerHit()
 {
-    mLogging <= "timerHit ";
+    //mLogging <= "timerHit ";
     static uint32_t time = 0;
     if(time == 10)
     {
-        QUrl myurl("https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/single_stations/10488/kml/MOSMIX_L_LATEST_10488.kmz");
-        mDownloadManager.doDownload(myurl);
+        startDownload();
         time++;
     }
     else
@@ -62,4 +63,14 @@ void OnlineServiceThread::startTimer(int32_t ms)
 void OnlineServiceThread::stopTimer()
 {
     mtimer.stop();
+}
+
+void OnlineServiceThread::startDownload()
+{
+    QUrl myurl("https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/single_stations/10488/kml/MOSMIX_L_LATEST_10488.kmz");
+    mDownloadManager.doDownload(myurl);
+
+    QString date = QDate::currentDate().toString(defaultformate);
+    mDatapoolInterface.setDatapoolQString(DIWaetherDownloadDate,date);
+    mLogging <= "startDownload";
 }
