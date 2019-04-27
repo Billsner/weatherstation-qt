@@ -48,6 +48,16 @@ QString DownloadManager::saveFileName(const QUrl &url)
     {
         basename = "download";
     }
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
+    QDir cfgfolder("download");
+    if(!cfgfolder.exists())
+    {
+        QDir appfolder("");
+        if(!appfolder.mkdir("download"))
+        {
+            mLogging <= "saveFileName: error create folder";
+        }
+    }
 
     if (QFile::exists(basename))
     {
@@ -65,7 +75,17 @@ QString DownloadManager::saveFileName(const QUrl &url)
 
 bool DownloadManager::saveToDisk(const QString &filename, QIODevice *data)
 {
-    QFile file(filename);
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
+    QDir cfgfolder("download");
+    if(!cfgfolder.exists())
+    {
+        QDir appfolder("");
+        if(!appfolder.mkdir("download"))
+        {
+            mLogging <= "saveToDisk: error create folder";
+        }
+    }
+    QFile file("./download/" + filename);
     if (!file.open(QIODevice::WriteOnly))
     {
         (mLogging << "Could not open " << qPrintable(filename) << " for writing: ") <= qPrintable(file.errorString());

@@ -41,7 +41,7 @@ void OnlineServiceThread::timerHit()
     static uint32_t time = 0;
     if(time == 10)
     {
-        QUrl myurl("https://opendata.dwd.de/weather/text_forecasts/html/VHDL50_DWEG_030834_html");
+        QUrl myurl("https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/single_stations/10488/kml/MOSMIX_L_LATEST_10488.kmz");
         mDownloadManager.doDownload(myurl);
         time++;
     }

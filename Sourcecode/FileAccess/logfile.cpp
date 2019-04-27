@@ -30,7 +30,7 @@ void Logfile::openFile()
             qCInfo(m_categrory) << "openFile: error create folder";
         }
     }
-    QDate currentdate = QDate::currentDate();;
+    QDate currentdate = QDate::currentDate();
     QString filename = "./log/" + currentdate.toString("yyyy")
             +currentdate.toString("MM")
             +currentdate.toString("dd")
