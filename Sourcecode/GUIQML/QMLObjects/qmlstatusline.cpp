@@ -31,7 +31,7 @@ void QMLStatusLine::init()
         }
         else
         {
-            mLogging << LLcritical <= "init: NULL == mClockObject ";
+            (mLogging << LLcritical) <= "init: NULL == mClockObject ";
         }
     }
     connect();
@@ -45,7 +45,7 @@ void QMLStatusLine::connect()
 
 void QMLStatusLine::triggertimer(void)
 {
-    mLogging << "triggertimer TID: " <= QThread::currentThreadId();
+    (mLogging << "triggertimer TID: ") <= QThread::currentThreadId();
     QTime time = QTime::currentTime();
     setClockTime(time.toString());
     static int count = 0;
@@ -85,17 +85,17 @@ void QMLStatusLine::setClockDateDay(QString date, QString day)
     }
     else
     {
-        mLogging << LLcritical << "setClockDateDay: datapool error " << date.toStdString().c_str() << " retdate " <= retstring.toStdString().c_str();
+        (mLogging << LLcritical << "setClockDateDay: datapool error ") << date.toStdString().c_str() << " retdate " <= retstring.toStdString().c_str();
     }
 }
 
 void QMLStatusLine::getDateFormat(void)
 {
     DatapoolInterface cDatapoolInterface;
-    int datapoolret = 0;
+    int32_t datapoolret = 0;
     if(cDatapoolInterface.getDatapoolInt(DIdataformatId, datapoolret) == true)
     {
-        mLogging << "receiveDateformateIndex: datapoolret " <= datapoolret;
+        (mLogging << "receiveDateformateIndex: datapoolret ") <= datapoolret;
         switch(datapoolret)
         {
         case 0:
@@ -114,7 +114,7 @@ void QMLStatusLine::getDateFormat(void)
     }
     else
     {
-        mLogging << LLcritical <= "receiveDateformateIndex: datapoolret getError";
+        (mLogging << LLcritical) <= "receiveDateformateIndex: datapoolret getError";
     }
 }
 

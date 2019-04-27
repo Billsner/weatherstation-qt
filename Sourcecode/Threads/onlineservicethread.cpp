@@ -67,10 +67,15 @@ void OnlineServiceThread::stopTimer()
 
 void OnlineServiceThread::startDownload()
 {
-    QUrl myurl("https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/single_stations/10488/kml/MOSMIX_L_LATEST_10488.kmz");
-    mDownloadManager.doDownload(myurl);
-
-    QString date = QDate::currentDate().toString(defaultformate);
-    mDatapoolInterface.setDatapoolQString(DIWaetherDownloadDate,date);
-    mLogging <= "startDownload";
+    int32_t requeststate = 0;
+    mDatapoolInterface.getDatapoolInt(DIWeatherDownloadRequest,requeststate);
+    if(requeststate == 1)
+    {
+        QUrl myurl("https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/single_stations/10488/kml/MOSMIX_L_LATEST_10488.kmz");
+        mDownloadManager.doDownload(myurl);
+        mDatapoolInterface.setDatapoolInt(DIWeatherDownloadRequest,0);
+        QString date = QDate::currentDate().toString(defaultformate);
+        mDatapoolInterface.setDatapoolQString(DIWaetherDownloadDate,date);
+        mLogging <= "startDownload";
+    }
 }

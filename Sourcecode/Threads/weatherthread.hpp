@@ -4,6 +4,7 @@
 #include <QThread>
 #include "Utils/logging.hpp"
 #include "GUIQML/QMLObjects/qmlweather.hpp"
+#include "weather/weatherdatainterpreter.hpp"
 #include <QTimer>
 #include <stdint.h>
 
@@ -30,6 +31,7 @@ private:
     Logging mLogging;
     QTimer mtimer;
     QMLWeather mQMLWeather;
+    WeatherDataInterpreter mWeatherDataInterpreter;
 
 };
 

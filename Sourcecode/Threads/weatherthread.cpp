@@ -37,6 +37,7 @@ void WeatherThread::run()
 void WeatherThread::timerHit()
 {
     mQMLWeather.triggertimer();
+    mWeatherDataInterpreter.triggerTimertick();
     mLogging <= "timerHit ";
 }
 

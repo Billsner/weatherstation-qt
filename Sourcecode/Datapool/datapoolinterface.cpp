@@ -25,7 +25,7 @@ bool DatapoolInterface::connectDatapool()
     }
     else
     {
-        mLogging << LLcritical <= "connectDatapool: No Connection";
+        (mLogging << LLcritical) <= "connectDatapool: No Connection";
     }
     return ret;
 }
@@ -50,7 +50,7 @@ bool DatapoolInterface::setDatapoolInt(uint32_t id, int32_t value)
     }
     else
     {
-        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
+        (mLogging << LLcritical) <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -58,6 +58,7 @@ bool DatapoolInterface::setDatapoolInt(uint32_t id, int32_t value)
 
 bool DatapoolInterface::getDatapoolInt(uint32_t id, int32_t &value)
 {
+    //todo: return state not bool
     mLogging <= "getDatapoolInt";
     bool ret = false;
     value = 0;
@@ -74,7 +75,7 @@ bool DatapoolInterface::getDatapoolInt(uint32_t id, int32_t &value)
     }
     else
     {
-        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
+        (mLogging << LLcritical) <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -93,7 +94,7 @@ bool DatapoolInterface::setDatapoolQString(uint32_t id, QString &value)
             mLogging <= "setDatapoolQString: delete old array";
         }
         msElementDatapool.id = id;
-        msElementDatapool.datasize = value.toStdString().size() + 1;
+        msElementDatapool.datasize = value.toStdString().size();
         msElementDatapool.data = reinterpret_cast<uint8_t *>(const_cast<char*>(value.toStdString().c_str()));
         mpDatapoolControll->setElement(id,msElementDatapool);
         //Set to 0 because only use pointer and no reserved memory to reduse copy of data
@@ -103,7 +104,7 @@ bool DatapoolInterface::setDatapoolQString(uint32_t id, QString &value)
     }
     else
     {
-        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
+        (mLogging << LLcritical) <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -111,6 +112,7 @@ bool DatapoolInterface::setDatapoolQString(uint32_t id, QString &value)
 
 bool DatapoolInterface::getDatapoolQString(uint32_t id, QString &value)
 {
+    //todo: return state not bool
     bool ret = false;
     if(nullptr != mpDatapoolControll)
     {
@@ -121,7 +123,7 @@ bool DatapoolInterface::getDatapoolQString(uint32_t id, QString &value)
     }
     else
     {
-        mLogging << LLcritical <= "setDatapoolInt: Try Reconnect";
+        (mLogging << LLcritical) <= "setDatapoolInt: Try Reconnect";
         connectDatapool();
     }
     return ret;
@@ -140,7 +142,7 @@ void DatapoolInterface::createDataArray(uint32_t size)
     {
         msElementDatapool.data = new uint8_t[size];
         msElementDatapool.datasize = size;
-        mLogging << "createDataArray: create new Array Size: " <= size;
+        (mLogging << "createDataArray: create new Array Size: ") <= size;
     }
 }
 
@@ -153,16 +155,16 @@ bool DatapoolInterface::serializeInt(int32_t value, uint8_t *data, uint32_t data
         data[1] = static_cast<uint8_t>((0x00ff0000 & value) >> 16);
         data[2] = static_cast<uint8_t>((0x0000ff00 & value) >> 0);
         data[3] = static_cast<uint8_t>((0x000000ff & value));
-        mLogging << "serializeInt: data[0]: " << static_cast<int>(data[0])
+        (mLogging << "serializeInt: data[0]: " << static_cast<int>(data[0])
                 << " data[1]: " << static_cast<int>(data[1])
                 << " data[2]: " << static_cast<int>(data[2])
                 << " data[3]: " << static_cast<int>(data[3])
-                << " value: " <= value;
+                << " value: ") <= value;
         ret = true;
     }
     else
     {
-        mLogging << LLcritical <= "serializeInt: Error";
+        (mLogging << LLcritical) <= "serializeInt: Error";
     }
     return ret;
 }
@@ -173,17 +175,17 @@ bool DatapoolInterface::deserializeInt(int32_t &value, uint8_t *data, uint32_t d
     value = 0;
     if((datasize == sizeof(value))&&(nullptr != data)&&(datasize == 4))
     {
-        value = data[3] + (data[2] << 8) + (data[1] << 16) + (data[0] << 24);
-        mLogging << "deserializeInt: data[0]: " << static_cast<int>(data[0])
+        value = static_cast<int32_t>(data[3] + (data[2] << 8) + (data[1] << 16) + (data[0] << 24));
+        (mLogging << "deserializeInt: data[0]: " << static_cast<int>(data[0])
                              << " data[1]: " << static_cast<int>(data[1])
                              << " data[2]: " << static_cast<int>(data[2])
                              << " data[3]: " << static_cast<int>(data[3])
-                             << " value: " <= value;
+                             << " value: ") <= value;
         ret = true;
     }
     else
     {
-        mLogging << LLcritical <= "deserializeInt: Error";
+        (mLogging << LLcritical) <= "deserializeInt: Error";
     }
     return ret;
 }

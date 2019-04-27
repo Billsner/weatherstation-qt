@@ -19,6 +19,7 @@ SOURCES += main.cpp \
     Threads/weatherthread.cpp \
     Utils/logging.cpp \
     Utils/loggingserver.cpp \
+    weather/weatherdatainterpreter.cpp \
     weather/weatherpicinfo.cpp \
     weather/weatherpicwarning.cpp \
     Threads/onlineservicethread.cpp
@@ -32,6 +33,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
+    weather/weatherdatainterpreter.hpp \
     weather/weatherdef.hpp \
     OnlineServices/downloadmanager.hpp \
     Datapool/datapoolcontroll.hpp \
