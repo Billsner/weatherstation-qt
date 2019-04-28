@@ -40,6 +40,17 @@ void WeatherDataInterpreter::triggerTimertick()
     {
         timercountCheckWeaterData--;
     }
+
+    static uint32_t timercountInterpretData = 15;
+    if(timercountInterpretData == 0)
+    {
+
+        timercountInterpretData = 60;
+    }
+    else
+    {
+        timercountInterpretData--;
+    }
 }
 
 bool WeatherDataInterpreter::checkLastDataSync(void)
@@ -50,6 +61,7 @@ bool WeatherDataInterpreter::checkLastDataSync(void)
     {
         ret = true;
         mNeedCheckDownload = true;
+        mDownloadDataActual = false;
         mLogging <= "checkLastDataSync: need new data";
     }
     else
@@ -73,15 +85,25 @@ bool WeatherDataInterpreter::checkActualWeatherData()
         {
             ret = true;
             mCheckDate = currentdate;
+            mDownloadDataActual = true;
             mLogging <= "checkActualWeatherData: date is correct";
         }
         else
         {
             ret = false;
+            mDownloadDataActual = false;
             mDatapoolInterface.setDatapoolInt(DIWeatherDownloadRequest,1);
 
             (mLogging << "checkActualWeatherData: date is not correct currentdate: " << currentdate.toStdString().size() << " dpdate: ") <= dpdate.toStdString().size();
         }
     }
     return ret;
+}
+
+void WeatherDataInterpreter::interpretData(void)
+{
+    if(mDownloadDataActual == true)
+    {
+        // todo
+    }
 }

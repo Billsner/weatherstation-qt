@@ -17,6 +17,7 @@ public:
 private:
     bool checkLastDataSync(void);
     bool checkActualWeatherData(void);
+    void interpretData(void);
 
 
     Logging mLogging;

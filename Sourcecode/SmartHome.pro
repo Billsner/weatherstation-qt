@@ -3,6 +3,7 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
+    FileAccess/interpretmosmixl.cpp \
     OnlineServices/downloadmanager.cpp \
     Datapool/datapoolcontroll.cpp \
     Datapool/datapoolelement.cpp \
@@ -33,6 +34,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
+    FileAccess/interpretmosmixl.hpp \
     weather/weatherdatainterpreter.hpp \
     weather/weatherdef.hpp \
     OnlineServices/downloadmanager.hpp \
