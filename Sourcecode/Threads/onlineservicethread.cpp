@@ -78,4 +78,8 @@ void OnlineServiceThread::startDownload()
         mDatapoolInterface.setDatapoolQString(DIWaetherDownloadDate,date);
         mLogging <= "startDownload";
     }
+    else
+    {
+        (mLogging << "startDownload: ") <= requeststate;
+    }
 }

@@ -44,7 +44,7 @@ void WeatherDataInterpreter::triggerTimertick()
     static uint32_t timercountInterpretData = 15;
     if(timercountInterpretData == 0)
     {
-
+        mInterpretMOSMIXL.startIntepretion();
         timercountInterpretData = 60;
     }
     else

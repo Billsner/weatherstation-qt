@@ -4,6 +4,7 @@
 #include "Utils/logging.hpp"
 #include "Datapool/datapoolinterface.hpp"
 #include <QString>
+#include "FileAccess/interpretmosmixl.hpp"
 
 class WeatherDataInterpreter
 {
@@ -25,6 +26,7 @@ private:
     bool mDownloadDataActual;
     bool mNeedCheckDownload;
     QString mCheckDate;
+    InterpretMOSMIXL mInterpretMOSMIXL;
 
 };
 

@@ -1,6 +1,7 @@
 #ifndef INTERPRETMOSMIXL_HPP
 #define INTERPRETMOSMIXL_HPP
 
+#include "Utils/logging.hpp"
 
 class InterpretMOSMIXL
 {
@@ -11,9 +12,10 @@ public:
     void startIntepretion(void);
 
 private:
-     void openFile(void);
+    void unzipFile(void);
+    void openFile(void);
 
-
+    Logging mLogging;
 
 };
 
