@@ -25,9 +25,9 @@ void InterpretMOSMIXL::unzipFile(void)
 {
     QProcess unzip;
     QStringList argument;
-    argument << "/download/MOSMIX_L_LATEST_10488.kmz.0";
+    argument << "";
     unzip.setWorkingDirectory(QCoreApplication::applicationDirPath()+"/download");
-    unzip.start("unzip",argument);
+    unzip.start("./unzipfiles.sh");
     if (unzip.waitForFinished())
     {
         (mLogging << "unzipFile: unzip finish: ") <= QCoreApplication::applicationDirPath().toStdString();

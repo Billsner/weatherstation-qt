@@ -58,6 +58,10 @@ QString DownloadManager::saveFileName(const QUrl &url)
             mLogging <= "saveFileName: error create folder";
         }
     }
+    else
+    {
+        mLogging <= "saveFileName: folder exist";
+    }
 
     if (QFile::exists(basename))
     {
@@ -69,7 +73,13 @@ QString DownloadManager::saveFileName(const QUrl &url)
             ++i;
         }
         basename += QString::number(i);
+        (mLogging << "saveFileName: file exist ") <= basename.toStdString();
     }
+    else
+    {
+        (mLogging <= "saveFileName: file not exist ")  <= basename.toStdString();;
+    }
+
     return basename;
 }
 
